@@ -1,5 +1,4 @@
-import React from 'react'
-import logo from './logo.svg'
+import * as React from 'react'
 import './App.css'
 import {ProjectsScreen} from 'screens/projects'
 

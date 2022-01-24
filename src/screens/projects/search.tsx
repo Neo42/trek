@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import {ProjectSearchProps} from './index.d'
 
 function ProjectSearch({
@@ -25,7 +25,7 @@ function ProjectSearch({
         onChange={(e) =>
           setParams({
             name,
-            principalId: parseInt(e.target.value),
+            principalId: e.target.value,
           })
         }
       >

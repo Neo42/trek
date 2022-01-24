@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import {ProjectListProps} from './index.d'
 
 function ProjectList({projects, users}: ProjectListProps) {

@@ -1,13 +1,13 @@
 export interface Project {
-  id: number
+  id: string
   name: string
-  principalId: number
+  principalId: string
   group: string
   createdAt: number
 }
 
 export interface User {
-  id: number
+  id: string
   name: string
   email: string
   title: string
@@ -20,7 +20,7 @@ export interface ProjectListProps {
 }
 
 interface ProjectSearchProps {
-  params: {name: string; principalId: number}
+  params: {name: string; principalId: string}
   setParams: (params: ProjectSearchProps['params']) => void
   users: User[]
 }

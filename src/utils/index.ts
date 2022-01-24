@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import * as React from 'react'
 
 /**
  * Check if a value is falsy but not zero
@@ -8,7 +8,7 @@ import React, {useEffect} from 'react'
 export const isFalsyNotZero = (value: any) => (value === 0 ? false : !value)
 
 /**
- * Strip all keys with falsy values but zero from an object
+ * Strip all keys with falsy values but not zero from an object
  * @param object - the object to be tidied up
  * @returns result
  */
@@ -27,11 +27,11 @@ export const stripFalsyValue = (object: object) => {
  * @param time - the amount of time to wait before setting the state
  * @returns The state and setState functions.
  */
-export const useDebouncedState = (value: any, time?: number) => {
-  const [state, setState] = React.useState(value)
-  useEffect(() => {
-    const timeout = setTimeout(() => setState(value), time)
+export const useDebouncedSetState = <Value>(value: Value, time?: number) => {
+  const [debouncedState, setDebouncedState] = React.useState(value)
+  React.useEffect(() => {
+    const timeout = setTimeout(() => setDebouncedState(value), time)
     return () => clearTimeout(timeout)
   }, [value, time])
-  return [state, setState]
+  return debouncedState
 }
