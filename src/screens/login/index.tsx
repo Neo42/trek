@@ -1,5 +1,6 @@
 import * as React from 'react'
-import {apiUrl} from 'constants/index'
+import {uuid} from 'minifaker'
+import {storage} from 'mocks'
 
 interface FormElements extends HTMLFormControlsCollection {
   username: HTMLInputElement
@@ -11,11 +12,22 @@ interface UsernameFormElement extends HTMLFormElement {
 
 export function LoginScreen() {
   function login(params: {username: string; password: string}) {
-    fetch(`${apiUrl}/login`, {
+    fetch('/users', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(params),
-    }).then((response) => response.json())
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: uuid.v4(),
+        ...params,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) throw new Error(data.message)
+        return data
+      })
+      .then((user) => storage.saveUsers(user))
   }
 
   function handleSubmit(event: React.FormEvent<UsernameFormElement>) {
@@ -36,7 +48,7 @@ export function LoginScreen() {
         <input title="Password" type="password" id="password" />
       </div>
       <button type="submit" title="Login">
-        Login
+        Register
       </button>
     </form>
   )
