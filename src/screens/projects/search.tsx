@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {ProjectSearchProps} from './index.d'
 
-function ProjectSearch({
+export function ProjectSearch({
   params: {name, principalId},
   setParams,
   users,
@@ -12,20 +12,20 @@ function ProjectSearch({
         title="search project"
         type="text"
         value={name}
-        onChange={(e) =>
+        onChange={(event) =>
           setParams({
             principalId,
-            name: e.target.value,
+            name: event.target.value,
           })
         }
       />
       <select
         title="select principal"
         value={principalId}
-        onChange={(e) =>
+        onChange={(event) =>
           setParams({
             name,
-            principalId: e.target.value,
+            principalId: event.target.value,
           })
         }
       >
@@ -39,5 +39,3 @@ function ProjectSearch({
     </form>
   )
 }
-
-export {ProjectSearch}

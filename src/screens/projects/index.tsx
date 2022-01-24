@@ -3,13 +3,15 @@ import * as qs from 'qs'
 import {stripFalsyValue, useDebouncedSetState} from 'utils'
 import {ProjectList} from './list'
 import {ProjectSearch} from './search'
+import {apiUrl} from 'constants/index'
 
-const apiUrl = process.env.REACT_APP_API_URL
-
-function ProjectsScreen() {
+export function ProjectsScreen() {
   const [users, setUsers] = React.useState([])
   const [projects, setProjects] = React.useState([])
-  const [params, setParams] = React.useState({name: '', principalId: ''})
+  const [params, setParams] = React.useState(() => ({
+    name: '',
+    principalId: '',
+  }))
   const debouncedParams = useDebouncedSetState(params, 250)
 
   React.useEffect(() => {
@@ -20,14 +22,16 @@ function ProjectsScreen() {
       .catch((error) => {
         throw error
       })
+  }, [debouncedParams])
 
+  React.useEffect(() => {
     fetch(`${apiUrl}/users`)
       .then((response) => response.json())
-      .then((data) => setUsers(data))
+      .then((users) => setUsers(users))
       .catch((error) => {
         throw error
       })
-  }, [debouncedParams])
+  }, [])
 
   return (
     <>
@@ -36,5 +40,3 @@ function ProjectsScreen() {
     </>
   )
 }
-
-export {ProjectsScreen}

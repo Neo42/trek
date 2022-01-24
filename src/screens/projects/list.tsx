@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {ProjectListProps} from './index.d'
 
-function ProjectList({projects, users}: ProjectListProps) {
+export function ProjectList({projects, users}: ProjectListProps) {
   return (
     <table>
       <thead>
@@ -23,4 +23,3 @@ function ProjectList({projects, users}: ProjectListProps) {
     </table>
   )
 }
-export {ProjectList}
