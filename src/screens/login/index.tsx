@@ -12,7 +12,7 @@ interface UsernameFormElement extends HTMLFormElement {
 
 export function LoginScreen() {
   function login(params: {username: string; password: string}) {
-    fetch('/users', {
+    fetch('/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
