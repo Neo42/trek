@@ -1,14 +1,10 @@
 import {rest} from 'msw'
 import db from 'mocks/db'
 
-const userHandlers = [
-  rest.post(`/login`, async (req, res, ctx) => {
-    const {username, password} = req.body
-    const user = await db.user.authenticate({username, password})
-    return res(ctx.json({user}))
-  }),
+const authUrl = process.env.REACT_APP_AUTH_URL
 
-  rest.post(`/register`, async (req, res, ctx) => {
+const userHandlers = [
+  rest.post(`${authUrl}/register`, async (req, res, ctx) => {
     const {username, password} = req.body
     const userFields = {username, password}
     await db.user.create(userFields)
@@ -21,6 +17,12 @@ const userHandlers = [
         ctx.json({status: 400, message: error.message}),
       )
     }
+    return res(ctx.json({user}))
+  }),
+
+  rest.post(`${authUrl}/login`, async (req, res, ctx) => {
+    const {username, password} = req.body
+    const user = await db.user.authenticate({username, password})
     return res(ctx.json({user}))
   }),
 ]

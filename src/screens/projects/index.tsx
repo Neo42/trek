@@ -3,7 +3,7 @@ import * as qs from 'qs'
 import {stripFalsyValue, useDebouncedSetState} from 'utils'
 import {ProjectList} from './list'
 import {ProjectSearch} from './search'
-import {apiUrl} from 'constants/index'
+import {apiUrl} from '../../constants'
 
 export function ProjectsScreen() {
   const [users, setUsers] = React.useState([])

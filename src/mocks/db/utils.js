@@ -1,11 +1,11 @@
 export function validateUserForm({username, password}) {
   if (!username) {
-    const error = new Error('用户名是必填项。')
+    const error = new Error('A username is required.')
     error.status = 400
     throw error
   }
   if (!password) {
-    const error = new Error('密码是必填项。')
+    const error = new Error('A password is required.')
     error.status = 400
     throw error
   }
