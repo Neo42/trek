@@ -11,6 +11,8 @@ export function validateUserForm({username, password}) {
   }
 }
 
+export const sanitizeUser = ({password, ...rest}) => rest
+
 export function hash(str) {
   var hash = 5381,
     i = str.length

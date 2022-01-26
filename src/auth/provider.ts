@@ -1,16 +1,17 @@
 import {AuthForm} from 'auth/index.d'
+import storage from 'mocks/storage'
 import {User} from 'screens/projects/index.d'
-
 import {LOGIN, POST, REGISTER, userTokenKey} from '../constants'
 
 const authURL = process.env.REACT_APP_AUTH_URL
+const tokenStorage = storage.get(userTokenKey)
 
 async function getToken() {
-  return window.localStorage.getItem(userTokenKey)
+  return tokenStorage.getValue()
 }
 
 function handleUserResponse({user}: {user: User}) {
-  window.localStorage.setItem(userTokenKey, user?.token ?? '')
+  tokenStorage.update(() => user?.token ?? '')
   return user
 }
 
@@ -23,7 +24,7 @@ function register(data: AuthForm) {
 }
 
 async function logout() {
-  window.localStorage.removeItem(userTokenKey)
+  tokenStorage.update(() => '')
 }
 
 async function client(endpoint: string, data: AuthForm) {

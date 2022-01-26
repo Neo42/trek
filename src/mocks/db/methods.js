@@ -1,10 +1,8 @@
 import db from 'mocks/db'
-import {validateUserForm} from './utils'
 
-export function authenticate({username, password}) {
-  validateUserForm({username, password})
+export function authenticate({username, passwordHash, id}) {
   const user = db.user.findFirst({where: {username: {equals: username}}})
-  if (user && user.password === password) {
+  if (user && user.passwordHash === passwordHash) {
     return {...user, token: btoa(user.id)}
   }
   const error = new Error('Invalid username or password.')
