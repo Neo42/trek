@@ -1,5 +1,6 @@
 import {User} from 'screens/projects/index.d'
 import {LOGIN, REGISTER, POST, userTokenKey} from '../constants'
+import {AuthForm} from 'auth/index.d'
 
 const authURL = process.env.REACT_APP_AUTH_URL
 
@@ -12,22 +13,19 @@ function handleUserResponse({user}: {user: User}) {
   return user
 }
 
-function login(data: {username: string; password: string}) {
+function login(data: AuthForm) {
   return client(LOGIN, data).then(handleUserResponse)
 }
 
-function register(data: {username: string; password: string}) {
+function register(data: AuthForm) {
   return client(REGISTER, data).then(handleUserResponse)
 }
 
-function logout() {
+async function logout() {
   window.localStorage.removeItem(userTokenKey)
 }
 
-async function client(
-  endpoint: string,
-  data: {username: string; password: string},
-) {
+async function client(endpoint: string, data: AuthForm) {
   const config = {
     method: POST,
     body: JSON.stringify(data),
@@ -37,11 +35,8 @@ async function client(
     .fetch(`${authURL}/${endpoint}`, config)
     .then(async (response) => {
       const data = await response.json()
-      if (response.ok) {
-        return data
-      } else {
-        return Promise.reject(data.message)
-      }
+      if (response.ok) return data
+      else return Promise.reject(data.message)
     })
 }
 

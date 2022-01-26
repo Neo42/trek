@@ -1,4 +1,4 @@
-export interface Project {
+interface Project {
   id: string
   name: string
   principalId: string
@@ -20,7 +20,7 @@ export interface ProjectListProps {
   users: User[]
 }
 
-interface ProjectSearchProps {
+export interface ProjectSearchProps {
   params: {name: string; principalId: string}
   setParams: (params: ProjectSearchProps['params']) => void
   users: User[]
