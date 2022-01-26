@@ -1,6 +1,6 @@
-import {ReactNode} from 'react'
+import * as React from 'react'
 import {AuthProvider} from './context'
 
-export function AppProviders({children}: {children: ReactNode}) {
+export function AppProviders({children}: {children: React.ReactNode}) {
   return <AuthProvider>{children}</AuthProvider>
 }

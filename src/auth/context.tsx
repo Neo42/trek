@@ -1,8 +1,8 @@
 import * as React from 'react'
-import * as auth from './provider'
-import {User} from 'screens/projects/index.d'
 import {AuthForm} from 'auth/index.d'
-import {ReactNode} from 'react'
+import {User} from 'screens/projects/index.d'
+
+import * as auth from './provider'
 
 const AuthContext = React.createContext<
   | {
@@ -15,7 +15,7 @@ const AuthContext = React.createContext<
 >(undefined)
 AuthContext.displayName = 'AuthContext'
 
-const AuthProvider = ({children}: {children: ReactNode}) => {
+const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const [user, setUser] = React.useState<User | null>(null)
   const login = (form: AuthForm) => auth.login(form).then(setUser)
   const register = (form: AuthForm) => auth.register(form).then(setUser)

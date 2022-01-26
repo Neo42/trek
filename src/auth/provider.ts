@@ -1,6 +1,7 @@
-import {User} from 'screens/projects/index.d'
-import {LOGIN, REGISTER, POST, userTokenKey} from '../constants'
 import {AuthForm} from 'auth/index.d'
+import {User} from 'screens/projects/index.d'
+
+import {LOGIN, POST, REGISTER, userTokenKey} from '../constants'
 
 const authURL = process.env.REACT_APP_AUTH_URL
 

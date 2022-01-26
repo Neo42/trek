@@ -1,9 +1,10 @@
 import * as React from 'react'
 import * as qs from 'qs'
 import {stripFalsyValue, useDebouncedSetState} from 'utils'
+
+import {apiUrl} from '../../constants'
 import {ProjectList} from './list'
 import {ProjectSearch} from './search'
-import {apiUrl} from '../../constants'
 
 export function ProjectsScreen() {
   const [users, setUsers] = React.useState([])
