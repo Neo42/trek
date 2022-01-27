@@ -19,16 +19,16 @@ export async function getUser(req) {
     error.status = 401
     throw error
   }
-  let userId
-  console.log(userId)
+  let id
   try {
-    userId = atob(token)
+    id = atob(token)
   } catch (e) {
     const error = new Error('Invalid token. Please login again.')
     error.status = 401
     throw error
   }
-  return await userDB.read(+userId)
+
+  return await userDB.findFirst({where: {id: {equals: id}}})
 }
 
 export const userHandlers = [

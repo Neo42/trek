@@ -19,19 +19,30 @@ const getRestHandlers = (endpoint, dbKey) => {
   const targetDB = db[dbKey]
   return [
     rest.get(`${apiUrl}/${endpoint}`, async (req, res, ctx) => {
-      const user = await getUser(req)
+      // TODO: match list with user id
+      const {id} = await getUser(req)
+
       const params = req.url.searchParams
-      console.log(params)
-      const queryResult = targetDB.queryByOwnerId(
-        user.id,
-        Object.fromEntries(params),
-      )
+
+      let searchConditions = []
+      for (const [key, value] of params) {
+        searchConditions.push([key, value])
+      }
+
+      searchConditions = searchConditions
+        .map(([key, value]) => ({
+          [key]: {equals: key.toLowerCase().includes('id') ? +value : value},
+        }))
+        .reduce((result, item) => ({...result, ...item}), {})
+
+      const queryResult = targetDB.findMany({where: searchConditions})
+      console.log(queryResult)
       return res(ctx.json(queryResult))
     }),
 
     rest.get(`${apiUrl}/${endpoint}/:id`, async (req, res, ctx) => {
       const {id} = req.params
-      const item = targetDB.detail(+id)
+      const item = targetDB.findFirst({where: {id: {equals: id}}})
       return res(ctx.json(item))
     }),
 

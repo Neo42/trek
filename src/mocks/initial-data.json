@@ -1,0 +1,57 @@
+{
+  "__TREK_USERS__": [
+    {
+      "id": 1,
+      "name": "Grant Predovic"
+    },
+    {
+      "id": 2,
+      "name": "Alfonso Kovacek"
+    },
+    {
+      "id": 3,
+      "name": "Leslie Runolfsdottir"
+    },
+    {
+      "id": 4,
+      "name": "Jackie Murray"
+    }
+  ],
+  "__TREK_PROJECTS__": [
+    {
+      "id": 1,
+      "name": "Deliverer",
+      "principalId": 1,
+      "group": "Delivery",
+      "createdAt": 1604989757139
+    },
+    {
+      "id": 2,
+      "name": "Group Buying",
+      "principalId": 2,
+      "group": "GB",
+      "createdAt": 1604989757139
+    },
+    {
+      "id": 3,
+      "name": "Logistic",
+      "principalId": 2,
+      "group": "Logistic",
+      "createdAt": 1546300800000
+    },
+    {
+      "id": 4,
+      "name": "HQ",
+      "principalId": 3,
+      "group": "HQ",
+      "createdAt": 1604980000011
+    },
+    {
+      "id": 5,
+      "name": "Routes",
+      "principalId": 4,
+      "group": "Delivery",
+      "createdAt": 1546900800000
+    }
+  ]
+}

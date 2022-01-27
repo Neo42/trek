@@ -1,19 +1,25 @@
-import {factory, primaryKey} from '@mswjs/data'
+import {factory, nullable, primaryKey} from '@mswjs/data'
 import {usersKey, projectsKey} from '../../constants'
 import {username, uuid} from 'minifaker'
 import 'minifaker/locales/en'
 import storage from 'mocks/storage'
 import {authenticate} from './methods'
 
+import data from '../initial-data.json'
+
 const db = factory({
   [usersKey]: {
-    username: primaryKey(username),
+    id: primaryKey(uuid.v4),
+    username: username,
     passwordHash: String,
-    id: uuid.v4,
+    name: nullable(String),
   },
   [projectsKey]: {
     id: primaryKey(uuid.v4),
-    ownerId: uuid.v4,
+    principalId: uuid.v4,
+    name: String,
+    group: String,
+    createdAt: Number,
   },
 })
 
@@ -32,9 +38,29 @@ window.showDB = (dbKey) => {
 }
 
 function loadData(dbKey) {
-  const items = storage.get(dbKey).getValue()
-  items.forEach((item) => db[dbKey].create(item))
+  const storageList = storage.get(dbKey)
+  const dataList = data[dbKey]
+  const dbList = db[dbKey]
+
+  dataList.forEach((item) => {
+    if (dbList.findFirst({where: {id: {equals: item.id}}})) return
+    dbList.create(item)
+  })
+  console.log(`${dbKey} initial data loaded.`)
+
+  storageList.getValue().forEach((item) => {
+    if (dbList.findFirst({where: {id: {equals: item.id}}})) return
+    dbList.create(item)
+  })
   console.log(`${dbKey} storage loaded.`)
+
+  dataList.forEach((item) => {
+    storageList.update((prevItems) => {
+      const hasItem = prevItems.filter(({id}) => id === item.id).length
+      return hasItem ? prevItems : [...prevItems, item]
+    })
+  })
+  console.log(`${dbKey} storage saved.`)
 }
 
 try {
