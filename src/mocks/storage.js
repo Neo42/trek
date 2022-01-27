@@ -1,5 +1,5 @@
 import {LiveStorage} from '@mswjs/storage'
-import {usersKey, userTokenKey} from '../constants'
+import {usersKey, userTokenKey, projectsKey} from '../constants'
 
 function storageFactory(...keys) {
   const storage = new Map()
@@ -12,5 +12,5 @@ function storageFactory(...keys) {
   return storage
 }
 
-const storage = storageFactory(userTokenKey, usersKey)
+const storage = storageFactory(userTokenKey, usersKey, projectsKey)
 export default storage

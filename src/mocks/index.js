@@ -1,7 +1,6 @@
 import {setupWorker} from 'msw'
-import db from './db'
-import {userHandlers} from 'mocks/handlers'
+import {userHandlers, restHandlers} from 'mocks/handlers'
 
-const handlers = [...db.user.toHandlers('rest'), ...userHandlers]
+const handlers = [...userHandlers, ...restHandlers]
 
 export const server = setupWorker(...handlers)

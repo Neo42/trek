@@ -18,20 +18,22 @@ export function ProjectsScreen() {
   React.useEffect(() => {
     const paramsString = qs.stringify(stripFalsyValue(debouncedParams))
     fetch(`${apiUrl}/projects?${paramsString}`)
-      .then((response) => response.json())
-      .then((data) => setProjects(data))
-      .catch((error) => {
-        throw error
+      .then(async (response) => {
+        const data = await response.json()
+        if (response.ok) return data
+        else return Promise.reject(data.message)
       })
+      .then((projects) => setProjects(projects))
   }, [debouncedParams])
 
   React.useEffect(() => {
     fetch(`${apiUrl}/users`)
-      .then((response) => response.json())
-      .then((users) => setUsers(users))
-      .catch((error) => {
-        throw error
+      .then(async (response) => {
+        const data = await response.json()
+        if (response.ok) return data
+        else return Promise.reject(data.message)
       })
+      .then((users) => setUsers(users))
   }, [])
 
   return (

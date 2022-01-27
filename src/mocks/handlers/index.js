@@ -1,1 +1,2 @@
-export {default as userHandlers} from './user'
+export {userHandlers} from './user'
+export {restHandlers} from './rest'

@@ -1,7 +1,9 @@
 import db from 'mocks/db'
 
 export function authenticate({username, passwordHash, id}) {
-  const user = db.user.findFirst({where: {username: {equals: username}}})
+  const user = db.__TREK_USERS__.findFirst({
+    where: {username: {equals: username}},
+  })
   if (user && user.passwordHash === passwordHash) {
     return {...user, token: btoa(user.id)}
   }

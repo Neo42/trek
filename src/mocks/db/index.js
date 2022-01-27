@@ -1,20 +1,24 @@
 import {factory, primaryKey} from '@mswjs/data'
-import {usersKey} from 'constants'
+import {usersKey, projectsKey} from '../../constants'
 import {username, uuid} from 'minifaker'
 import 'minifaker/locales/en'
 import storage from 'mocks/storage'
 import {authenticate} from './methods'
 
 const db = factory({
-  user: {
+  [usersKey]: {
     username: primaryKey(username),
     passwordHash: String,
     id: uuid.v4,
   },
+  [projectsKey]: {
+    id: primaryKey(uuid.v4),
+    ownerId: uuid.v4,
+  },
 })
 
-db.user = {
-  ...db.user,
+db.__TREK_USERS__ = {
+  ...db.__TREK_USERS__,
   authenticate,
 }
 
@@ -27,14 +31,14 @@ window.showDB = (dbKey) => {
   console.log({[dbKey]: db[dbKey].getAll()})
 }
 
-function loadData() {
-  const users = storage.get(usersKey).getValue()
-  users.forEach((user) => db.user.create(user))
-  console.log(`${usersKey} storage loaded.`)
+function loadData(dbKey) {
+  const items = storage.get(dbKey).getValue()
+  items.forEach((item) => db[dbKey].create(item))
+  console.log(`${dbKey} storage loaded.`)
 }
 
 try {
-  loadData()
+  ;[usersKey, projectsKey].forEach(loadData)
 } catch (error) {
   throw error
 }
