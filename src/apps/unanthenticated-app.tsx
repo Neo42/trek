@@ -1,6 +1,6 @@
 import * as React from 'react'
-import {useAuth} from 'auth/context'
 import {AuthForm} from 'auth/index.d'
+import {useAuth} from 'auth/context'
 
 interface FormElements extends HTMLFormControlsCollection {
   username: HTMLInputElement

@@ -1,7 +1,7 @@
-import {AuthForm} from 'auth/index.d'
 import storage from 'mocks/storage'
-import {User} from 'screens/projects/index.d'
+import {AuthForm} from 'auth/index.d'
 import {LOGIN, POST, REGISTER, userTokenKey} from '../constants'
+import {User} from 'screens/projects/index.d'
 
 const authURL = process.env.REACT_APP_AUTH_URL
 const tokenStorage = storage.get(userTokenKey)

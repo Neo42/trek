@@ -1,9 +1,9 @@
+import App from 'apps/App'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import App from 'apps/App'
 import reportWebVitals from './reportWebVitals'
 import {AppProviders} from 'auth'
+import './index.css'
 
 if (process.env.NODE_ENV === 'development') {
   const {server} = require('./mocks')

@@ -1,8 +1,7 @@
+import * as auth from './provider'
 import * as React from 'react'
 import {AuthForm} from 'auth/index.d'
 import {User} from 'screens/projects/index.d'
-
-import * as auth from './provider'
 
 const AuthContext = React.createContext<
   | {
