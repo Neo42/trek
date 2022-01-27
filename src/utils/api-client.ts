@@ -9,7 +9,7 @@ interface Config extends RequestInit {
   token?: string
 }
 
-function client(
+export function client(
   endpoint: string,
   {data, token, headers: customHeaders, ...customConfig}: Config = {},
 ) {
@@ -24,7 +24,7 @@ function client(
     ...customConfig,
   }
 
-  const params = customConfig.method ? '' : `?${qs.stringify(data)}`
+  const params = customConfig.method ? '' : data ? `?${qs.stringify(data)}` : ''
 
   return window
     .fetch(`${apiUrl}/${endpoint}${params}`, config)

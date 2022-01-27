@@ -1,12 +1,11 @@
 import storage from 'mocks/storage'
 import {AuthForm} from 'auth/index.d'
-import {LOGIN, POST, REGISTER, userTokenKey} from '../constants'
+import {authUrl, LOGIN, POST, REGISTER, userTokenKey} from '../constants'
 import {User} from 'screens/projects/index.d'
 
-const authURL = process.env.REACT_APP_AUTH_URL
 const tokenStorage = storage.get(userTokenKey)
 
-async function getToken() {
+function getToken() {
   return tokenStorage.getValue()
 }
 
@@ -34,7 +33,7 @@ async function client(endpoint: string, data: AuthForm) {
     headers: {'Content-Type': 'application/json'},
   }
   return window
-    .fetch(`${authURL}/${endpoint}`, config)
+    .fetch(`${authUrl}/${endpoint}`, config)
     .then(async (response) => {
       const data = await response.json()
       if (response.ok) return data

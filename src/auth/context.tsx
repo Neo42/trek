@@ -2,6 +2,7 @@ import * as auth from './provider'
 import * as React from 'react'
 import {AuthForm} from 'auth/index.d'
 import {User} from 'screens/projects/index.d'
+import {client} from 'utils/api-client'
 
 const AuthContext = React.createContext<
   | {
@@ -19,6 +20,20 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const login = (form: AuthForm) => auth.login(form).then(setUser)
   const register = (form: AuthForm) => auth.register(form).then(setUser)
   const logout = () => auth.logout().then(() => setUser(null))
+
+  const initializeUser = React.useCallback(async () => {
+    let user = null
+    const token = auth.getToken()
+    if (token) {
+      const data = await client('me', {token})
+      user = data.user
+    }
+    return user
+  }, [])
+
+  React.useEffect(() => {
+    initializeUser().then(setUser)
+  }, [initializeUser])
 
   const value = {user, login, register, logout}
   return <AuthContext.Provider value={value} children={children} />

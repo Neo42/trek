@@ -36,7 +36,6 @@ const getRestHandlers = (endpoint, dbKey) => {
         .reduce((result, item) => ({...result, ...item}), {})
 
       const queryResult = targetDB.findMany({where: searchConditions})
-      console.log(queryResult)
       return res(ctx.json(queryResult))
     }),
 

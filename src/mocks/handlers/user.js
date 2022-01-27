@@ -1,13 +1,11 @@
 import {rest} from 'msw'
 import db from 'mocks/db'
 import storage from 'mocks/storage'
-import {usersKey} from 'constants'
+import {authUrl, apiUrl, usersKey} from '../../constants'
 import {hash, sanitizeUser, validateUserForm} from 'mocks/db/utils'
 
 const localUsers = storage.get(usersKey)
 const userDB = db.__TREK_USERS__
-
-const authUrl = process.env.REACT_APP_AUTH_URL
 
 const getToken = (req) =>
   req.headers.get('Authorization')?.replace('Bearer ', '')
@@ -34,7 +32,7 @@ export async function getUser(req) {
 export const userHandlers = [
   ...userDB.toHandlers('rest'),
 
-  rest.get(`${authUrl}/me`, async (req, res, ctx) => {
+  rest.get(`${apiUrl}/me`, async (req, res, ctx) => {
     const user = await getUser(req)
     const token = getToken(req)
     return res(ctx.json({user: {...user, token}}))

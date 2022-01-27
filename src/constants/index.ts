@@ -1,4 +1,5 @@
 export const apiUrl = process.env.REACT_APP_API_URL
+export const authUrl = process.env.REACT_APP_AUTH_URL
 export const userTokenKey = '__TREK_USER_TOKEN__'
 export const usersKey = '__TREK_USERS__'
 export const projectsKey = '__TREK_PROJECTS__'
