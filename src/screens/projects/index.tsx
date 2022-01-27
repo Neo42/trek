@@ -1,10 +1,8 @@
 import * as React from 'react'
-import * as qs from 'qs'
-import {stripFalsyValue, useDebouncedSetState} from 'utils'
-
-import {apiUrl} from '../../constants'
 import {ProjectList} from './list'
 import {ProjectSearch} from './search'
+import {stripFalsyValue, useDebouncedSetState} from 'utils'
+import {useClient} from 'utils/api-client'
 
 export function ProjectsScreen() {
   const [users, setUsers] = React.useState([])
@@ -14,27 +12,17 @@ export function ProjectsScreen() {
     principalId: '',
   }))
   const debouncedParams = useDebouncedSetState(params, 250)
+  const client = useClient()
 
   React.useEffect(() => {
-    const paramsString = qs.stringify(stripFalsyValue(debouncedParams))
-    fetch(`${apiUrl}/projects?${paramsString}`)
-      .then(async (response) => {
-        const data = await response.json()
-        if (response.ok) return data
-        else return Promise.reject(data.message)
-      })
-      .then((projects) => setProjects(projects))
-  }, [debouncedParams])
+    client('projects', {
+      data: stripFalsyValue(debouncedParams),
+    }).then(setProjects)
+  }, [client, debouncedParams])
 
   React.useEffect(() => {
-    fetch(`${apiUrl}/users`)
-      .then(async (response) => {
-        const data = await response.json()
-        if (response.ok) return data
-        else return Promise.reject(data.message)
-      })
-      .then((users) => setUsers(users))
-  }, [])
+    client('users').then(setUsers)
+  }, [client])
 
   return (
     <>
