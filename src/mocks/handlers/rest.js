@@ -21,7 +21,6 @@ const getRestHandlers = (endpoint, dbKey) => {
     rest.get(`${apiUrl}/${endpoint}`, async (req, res, ctx) => {
       // TODO: match list with user id
       const {id} = await getUser(req)
-
       const params = req.url.searchParams
 
       let searchConditions = []

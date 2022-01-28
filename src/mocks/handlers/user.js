@@ -2,7 +2,7 @@ import {rest} from 'msw'
 import db from 'mocks/db'
 import storage from 'mocks/storage'
 import {authUrl, apiUrl, usersKey} from '../../constants'
-import {hash, sanitizeUser, validateUserForm} from 'mocks/db/utils'
+import {hash, stripUserPassword, validateUserForm} from 'mocks/db/utils'
 
 const localUsers = storage.get(usersKey)
 const userDB = db.__TREK_USERS__
@@ -53,7 +53,7 @@ export const userHandlers = [
         ctx.json({status: 400, message: error.message}),
       )
     }
-    localUsers.update((prevUsers) => [...prevUsers, sanitizeUser(user)])
+    localUsers.update((prevUsers) => [...prevUsers, stripUserPassword(user)])
     return res(ctx.json({user}))
   }),
 

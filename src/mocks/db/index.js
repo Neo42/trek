@@ -46,13 +46,11 @@ function loadData(dbKey) {
     if (dbList.findFirst({where: {id: {equals: item.id}}})) return
     dbList.create(item)
   })
-  console.log(`${dbKey} initial data loaded.`)
 
   storageList.getValue().forEach((item) => {
     if (dbList.findFirst({where: {id: {equals: item.id}}})) return
     dbList.create(item)
   })
-  console.log(`${dbKey} storage loaded.`)
 
   dataList.forEach((item) => {
     storageList.update((prevItems) => {
@@ -60,7 +58,6 @@ function loadData(dbKey) {
       return hasItem ? prevItems : [...prevItems, item]
     })
   })
-  console.log(`${dbKey} storage saved.`)
 }
 
 try {
