@@ -1,25 +1,30 @@
+import {Table} from 'antd'
 import * as React from 'react'
 import {ProjectListProps} from './index.d'
 
 export function ProjectList({projects, users}: ProjectListProps) {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>name</th>
-          <th>principal</th>
-        </tr>
-      </thead>
-      <tbody>
-        {projects.map(({name, principalId}) => (
-          <tr key={name}>
-            <td>{name}</td>
-            <td>
-              {users.find(({id}) => id === principalId)?.name ?? 'Unknown'}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <Table
+      pagination={false}
+      columns={[
+        {
+          title: 'Name',
+          dataIndex: 'name',
+          sorter: (a, b) => a.name.localeCompare(b.name),
+        },
+        {
+          title: 'Principal',
+          render(_, project) {
+            return (
+              <span>
+                {users.find((user) => user.id === project.principalId)?.name ??
+                  'Unknown'}
+              </span>
+            )
+          },
+        },
+      ]}
+      dataSource={projects}
+    ></Table>
   )
 }

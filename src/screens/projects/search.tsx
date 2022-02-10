@@ -1,3 +1,4 @@
+import {Input, Select} from 'antd'
 import * as React from 'react'
 import {ProjectSearchProps} from './index.d'
 
@@ -8,7 +9,7 @@ export function ProjectSearch({
 }: ProjectSearchProps) {
   return (
     <form>
-      <input
+      <Input
         title="search project"
         type="text"
         value={name}
@@ -19,23 +20,22 @@ export function ProjectSearch({
           })
         }
       />
-      <select
-        title="select principal"
+      <Select
         value={principalId}
-        onChange={(event) =>
+        onChange={(value) =>
           setParams({
             name,
-            principalId: event.target.value,
+            principalId: value,
           })
         }
       >
-        <option value={''}>Principal</option>
+        <Select.Option value={''}>Principal</Select.Option>
         {users.map((user) => (
-          <option key={user.id} value={user.id}>
+          <Select.Option key={user.id} value={user.id}>
             {user.name}
-          </option>
+          </Select.Option>
         ))}
-      </select>
+      </Select>
     </form>
   )
 }
