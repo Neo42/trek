@@ -3,7 +3,7 @@ import {AuthForm} from 'auth/index.d'
 import {useAuth} from 'auth/context'
 import {Button, Card, Divider, Form, Input} from 'antd'
 import styled from '@emotion/styled'
-import logo from 'assets/logo.svg'
+import logo from 'assets/logo.png'
 import left from 'assets/left.svg'
 import right from 'assets/right.svg'
 
@@ -91,7 +91,7 @@ const ShadowCard = styled(Card)`
 const Header = styled.header`
   background: url(${logo}) no-repeat center;
   padding: 6.25rem 0;
-  background-size: auto 4rem;
+  background-size: auto 6rem;
   width: 100%;
 `
 

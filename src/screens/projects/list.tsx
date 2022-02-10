@@ -6,6 +6,7 @@ export function ProjectList({projects, users}: ProjectListProps) {
   return (
     <Table
       pagination={false}
+      rowKey={(project) => project.id}
       columns={[
         {
           title: 'Name',
