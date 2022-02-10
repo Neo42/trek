@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import reportWebVitals from './reportWebVitals'
 import {AppProviders} from 'auth'
 import './index.css'
+import 'antd/dist/antd.less'
 
 if (process.env.NODE_ENV === 'development') {
   const {server} = require('./mocks')
