@@ -2,6 +2,7 @@ interface Project {
   id: string
   name: string
   principalId: string
+  pin: boolean
   group: string
   createdAt: number
 }

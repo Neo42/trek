@@ -1,4 +1,5 @@
 import {Table} from 'antd'
+import dayjs from 'dayjs'
 import * as React from 'react'
 import {ProjectListProps} from './index.d'
 
@@ -14,12 +15,28 @@ export function ProjectList({projects, users}: ProjectListProps) {
           sorter: (a, b) => a.name.localeCompare(b.name),
         },
         {
+          title: 'Group',
+          dataIndex: 'group',
+        },
+        {
           title: 'Principal',
           render(_, project) {
             return (
               <span>
                 {users.find((user) => user.id === project.principalId)?.name ??
                   'Unknown'}
+              </span>
+            )
+          },
+        },
+        {
+          title: 'Created At',
+          render(_, project) {
+            return (
+              <span>
+                {project.createdAt
+                  ? dayjs(project.createdAt).format('YYYY-MM-DD')
+                  : ''}
               </span>
             )
           },

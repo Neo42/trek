@@ -1,4 +1,7 @@
-import {Input, Select} from 'antd'
+/** @jsxImportSource @emotion/react */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {jsx} from '@emotion/react'
+import {Form, Input, Select} from 'antd'
 import * as React from 'react'
 import {ProjectSearchProps} from './index.d'
 
@@ -8,34 +11,39 @@ export function ProjectSearch({
   users,
 }: ProjectSearchProps) {
   return (
-    <form>
-      <Input
-        title="search project"
-        type="text"
-        value={name}
-        onChange={(event) =>
-          setParams({
-            principalId,
-            name: event.target.value,
-          })
-        }
-      />
-      <Select
-        value={principalId}
-        onChange={(value) =>
-          setParams({
-            name,
-            principalId: value,
-          })
-        }
-      >
-        <Select.Option value={''}>Principal</Select.Option>
-        {users.map((user) => (
-          <Select.Option key={user.id} value={user.id}>
-            {user.name}
-          </Select.Option>
-        ))}
-      </Select>
-    </form>
+    <Form css={{marginBottom: `2rem`}} layout="inline">
+      <Form.Item>
+        <Input
+          placeholder="Project Name"
+          title="search project"
+          type="text"
+          value={name}
+          onChange={(event) =>
+            setParams({
+              principalId,
+              name: event.target.value,
+            })
+          }
+        />
+      </Form.Item>
+      <Form.Item>
+        <Select
+          value={principalId}
+          onChange={(value) =>
+            setParams({
+              name,
+              principalId: value,
+            })
+          }
+        >
+          <Select.Option value={''}>Principal</Select.Option>
+          {users.map((user) => (
+            <Select.Option key={user.id} value={user.id}>
+              {user.name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
+    </Form>
   )
 }

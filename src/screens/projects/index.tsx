@@ -3,6 +3,7 @@ import {ProjectList} from './list'
 import {ProjectSearch} from './search'
 import {stripFalsyValue, useDebouncedSetState} from 'utils'
 import {useClient} from 'utils/api-client'
+import styled from '@emotion/styled'
 
 export function ProjectsScreen() {
   const [users, setUsers] = React.useState([])
@@ -25,9 +26,14 @@ export function ProjectsScreen() {
   }, [client])
 
   return (
-    <>
+    <Container>
+      <h1>Project List</h1>
       <ProjectSearch params={params} setParams={setParams} users={users} />
       <ProjectList projects={projects} users={users} />
-    </>
+    </Container>
   )
 }
+
+const Container = styled.div`
+  padding: 3.2rem;
+`

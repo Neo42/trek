@@ -3,7 +3,7 @@ import {AuthForm} from 'auth/index.d'
 import {useAuth} from 'auth/context'
 import {Button, Card, Divider, Form, Input} from 'antd'
 import styled from '@emotion/styled'
-import logo from 'assets/logo.png'
+import logo from 'assets/logo.svg'
 import left from 'assets/left.svg'
 import right from 'assets/right.svg'
 
@@ -62,11 +62,14 @@ export function UnauthenticatedApp() {
           title={isRegisterScreen ? 'Create account' : 'Login'}
         />
         <Divider />
-        <a onClick={() => setIsRegisterScreen(!isRegisterScreen)}>
+        <Button
+          type="link"
+          onClick={() => setIsRegisterScreen(!isRegisterScreen)}
+        >
           {isRegisterScreen
             ? 'Already have an account? Login'
             : `Don't have an account? Create one`}
-        </a>
+        </Button>
       </ShadowCard>
     </Container>
   )
