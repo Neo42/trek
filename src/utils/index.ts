@@ -1,22 +1,12 @@
 import * as React from 'react'
 
-/**
- * Check if a value is falsy but not zero
- * @param value - the value to check
- * @returns boolean
- */
-export const isFalsyNotZero = (value: any) => (value === 0 ? false : !value)
+const isVoid = (value: unknown) =>
+  value === undefined || value === null || value === ''
 
-/**
- * Strip all keys with falsy values but not zero from an object
- * @param object - the object to be tidied up
- * @returns result
- */
-export const stripFalsyValue = (object: object) => {
+export const stripFalsyValue = (object: {[key: string]: unknown}) => {
   const result = {...object}
   Object.entries(result).forEach(([key, value]) => {
-    // @ts-ignore
-    if (isFalsyNotZero(value)) delete result[key]
+    if (isVoid(value)) delete result[key]
   })
   return result
 }
