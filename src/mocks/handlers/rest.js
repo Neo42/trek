@@ -30,7 +30,9 @@ const getRestHandlers = (endpoint, dbKey) => {
 
       searchConditions = searchConditions
         .map(([key, value]) => ({
-          [key]: {equals: key.toLowerCase().includes('id') ? +value : value},
+          [key]: key.toLowerCase().includes('id')
+            ? {equals: +value}
+            : {contains: value},
         }))
         .reduce((result, item) => ({...result, ...item}), {})
 

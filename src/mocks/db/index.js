@@ -1,4 +1,4 @@
-import {factory, nullable, primaryKey} from '@mswjs/data'
+import {factory, primaryKey} from '@mswjs/data'
 import {usersKey, projectsKey} from '../../constants'
 import {username, uuid} from 'minifaker'
 import 'minifaker/dist/esm/locales/en'
@@ -12,7 +12,7 @@ const db = factory({
     id: primaryKey(uuid.v4),
     username: username,
     passwordHash: String,
-    name: nullable(String),
+    name: String,
   },
   [projectsKey]: {
     id: primaryKey(uuid.v4),

@@ -35,7 +35,7 @@ export const userHandlers = [
   rest.get(`${apiUrl}/me`, async (req, res, ctx) => {
     const user = await getUser(req)
     const token = getToken(req)
-    return res(ctx.json({user: {...user, token}}))
+    return res(ctx.json({user: {...user, name: user.username, token}}))
   }),
 
   rest.post(`${authUrl}/register`, async (req, res, ctx) => {
@@ -43,7 +43,7 @@ export const userHandlers = [
     validateUserForm({username, password})
     const id = hash(username)
     const passwordHash = hash(password)
-    await userDB.create({id, username, passwordHash})
+    await userDB.create({id, username, passwordHash, name: username})
     let user
     try {
       user = await userDB.authenticate({id, username, passwordHash})
