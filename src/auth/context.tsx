@@ -1,12 +1,11 @@
-import * as auth from './provider'
 import * as React from 'react'
 import {AuthForm} from 'auth/index.d'
-import {User} from 'screens/projects/index.d'
-import {client} from 'utils/api-client'
-import {useAsync} from 'utils'
 import {FullPageFallback, FullPageLoading} from 'components'
+import {User} from 'screens/projects/index.d'
+import {client, useAsync} from 'utils'
+import * as auth from './provider'
 
-const AuthContext = React.createContext<
+export const AuthContext = React.createContext<
   | {
       user: User | null
       register: (form: AuthForm) => Promise<void>
@@ -17,7 +16,7 @@ const AuthContext = React.createContext<
 >(undefined)
 AuthContext.displayName = 'AuthContext'
 
-const AuthProvider = ({children}: {children: React.ReactNode}) => {
+export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const {
     data: user,
     setData: setUser,
@@ -58,10 +57,8 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
   return <AuthContext.Provider value={value} children={children} />
 }
 
-function useAuth() {
+export function useAuth() {
   const context = React.useContext(AuthContext)
   if (!context) throw new Error('useAuth must be used within a AuthProvider.')
   return context
 }
-
-export {AuthContext, AuthProvider, useAuth}

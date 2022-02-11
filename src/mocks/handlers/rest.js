@@ -1,7 +1,7 @@
 import {rest} from 'msw'
 import {getUser} from './user'
 import {apiUrl, projectsKey, usersKey} from '../../constants'
-import db from 'mocks/db'
+import db from '../db'
 
 const tryToNumber = (value) =>
   Array.isArray(value) ? value.map(Number) : Number(value)

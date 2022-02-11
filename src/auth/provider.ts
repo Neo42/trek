@@ -1,6 +1,6 @@
-import storage from 'mocks/storage'
-import {AuthForm} from 'auth/index.d'
+import {storage} from 'mocks'
 import {authUrl, LOGIN, POST, REGISTER, userTokenKey} from '../constants'
+import {AuthForm} from 'auth/index.d'
 import {User} from 'screens/projects/index.d'
 
 const tokenStorage = storage.get(userTokenKey)

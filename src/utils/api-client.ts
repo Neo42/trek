@@ -1,13 +1,8 @@
-import * as auth from 'auth/provider'
-import * as qs from 'qs'
 import * as React from 'react'
+import * as auth from 'auth'
+import * as qs from 'qs'
 import {apiUrl, GET} from '../constants'
-import {useAuth} from 'auth/context'
-
-interface Config extends RequestInit {
-  data?: object
-  token?: string
-}
+import {Config} from './index.d'
 
 export function client(
   endpoint: string,
@@ -44,7 +39,7 @@ export function client(
 }
 
 export function useClient() {
-  const token = useAuth().user?.token
+  const token = auth.useAuth().user?.token
   return React.useCallback(
     (...[endpoint, config]: Parameters<typeof client>) =>
       client(endpoint, {...config, token}),

@@ -19,3 +19,8 @@ export type AsyncState<Data> =
       error: null
       data: null
     }
+
+export interface Config extends RequestInit {
+  data?: object
+  token?: string
+}
