@@ -11,17 +11,8 @@ import logo from 'assets/logo.svg'
 import left from 'assets/left.svg'
 import right from 'assets/right.svg'
 
-interface FormElements extends HTMLFormControlsCollection {
-  username: HTMLInputElement
-  password: HTMLInputElement
-}
-
-export interface UsernameFormElement extends HTMLFormElement {
-  readonly elements: FormElements
-}
-
 export interface UserFormProps {
-  title: 'Login' | 'Create account'
+  title: 'Login' | 'Create Account'
   onSubmit: (form: AuthForm) => Promise<void>
   onError: (error: any) => void
 }
@@ -32,7 +23,7 @@ function UserForm({onSubmit, title, onError}: UserFormProps) {
   async function handleSubmit(values: {
     username: string
     password: string
-    'confirm-password'?: string
+    'confirm-password': string
   }) {
     if (
       values['confirm-password'] &&
@@ -62,7 +53,7 @@ function UserForm({onSubmit, title, onError}: UserFormProps) {
       >
         <Input placeholder="Password" type="password" id="password" />
       </Form.Item>
-      {title === 'Create account' ? (
+      {title === 'Create Account' ? (
         <Form.Item
           name="confirm-password"
           rules={[
@@ -110,7 +101,7 @@ export function UnauthenticatedApp() {
         <UserForm
           onError={setError}
           onSubmit={isRegisterScreen ? register : login}
-          title={isRegisterScreen ? 'Create account' : 'Login'}
+          title={isRegisterScreen ? 'Create Account' : 'Login'}
         />
         <Divider />
         <Button

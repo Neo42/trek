@@ -35,6 +35,7 @@ export const userHandlers = [
   rest.get(`${apiUrl}/me`, async (req, res, ctx) => {
     const user = await getUser(req)
     const token = getToken(req)
+    await new Promise((resolve) => setTimeout(resolve, 2000))
     return res(ctx.json({user: {...user, name: user.username, token}}))
   }),
 

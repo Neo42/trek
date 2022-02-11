@@ -3,6 +3,7 @@ import * as React from 'react'
 import {AuthForm} from 'auth/index.d'
 import {User} from 'screens/projects/index.d'
 import {client} from 'utils/api-client'
+import {useAsync} from 'utils'
 
 const AuthContext = React.createContext<
   | {
@@ -16,10 +17,21 @@ const AuthContext = React.createContext<
 AuthContext.displayName = 'AuthContext'
 
 const AuthProvider = ({children}: {children: React.ReactNode}) => {
-  const [user, setUser] = React.useState<User | null>(null)
+  const {
+    data: user,
+    setData: setUser,
+    setError,
+    reset: resetUser,
+    run,
+    error,
+    isLoading,
+    isIdle,
+    isError,
+  } = useAsync<User>()
+
   const login = (form: AuthForm) => auth.login(form).then(setUser)
   const register = (form: AuthForm) => auth.register(form).then(setUser)
-  const logout = () => auth.logout().then(() => setUser(null))
+  const logout = () => auth.logout().then(() => resetUser())
 
   const initializeUser = React.useCallback(async () => {
     let user = null
@@ -32,8 +44,12 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
   }, [])
 
   React.useEffect(() => {
-    initializeUser().then(setUser)
-  }, [initializeUser])
+    run(initializeUser())
+  }, [initializeUser, run])
+
+  if (isIdle || isLoading) {
+    return <p>Loading...</p>
+  }
 
   const value = {user, login, register, logout}
   return <AuthContext.Provider value={value} children={children} />

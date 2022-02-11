@@ -37,6 +37,10 @@ export const useAsync = <Data>(
     })
   }, [])
 
+  const reset = React.useCallback(() => {
+    setState({status: 'idle', data: null, error: null})
+  }, [])
+
   const run = React.useCallback(
     (promise: Promise<Data>) => {
       if (!promise || !promise.then) {
@@ -71,6 +75,7 @@ export const useAsync = <Data>(
     isError: state.status === 'error',
     isSuccess: state.status === 'success',
     run,
+    reset,
     setData,
     setError,
     ...state,
