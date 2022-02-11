@@ -2,7 +2,7 @@ import {factory, primaryKey} from '@mswjs/data'
 import {usersKey, projectsKey} from '../../constants'
 import {username, uuid} from 'minifaker'
 import 'minifaker/dist/esm/locales/en'
-import {storage} from 'mocks'
+import storage from 'mocks/storage'
 import {authenticate} from './methods'
 
 import data from '../initial-data.json'

@@ -1,8 +1,8 @@
 import {rest} from 'msw'
-import db from '../db'
-import storage from '../storage'
+import db from 'mocks/db'
+import storage from 'mocks/storage'
 import {authUrl, apiUrl, usersKey} from '../../constants'
-import {hash, stripUserPassword, validateUserForm} from '../db/utils'
+import {hash, stripUserPassword, validateUserForm} from 'mocks/db/utils'
 
 const localUsers = storage.get(usersKey)
 const userDB = db.__TREK_USERS__

@@ -1,4 +1,4 @@
-import db from '../db'
+import db from 'mocks/db'
 
 export async function authenticate({username, passwordHash}) {
   const user = db.__TREK_USERS__.findFirst({

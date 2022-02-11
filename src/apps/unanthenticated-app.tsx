@@ -1,13 +1,15 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {jsx} from '@emotion/react'
-import styled from '@emotion/styled'
-import {Button, Card, Divider, Form, Input, Typography} from 'antd'
-import {leftSvg, logoSvg, rightSvg} from 'assets'
-import {useAuth} from 'auth'
-import {AuthForm} from 'auth/index.d'
 import * as React from 'react'
 import {useAsync} from 'utils'
+import {useAuth} from 'auth/context'
+import {Button, Card, Divider, Form, Input, Typography} from 'antd'
+import styled from '@emotion/styled'
+import {AuthForm} from 'auth/index.d'
+import logo from 'assets/logo.svg'
+import left from 'assets/left.svg'
+import right from 'assets/right.svg'
 
 export interface UserFormProps {
   title: 'Login' | 'Create Account'
@@ -132,7 +134,7 @@ const ShadowCard = styled(Card)`
   text-align: center;
 `
 const Header = styled.header`
-  background: url(${logoSvg}) no-repeat center;
+  background: url(${logo}) no-repeat center;
   padding: 6.25rem 0;
   background-size: auto 6rem;
   width: 100%;
@@ -147,7 +149,7 @@ const Background = styled.div`
   background-position: left bottom, right bottom;
   background-size: calc(((100vw - 40rem) / 2) - 3.2rem),
     calc(((100vw - 40rem) / 2) - 3.2rem), cover;
-  background-image: url(${leftSvg}), url(${rightSvg});
+  background-image: url(${left}), url(${right});
 `
 
 export const LongButton = styled(Button)`

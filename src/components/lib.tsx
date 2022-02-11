@@ -1,5 +1,5 @@
-import {Spin, Typography} from 'antd'
 import styled from '@emotion/styled'
+import {Spin, Typography} from 'antd'
 
 export const Row = styled.div<{
   gap?: number | boolean

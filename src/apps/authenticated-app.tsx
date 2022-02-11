@@ -1,9 +1,9 @@
+import {ProjectsScreen} from 'screens/projects'
+import {useAuth} from 'auth/context'
 import styled from '@emotion/styled'
 import {Button, Dropdown, Menu} from 'antd'
-import {Logo} from 'assets'
-import {useAuth} from 'auth'
 import {Row} from 'components'
-import {ProjectsScreen} from 'screens/projects'
+import {ReactComponent as Logo} from 'assets/logo.svg'
 
 export const AuthenticatedApp = () => {
   const {user, logout} = useAuth()
