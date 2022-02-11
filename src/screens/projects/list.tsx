@@ -30,12 +30,12 @@ export function ProjectList({projects, users}: ProjectListProps) {
           },
         },
         {
-          title: 'Created At',
+          title: 'Creation Date',
           render(_, project) {
             return (
               <span>
-                {project.createdAt
-                  ? dayjs(project.createdAt).format('YYYY-MM-DD')
+                {project.creationDate
+                  ? dayjs(project.creationDate).format('YYYY-MM-DD')
                   : ''}
               </span>
             )

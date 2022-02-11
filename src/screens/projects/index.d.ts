@@ -4,7 +4,7 @@ interface Project {
   principalId: string
   pin: boolean
   group: string
-  createdAt: number
+  creationDate: number
 }
 
 export interface User {

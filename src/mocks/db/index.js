@@ -19,7 +19,7 @@ const db = factory({
     principalId: uuid.v4,
     name: String,
     group: String,
-    createdAt: Number,
+    creationDate: Number,
   },
 })
 

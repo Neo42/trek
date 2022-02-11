@@ -23,35 +23,35 @@
       "name": "Deliverer",
       "principalId": 1,
       "group": "Delivery",
-      "createdAt": 1604989757139
+      "creationDate": 1604989757139
     },
     {
       "id": 2,
       "name": "Group Buying",
       "principalId": 2,
       "group": "Group Buying",
-      "createdAt": 1604989757139
+      "creationDate": 1604989757139
     },
     {
       "id": 3,
       "name": "Logistic",
       "principalId": 2,
       "group": "Logistic",
-      "createdAt": 1546300800000
+      "creationDate": 1546300800000
     },
     {
       "id": 4,
       "name": "HQ",
       "principalId": 3,
       "group": "HQ",
-      "createdAt": 1604980000011
+      "creationDate": 1604980000011
     },
     {
       "id": 5,
       "name": "Routes",
       "principalId": 4,
       "group": "Delivery",
-      "createdAt": 1546900800000
+      "creationDate": 1546900800000
     }
   ]
 }

@@ -12,7 +12,6 @@ export const AuthenticatedApp = () => {
       <Header spaceBetween={true}>
         <HeaderLeft gap={true}>
           <Logo width="8rem" height="6rem" color="rgb(38,132,255)" />
-          <h2>Logo</h2>
           <h2>Projects</h2>
           <h2>Users</h2>
         </HeaderLeft>
