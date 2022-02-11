@@ -19,7 +19,7 @@ export const useAsync = <Data>(
     customInitialState ?? defaultInitialState,
   )
 
-  const {throwOnError} = {...defaultConfig, ...customConfig}
+  const {throwOnError} = customConfig ?? defaultConfig
 
   const setData = React.useCallback((data: Data) => {
     setState({
@@ -38,7 +38,11 @@ export const useAsync = <Data>(
   }, [])
 
   const reset = React.useCallback(() => {
-    setState({status: 'idle', data: null, error: null})
+    setState({
+      status: 'idle',
+      data: null,
+      error: null,
+    })
   }, [])
 
   const run = React.useCallback(

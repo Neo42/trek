@@ -4,7 +4,7 @@ import {AuthForm} from 'auth/index.d'
 import {User} from 'screens/projects/index.d'
 import {client} from 'utils/api-client'
 import {useAsync} from 'utils'
-import {FullPageFallback, FullPageLoading} from '../components/lib'
+import {FullPageFallback, FullPageLoading} from 'components'
 
 const AuthContext = React.createContext<
   | {
@@ -21,12 +21,10 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const {
     data: user,
     setData: setUser,
-    setError,
     reset: resetUser,
     run,
     error,
     isLoading,
-    isIdle,
     isError,
   } = useAsync<User>()
 
@@ -48,7 +46,7 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
     run(initializeUser())
   }, [initializeUser, run])
 
-  if (isIdle || isLoading) {
+  if (isLoading) {
     return <FullPageLoading />
   }
 

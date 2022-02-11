@@ -2,7 +2,7 @@ import {ProjectsScreen} from 'screens/projects'
 import {useAuth} from 'auth/context'
 import styled from '@emotion/styled'
 import {Button, Dropdown, Menu} from 'antd'
-import {Row} from 'components/lib'
+import {Row} from 'components'
 import {ReactComponent as Logo} from 'assets/logo.svg'
 
 export const AuthenticatedApp = () => {
