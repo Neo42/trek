@@ -36,6 +36,8 @@ export const userHandlers = [
     const user = await getUser(req)
     const token = getToken(req)
     await new Promise((resolve) => setTimeout(resolve, 2000))
+    // test error response
+    // throw new Error('Test error message.')
     return res(ctx.json({user: {...user, name: user.username, token}}))
   }),
 
