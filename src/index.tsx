@@ -5,13 +5,11 @@ import reportWebVitals from './reportWebVitals'
 import {AppProviders} from 'auth'
 import 'antd/dist/antd.less'
 
-if (process.env.NODE_ENV === 'development') {
-  const {server} = require('./mocks')
-  server.start({
-    onUnhandledRequest: 'bypass',
-    quiet: true,
-  })
-}
+const {server} = require('./mocks')
+server.start({
+  onUnhandledRequest: 'bypass',
+  quiet: true,
+})
 
 ReactDOM.render(
   <React.StrictMode>
