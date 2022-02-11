@@ -1,8 +1,12 @@
+/** @jsxImportSource @emotion/react */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {jsx} from '@emotion/react'
 import * as React from 'react'
-import {AuthForm} from 'auth/index.d'
+import {useAsync} from 'utils'
 import {useAuth} from 'auth/context'
-import {Button, Card, Divider, Form, Input} from 'antd'
+import {Button, Card, Divider, Form, Input, Typography} from 'antd'
 import styled from '@emotion/styled'
+import {AuthForm} from 'auth/index.d'
 import logo from 'assets/logo.svg'
 import left from 'assets/left.svg'
 import right from 'assets/right.svg'
@@ -17,13 +21,31 @@ export interface UsernameFormElement extends HTMLFormElement {
 }
 
 export interface UserFormProps {
-  onSubmit: (form: AuthForm) => Promise<void>
   title: 'Login' | 'Create account'
+  onSubmit: (form: AuthForm) => Promise<void>
+  onError: (error: any) => void
 }
 
-function UserForm({onSubmit, title}: UserFormProps) {
-  function handleSubmit(values: {username: string; password: string}) {
-    onSubmit(values)
+function UserForm({onSubmit, title, onError}: UserFormProps) {
+  const {run, isLoading} = useAsync(undefined, {throwOnError: true})
+
+  async function handleSubmit(values: {
+    username: string
+    password: string
+    'confirm-password'?: string
+  }) {
+    if (
+      values['confirm-password'] &&
+      values['confirm-password'] !== values.password
+    ) {
+      onError(new Error(`Passwords didn't match.`))
+      return
+    }
+    try {
+      await run(onSubmit(values))
+    } catch (error) {
+      onError(error)
+    }
   }
 
   return (
@@ -40,8 +62,27 @@ function UserForm({onSubmit, title}: UserFormProps) {
       >
         <Input placeholder="Password" type="password" id="password" />
       </Form.Item>
+      {title === 'Create account' ? (
+        <Form.Item
+          name="confirm-password"
+          rules={[
+            {required: true, message: 'Please enter your password again.'},
+          ]}
+        >
+          <Input
+            placeholder="Confirm Password"
+            type="password"
+            id="confirm-password"
+          />
+        </Form.Item>
+      ) : null}
       <Form.Item>
-        <LongButton htmlType="submit" type="primary" title={title}>
+        <LongButton
+          loading={isLoading}
+          htmlType="submit"
+          type="primary"
+          title={title}
+        >
           {title}
         </LongButton>
       </Form.Item>
@@ -52,12 +93,22 @@ function UserForm({onSubmit, title}: UserFormProps) {
 export function UnauthenticatedApp() {
   const [isRegisterScreen, setIsRegisterScreen] = React.useState(false)
   const {login, register} = useAuth()
+  const [error, setError] = React.useState<Error | null>(null)
+
   return (
     <Container>
       <Header />
       <Background />
       <ShadowCard>
+        <Title>
+          {isRegisterScreen ? 'Login' : 'login'} to continue:
+          <div css={{fontWeight: 'bold'}}>Your team's site</div>
+        </Title>
+        {error ? (
+          <Typography.Text type="danger">{error.message}</Typography.Text>
+        ) : null}
         <UserForm
+          onError={setError}
           onSubmit={isRegisterScreen ? register : login}
           title={isRegisterScreen ? 'Create account' : 'Login'}
         />
@@ -112,4 +163,10 @@ const Background = styled.div`
 
 export const LongButton = styled(Button)`
   width: 100%;
+`
+
+const Title = styled.h2`
+  margin-bottom: 2.4rem;
+  color: rgb(94, 108, 132);
+  font-size: 1.6rem;
 `

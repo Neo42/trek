@@ -1,4 +1,6 @@
-interface Project {
+import {TableProps} from 'antd'
+
+export interface Project {
   id: string
   name: string
   principalId: string
@@ -16,8 +18,7 @@ export interface User {
   token: string
 }
 
-export interface ProjectListProps {
-  projects: Project[]
+export interface ProjectListProps extends TableProps<Project> {
   users: User[]
 }
 

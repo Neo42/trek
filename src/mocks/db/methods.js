@@ -1,6 +1,6 @@
 import db from 'mocks/db'
 
-export function authenticate({username, passwordHash, id}) {
+export async function authenticate({username, passwordHash}) {
   const user = db.__TREK_USERS__.findFirst({
     where: {username: {equals: username}},
   })
@@ -9,5 +9,6 @@ export function authenticate({username, passwordHash, id}) {
   }
   const error = new Error('Invalid username or password.')
   error.status = 400
+  await new Promise((resolve) => setTimeout(resolve, 2000))
   throw error
 }

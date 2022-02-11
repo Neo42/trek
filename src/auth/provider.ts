@@ -37,7 +37,7 @@ async function client(endpoint: string, data: AuthForm) {
     .then(async (response) => {
       const data = await response.json()
       if (response.ok) return data
-      else return Promise.reject(data.message)
+      else return Promise.reject(data)
     })
 }
 

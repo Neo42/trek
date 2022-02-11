@@ -37,6 +37,8 @@ const getRestHandlers = (endpoint, dbKey) => {
         .reduce((result, item) => ({...result, ...item}), {})
 
       const queryResult = targetDB.findMany({where: searchConditions})
+      await new Promise((resolve) => setTimeout(resolve, 300))
+      // throw Error('test error')
       return res(ctx.json(queryResult))
     }),
 

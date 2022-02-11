@@ -1,11 +1,11 @@
 import {Table} from 'antd'
 import dayjs from 'dayjs'
-import * as React from 'react'
 import {ProjectListProps} from './index.d'
 
-export function ProjectList({projects, users}: ProjectListProps) {
+export function ProjectList({users, ...restProps}: ProjectListProps) {
   return (
     <Table
+      loading
       pagination={false}
       rowKey={(project) => project.id}
       columns={[
@@ -42,7 +42,7 @@ export function ProjectList({projects, users}: ProjectListProps) {
           },
         },
       ]}
-      dataSource={projects}
-    ></Table>
+      {...restProps}
+    />
   )
 }
