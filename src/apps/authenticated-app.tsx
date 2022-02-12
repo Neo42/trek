@@ -1,46 +1,22 @@
-import {ProjectsScreen} from 'screens/projects'
-import {useAuth} from 'auth/context'
-import styled from '@emotion/styled'
 import {Button, Dropdown, Menu} from 'antd'
+import styled from '@emotion/styled'
+import {Navigate, Route, Routes, useNavigate} from 'react-router-dom'
+import {ProjectsScreen} from 'screens/projects'
+import {ProjectScreen} from 'screens/project'
+import {useAuth} from 'auth/context'
 import {Row} from 'components'
 import {ReactComponent as Logo} from 'assets/logo.svg'
 
 export const AuthenticatedApp = () => {
-  const {user, logout} = useAuth()
-
   return (
     <Container>
-      <Header spaceBetween={true}>
-        <HeaderLeft gap={true}>
-          <Logo width="8rem" height="6rem" color="rgb(38,132,255)" />
-          <h2>Projects</h2>
-          <h2>Users</h2>
-        </HeaderLeft>
-        <HeaderRight>
-          <Dropdown
-            overlay={
-              <Menu>
-                <Menu.Item key="logout">
-                  <Button type="link" onClick={logout}>
-                    Logout
-                  </Button>
-                </Menu.Item>
-              </Menu>
-            }
-          >
-            <Button
-              type="link"
-              onClick={(e) => {
-                e.preventDefault()
-              }}
-            >
-              Hi, {user?.name}
-            </Button>
-          </Dropdown>
-        </HeaderRight>
-      </Header>
+      <PageHeader />
       <Main>
-        <ProjectsScreen />
+        <Routes>
+          <Route path="projects" element={<ProjectsScreen />} />
+          <Route path="projects/:projectId/*" element={<ProjectScreen />} />
+          <Route path="*" element={<Navigate replace to={`projects`} />} />
+        </Routes>
       </Main>
     </Container>
   )
@@ -50,6 +26,49 @@ const Container = styled.div`
   grid-template-rows: 6rem 1fr 6rem;
   height: 100vh;
 `
+
+const PageHeader = () => {
+  const {user, logout} = useAuth()
+  const navigate = useNavigate()
+
+  return (
+    <Header spaceBetween={true}>
+      <HeaderLeft gap={true}>
+        <Button
+          style={{display: 'flex', placeItems: 'center'}}
+          type="link"
+          onClick={() => navigate('/')}
+        >
+          <Logo height="5rem" width="5rem" />
+        </Button>
+        <h2>Projects</h2>
+        <h2>Users</h2>
+      </HeaderLeft>
+      <HeaderRight>
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key="logout">
+                <Button type="link" onClick={logout}>
+                  Logout
+                </Button>
+              </Menu.Item>
+            </Menu>
+          }
+        >
+          <Button
+            type="link"
+            onClick={(e) => {
+              e.preventDefault()
+            }}
+          >
+            Hi, {user?.name}
+          </Button>
+        </Dropdown>
+      </HeaderRight>
+    </Header>
+  )
+}
 
 const Header = styled(Row)`
   padding: 3.2rem;

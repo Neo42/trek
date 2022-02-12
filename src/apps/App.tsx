@@ -1,8 +1,8 @@
 import {AuthenticatedApp} from 'apps/authenticated-app'
 import {UnauthenticatedApp} from 'apps/unauthenticated-app'
+import {ErrorBoundary, FullPageFallback} from 'components'
 import {useAuth} from 'auth/context'
 import './App.css'
-import {ErrorBoundary, FullPageFallback} from 'components'
 
 function App() {
   const {user} = useAuth()

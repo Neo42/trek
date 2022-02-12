@@ -100,7 +100,7 @@ export function UnauthenticatedApp() {
       <Background />
       <ShadowCard>
         <Title>
-          {isRegisterScreen ? 'Login' : 'login'} to continue:
+          {isRegisterScreen ? 'Register' : 'Login'} to continue:
           <div css={{fontWeight: 'bold'}}>Your team's site</div>
         </Title>
         {error ? (

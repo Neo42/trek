@@ -1,5 +1,6 @@
 import {Table} from 'antd'
 import dayjs from 'dayjs'
+import {Link} from 'react-router-dom'
 import {ProjectListProps} from './index.d'
 
 export function ProjectList({users, ...restProps}: ProjectListProps) {
@@ -11,7 +12,9 @@ export function ProjectList({users, ...restProps}: ProjectListProps) {
       columns={[
         {
           title: 'Name',
-          dataIndex: 'name',
+          render(_, project) {
+            return <Link to={String(project.id)}>{project.name}</Link>
+          },
           sorter: (a, b) => a.name.localeCompare(b.name),
         },
         {

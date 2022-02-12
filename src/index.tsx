@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import {BrowserRouter} from 'react-router-dom'
 import App from 'apps/App'
-import {AppProviders} from 'auth'
+import {AppProvider} from 'auth'
 import {HelmetProvider} from 'react-helmet-async'
 import reportWebVitals from './reportWebVitals'
 import 'antd/dist/antd.less'
@@ -15,9 +16,11 @@ server.start({
 ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
-      <AppProviders>
-        <App />
-      </AppProviders>
+      <BrowserRouter>
+        <AppProvider>
+          <App />
+        </AppProvider>
+      </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root'),

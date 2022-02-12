@@ -7,7 +7,7 @@ export class ErrorBoundary extends React.Component<
 > {
   state: Readonly<ErrorBoundaryState> = {error: null}
 
-  // set the error state right after error is thrown
+  // set the error state right after an error is thrown
   static getDerivedStateFromError(error: Error) {
     return {error}
   }
