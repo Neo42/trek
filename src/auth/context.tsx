@@ -2,8 +2,7 @@ import * as auth from './provider'
 import * as React from 'react'
 import {AuthForm} from 'auth/index.d'
 import {User} from 'screens/projects/index.d'
-import {client} from 'utils/api-client'
-import {useAsync} from 'utils'
+import {client, useAsync} from 'utils'
 import {FullPageFallback, FullPageLoading} from 'components'
 
 const AuthContext = React.createContext<

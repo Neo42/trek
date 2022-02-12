@@ -7,6 +7,7 @@ import {ReactComponent as Logo} from 'assets/logo.svg'
 
 export const AuthenticatedApp = () => {
   const {user, logout} = useAuth()
+
   return (
     <Container>
       <Header spaceBetween={true}>

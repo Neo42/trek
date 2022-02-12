@@ -1,5 +1,5 @@
 import {rest} from 'msw'
-import {getUser} from './user'
+// import {getUser} from './user'
 import {apiUrl, projectsKey, usersKey} from '../../constants'
 import db from 'mocks/db'
 
@@ -20,7 +20,7 @@ const getRestHandlers = (endpoint, dbKey) => {
   return [
     rest.get(`${apiUrl}/${endpoint}`, async (req, res, ctx) => {
       // TODO: match list with user id
-      const {id} = await getUser(req)
+      // const {id} = await getUser(req)
       const params = req.url.searchParams
 
       let searchConditions = []

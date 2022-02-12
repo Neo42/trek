@@ -3,9 +3,11 @@ import {ProjectList} from './list'
 import {ProjectSearch} from './search'
 import styled from '@emotion/styled'
 import {Typography} from 'antd'
-import {useProjects, useDebouncedSetState, useUsers} from 'utils'
+import {useDebouncedSetState, useHeadTitle, useProjects, useUsers} from 'utils'
+import {Helmet} from 'react-helmet-async'
 
 export function ProjectsScreen() {
+  useHeadTitle('Project List | Trek')
   const [params, setParams] = React.useState(() => ({
     name: '',
     principalId: '',
@@ -16,6 +18,9 @@ export function ProjectsScreen() {
 
   return (
     <Container>
+      <Helmet>
+        <title>Project List</title>
+      </Helmet>
       <h1>Project List</h1>
       {error ? (
         <Typography.Text type="danger">{error.message}</Typography.Text>

@@ -1,7 +1,7 @@
 import * as auth from 'auth/provider'
 import * as qs from 'qs'
 import * as React from 'react'
-import {apiUrl, GET} from '../constants'
+import {apiUrl, GET} from '../../constants'
 import {useAuth} from 'auth/context'
 
 interface Config extends RequestInit {

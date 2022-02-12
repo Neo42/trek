@@ -1,15 +1,19 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {jsx} from '@emotion/react'
-import * as React from 'react'
-import {useAsync} from 'utils'
-import {useAuth} from 'auth/context'
-import {Button, Card, Divider, Form, Input, Typography} from 'antd'
 import styled from '@emotion/styled'
-import {AuthForm} from 'auth/index.d'
-import logo from 'assets/logo.svg'
+import {Button, Card, Divider, Form, Input, Typography} from 'antd'
 import left from 'assets/left.svg'
+import logo from 'assets/logo.svg'
 import right from 'assets/right.svg'
+import {useAuth} from 'auth/context'
+import {AuthForm} from 'auth/index.d'
+import * as React from 'react'
+import {Helmet} from 'react-helmet-async'
+import {
+  useAsync,
+  // useHeadTitle
+} from 'utils'
 
 export interface UserFormProps {
   title: 'Login' | 'Create Account'
@@ -83,11 +87,15 @@ function UserForm({onSubmit, title, onError}: UserFormProps) {
 
 export function UnauthenticatedApp() {
   const [isRegisterScreen, setIsRegisterScreen] = React.useState(false)
+  // useHeadTitle(`Please ${isRegisterScreen ? 'Login' : 'Register'} to Continue`)
   const {login, register} = useAuth()
   const [error, setError] = React.useState<Error | null>(null)
 
   return (
     <Container>
+      <Helmet>
+        <title>{isRegisterScreen ? 'Create Account' : 'Login'} | Trek</title>
+      </Helmet>
       <Header />
       <Background />
       <ShadowCard>

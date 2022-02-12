@@ -1,8 +1,9 @@
-import App from 'apps/App'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import reportWebVitals from './reportWebVitals'
+import App from 'apps/App'
 import {AppProviders} from 'auth'
+import {HelmetProvider} from 'react-helmet-async'
+import reportWebVitals from './reportWebVitals'
 import 'antd/dist/antd.less'
 
 const {server} = require('./mocks')
@@ -13,9 +14,11 @@ server.start({
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppProviders>
-      <App />
-    </AppProviders>
+    <HelmetProvider>
+      <AppProviders>
+        <App />
+      </AppProviders>
+    </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 )
