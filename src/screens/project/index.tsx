@@ -1,9 +1,8 @@
-import {Link, Route, Routes, Navigate, useParams} from 'react-router-dom'
+import {Link, Route, Routes, Navigate} from 'react-router-dom'
 import {KanbanScreen} from '../kanban'
 import {TasksScreen} from '../tasks'
 
 export const ProjectScreen = () => {
-  const {projectId} = useParams()
   return (
     <div>
       <h1>Project</h1>

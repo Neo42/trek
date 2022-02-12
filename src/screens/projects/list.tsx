@@ -24,12 +24,8 @@ export function ProjectList({users, ...restProps}: ProjectListProps) {
         {
           title: 'Principal',
           render(_, project) {
-            return (
-              <span>
-                {users.find((user) => user.id === project.principalId)?.name ??
-                  'Unknown'}
-              </span>
-            )
+            const user = users.find((user) => user.id === project.principalId)
+            return <span>{user?.name ?? 'Unknown'}</span>
           },
         },
         {

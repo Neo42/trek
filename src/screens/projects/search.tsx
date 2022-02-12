@@ -2,7 +2,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {jsx} from '@emotion/react'
 import {Form, Input, Select} from 'antd'
-import * as React from 'react'
 import {ProjectSearchProps} from './index.d'
 
 export function ProjectSearch({
@@ -28,6 +27,7 @@ export function ProjectSearch({
       </Form.Item>
       <Form.Item>
         <Select
+          placeholder="Principal"
           value={principalId}
           onChange={(value) =>
             setParams({
@@ -36,9 +36,9 @@ export function ProjectSearch({
             })
           }
         >
-          <Select.Option value={''}>Principal</Select.Option>
+          <Select.Option value={''}>All</Select.Option>
           {users.map((user) => (
-            <Select.Option key={user.id} value={user.id}>
+            <Select.Option key={user.id} value={String(user.id)}>
               {user.name}
             </Select.Option>
           ))}

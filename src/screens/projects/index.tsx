@@ -7,17 +7,19 @@ import {
   useDebouncedSetState,
   // useHeadTitle
   useProjects,
+  useQueryParams,
   useUsers,
 } from 'utils'
 import {Helmet} from 'react-helmet-async'
 
 export function ProjectsScreen() {
   // useHeadTitle('Project List | Trek')
-  const [params, setParams] = React.useState(() => ({
-    name: '',
-    principalId: '',
-  }))
-  const debouncedParams = useDebouncedSetState(params, 250)
+  const keys = React.useMemo<['name', 'principalId']>(
+    () => ['name', 'principalId'],
+    [],
+  )
+  const [queryParams, setQueryParams] = useQueryParams(keys)
+  const debouncedParams = useDebouncedSetState(queryParams, 250)
   const {data: projects, error, isLoading} = useProjects(debouncedParams)
   const {data: users} = useUsers()
 
@@ -31,8 +33,8 @@ export function ProjectsScreen() {
         <Typography.Text type="danger">{error.message}</Typography.Text>
       ) : null}
       <ProjectSearch
-        params={params}
-        setParams={setParams}
+        params={queryParams}
+        setParams={setQueryParams}
         users={users ?? []}
       />
       <ProjectList
@@ -43,6 +45,8 @@ export function ProjectsScreen() {
     </Container>
   )
 }
+
+// ProjectsScreen.whyDidYouRender = true
 
 const Container = styled.div`
   padding: 3.2rem;
