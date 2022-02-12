@@ -1,6 +1,8 @@
 import * as React from 'react'
 import {AsyncState} from '../index.d'
 
+//TODO - fix unmounted state change with useRef & useLayoutEffect
+
 const defaultInitialState: AsyncState<null> = {
   status: 'idle',
   data: null,

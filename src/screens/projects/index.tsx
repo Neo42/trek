@@ -3,11 +3,16 @@ import {ProjectList} from './list'
 import {ProjectSearch} from './search'
 import styled from '@emotion/styled'
 import {Typography} from 'antd'
-import {useDebouncedSetState, useHeadTitle, useProjects, useUsers} from 'utils'
+import {
+  useDebouncedSetState,
+  // useHeadTitle
+  useProjects,
+  useUsers,
+} from 'utils'
 import {Helmet} from 'react-helmet-async'
 
 export function ProjectsScreen() {
-  useHeadTitle('Project List | Trek')
+  // useHeadTitle('Project List | Trek')
   const [params, setParams] = React.useState(() => ({
     name: '',
     principalId: '',
