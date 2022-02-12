@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {jsx} from '@emotion/react'
-import {Form, Input, Select} from 'antd'
+import {Form, Input} from 'antd'
+import {UserSelect} from 'components'
 import {ProjectSearchProps} from './index.d'
 
 export function ProjectSearch({
@@ -26,23 +27,17 @@ export function ProjectSearch({
         />
       </Form.Item>
       <Form.Item>
-        <Select
+        <UserSelect
           placeholder="Principal"
           value={principalId}
-          onChange={(value) =>
+          onChange={(value) => {
             setParams({
               name,
-              principalId: value,
+              principalId: value || undefined,
             })
-          }
-        >
-          <Select.Option value={''}>All</Select.Option>
-          {users.map((user) => (
-            <Select.Option key={user.id} value={String(user.id)}>
-              {user.name}
-            </Select.Option>
-          ))}
-        </Select>
+          }}
+          defaultOptionName="Principal"
+        />
       </Form.Item>
     </Form>
   )

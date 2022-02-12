@@ -11,7 +11,9 @@ export const useQueryParams = <Key extends string>(keys: Key[]) => {
           ...result,
           [key]: searchParams.get(key),
         }),
-        {} as {[key in Key]: string},
+        {} as {
+          [key in Key]: string
+        },
       ),
     [keys, searchParams],
   )
