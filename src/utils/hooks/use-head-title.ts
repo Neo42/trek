@@ -1,7 +1,8 @@
 import * as React from 'react'
 
 export const useHeadTitle = (title: string, keepOnUnmount = true) => {
-  const prevTitle = document.title
+  const titleRef = React.useRef(title)
+  const prevTitle = titleRef.current
 
   React.useLayoutEffect(() => {
     document.title = title
