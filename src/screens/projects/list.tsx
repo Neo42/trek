@@ -3,11 +3,14 @@ import dayjs from 'dayjs'
 import {Link} from 'react-router-dom'
 import {Pin} from 'components'
 import {ProjectListProps} from './index.d'
-import {useCreateListItem, useUpdateListItem} from 'utils'
+import {useUpdateListItem} from 'utils'
 
 export function ProjectList({users, ...restProps}: ProjectListProps) {
   const {update} = useUpdateListItem()
-  const {create} = useCreateListItem()
+
+  const pinProject = (id: number) => (pinned: boolean) => {
+    update({id, pinned})
+  }
 
   return (
     <Table
@@ -19,12 +22,7 @@ export function ProjectList({users, ...restProps}: ProjectListProps) {
           title: <Pin checked disabled />,
           render(_, project) {
             return (
-              <Pin
-                checked={project.pinned}
-                onChange={(pinned) => {
-                  update({id: project.id, pinned})
-                }}
-              />
+              <Pin checked={project.pinned} onChange={pinProject(project.id)} />
             )
           },
         },
