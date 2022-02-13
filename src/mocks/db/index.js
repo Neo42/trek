@@ -1,10 +1,9 @@
 import {factory, primaryKey} from '@mswjs/data'
-import {usersKey, projectsKey} from '../../constants'
 import {username, uuid} from 'minifaker'
 import 'minifaker/dist/esm/locales/en'
+import {usersKey, projectsKey} from '../../constants'
 import storage from '../storage'
 import {authenticate} from './methods'
-
 import data from '../initial-data.json'
 
 const db = factory({
@@ -20,6 +19,7 @@ const db = factory({
     name: String,
     group: String,
     creationDate: Number,
+    pinned: Boolean,
   },
 })
 
@@ -43,20 +43,15 @@ function loadData(dbKey) {
   const dbList = db[dbKey]
 
   dataList.forEach((item) => {
-    if (dbList.findFirst({where: {id: {equals: item.id}}})) return
-    dbList.create(item)
+    storageList.update((prevItems) => {
+      const hasItem = prevItems.filter(({id}) => id === item.id).length
+      return hasItem ? prevItems : [...prevItems, item]
+    })
   })
 
   storageList.getValue().forEach((item) => {
     if (dbList.findFirst({where: {id: {equals: item.id}}})) return
     dbList.create(item)
-  })
-
-  dataList.forEach((item) => {
-    storageList.update((prevItems) => {
-      const hasItem = prevItems.filter(({id}) => id === item.id).length
-      return hasItem ? prevItems : [...prevItems, item]
-    })
   })
 }
 

@@ -2,6 +2,7 @@ import {rest} from 'msw'
 // import {getUser} from './user'
 import {apiUrl, projectsKey, usersKey} from '../../constants'
 import db from 'mocks/db'
+import storage from 'mocks/storage'
 
 const tryToNumber = (value) =>
   Array.isArray(value) ? value.map(Number) : Number(value)
@@ -17,6 +18,7 @@ const convertIds = (object) => {
 
 const getRestHandlers = (endpoint, dbKey) => {
   const targetDB = db[dbKey]
+  const targetStorage = storage.get(dbKey)
   return [
     rest.get(`${apiUrl}/${endpoint}`, async (req, res, ctx) => {
       // TODO: match list with user id
@@ -49,9 +51,16 @@ const getRestHandlers = (endpoint, dbKey) => {
     }),
 
     rest.patch(`${apiUrl}/${endpoint}/:id`, async (req, res, ctx) => {
-      const {id} = convertIds(req.params)
-      const updates = req.body
-      const updatedItem = targetDB.update(id, updates)
+      const {id} = req.params
+      const data = req.body
+      targetDB.update({
+        where: {id: {equals: parseInt(id)}},
+        data,
+      })
+      targetStorage.update(() => targetDB.getAll())
+      const updatedItem = targetDB.findFirst({
+        where: {id: {equals: parseInt(id)}},
+      })
       return res(ctx.json(updatedItem))
     }),
 

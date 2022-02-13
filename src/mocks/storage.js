@@ -4,10 +4,7 @@ import {usersKey, userTokenKey, projectsKey} from '../constants'
 function storageFactory(...keys) {
   const storage = new Map()
   keys.forEach((key) =>
-    storage.set(
-      `${key}`,
-      new LiveStorage(`${key}`, key === userTokenKey ? '' : []),
-    ),
+    storage.set(key, new LiveStorage(`${key}`, key === userTokenKey ? '' : [])),
   )
   return storage
 }
