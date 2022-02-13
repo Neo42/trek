@@ -4,7 +4,7 @@ import 'minifaker/dist/esm/locales/en'
 import {usersKey, projectsKey} from '../../constants'
 import storage from '../storage'
 import {authenticate} from './methods'
-import data from '../initial-data.json'
+import store from '../initial-data.json'
 
 const db = factory({
   [usersKey]: {
@@ -37,26 +37,31 @@ window.showDB = (dbKey) => {
   console.log({[dbKey]: db[dbKey].getAll()})
 }
 
-function loadData(dbKey) {
-  const storageList = storage.get(dbKey)
-  const dataList = data[dbKey]
-  const dbList = db[dbKey]
+function loadData(...dbKeys) {
+  dbKeys.forEach((dbKey) => {
+    const storageDataSet = storage.get(dbKey)
+    const localDataStore = store[dbKey]
+    const dbDataSet = db[dbKey]
 
-  dataList.forEach((item) => {
-    storageList.update((prevItems) => {
-      const hasItem = prevItems.filter(({id}) => id === item.id).length
-      return hasItem ? prevItems : [...prevItems, item]
+    localDataStore.forEach((localData) => {
+      storageDataSet.update((storageDataSet) => {
+        const hasDataInStorage = storageDataSet.filter(
+          (storageData) => storageData.id === localData.id,
+        ).length
+        const newStorageDateSet = [...storageDataSet, localData]
+        return hasDataInStorage ? storageDataSet : newStorageDateSet
+      })
     })
-  })
 
-  storageList.getValue().forEach((item) => {
-    if (dbList.findFirst({where: {id: {equals: item.id}}})) return
-    dbList.create(item)
+    storageDataSet.getValue().forEach((data) => {
+      if (dbDataSet.findFirst({where: {id: {equals: data.id}}})) return
+      dbDataSet.create(data)
+    })
   })
 }
 
 try {
-  ;[usersKey, projectsKey].forEach(loadData)
+  loadData(usersKey, projectsKey)
 } catch (error) {
   throw error
 }
