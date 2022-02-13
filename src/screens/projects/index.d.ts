@@ -4,9 +4,9 @@ export interface Project {
   id: number
   name: string
   principalId: number | undefined
-  pin: boolean
   group: string
   creationDate: number
+  pinned: boolean
 }
 
 export interface User {

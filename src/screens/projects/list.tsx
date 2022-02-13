@@ -1,15 +1,33 @@
 import {Table} from 'antd'
 import dayjs from 'dayjs'
 import {Link} from 'react-router-dom'
+import {Pin} from 'components'
 import {ProjectListProps} from './index.d'
+import {useCreateListItem, useUpdateListItem} from 'utils'
 
 export function ProjectList({users, ...restProps}: ProjectListProps) {
+  const {update} = useUpdateListItem()
+  const {create} = useCreateListItem()
+
   return (
     <Table
       loading
       pagination={false}
       rowKey={(project) => project.id}
       columns={[
+        {
+          title: <Pin checked disabled />,
+          render(_, project) {
+            return (
+              <Pin
+                checked={project.pinned}
+                onChange={(pinned) => {
+                  update({id: project.id, pinned})
+                }}
+              />
+            )
+          },
+        },
         {
           title: 'Name',
           render(_, project) {
