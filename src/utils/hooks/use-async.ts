@@ -1,8 +1,6 @@
 import * as React from 'react'
 import {AsyncState} from '../index.d'
 
-//TODO - fix unmounted state change with useRef & useLayoutEffect
-
 const defaultInitialState: AsyncState<null> = {
   status: 'idle',
   data: null,
@@ -13,39 +11,65 @@ const defaultConfig = {
   throwOnError: false,
 }
 
+function useSafeDispatch<Type>(dispatch: React.Dispatch<AsyncState<Type>>) {
+  const mounted = React.useRef(false)
+  React.useLayoutEffect(() => {
+    mounted.current = true
+    return () => void (mounted.current = false)
+  }, [])
+  return React.useCallback(
+    (...args: [AsyncState<Type>]) =>
+      mounted.current ? dispatch(...args) : void 0,
+    [dispatch],
+  )
+}
+
 export const useAsync = <Data>(
   customInitialState?: AsyncState<Data>,
   customConfig?: typeof defaultConfig,
 ) => {
-  const [state, setState] = React.useState<AsyncState<Data>>(
-    customInitialState ?? defaultInitialState,
-  )
+  const initialStateRef = React.useRef({
+    ...defaultInitialState,
+    ...customInitialState,
+  })
+
+  const [state, setState] = React.useReducer<
+    (s: AsyncState<Data>, a: AsyncState<Data>) => AsyncState<Data>
+  >((s, a) => ({...s, ...a}), initialStateRef.current)
+
+  const safeSetState = useSafeDispatch(setState)
 
   const {throwOnError} = customConfig ?? defaultConfig
 
-  const setData = React.useCallback((data: Data) => {
-    setState({
-      status: 'success',
-      data,
-      error: null,
-    })
-  }, [])
+  const setData = React.useCallback(
+    (data: Data) => {
+      safeSetState({
+        status: 'success',
+        data,
+        error: null,
+      })
+    },
+    [safeSetState],
+  )
 
-  const setError = React.useCallback((error: Error) => {
-    setState({
-      status: 'error',
-      data: null,
-      error,
-    })
-  }, [])
+  const setError = React.useCallback(
+    (error: Error) => {
+      safeSetState({
+        status: 'error',
+        data: null,
+        error,
+      })
+    },
+    [safeSetState],
+  )
 
   const reset = React.useCallback(() => {
-    setState({
+    safeSetState({
       status: 'idle',
       data: null,
       error: null,
     })
-  }, [])
+  }, [safeSetState])
 
   const run = React.useCallback(
     (promise: Promise<Data>) => {
@@ -53,7 +77,7 @@ export const useAsync = <Data>(
         throw new Error('A promise must be provided to use the `useAsync.run`.')
       }
 
-      setState({
+      safeSetState({
         status: 'loading',
         data: null,
         error: null,
@@ -72,7 +96,7 @@ export const useAsync = <Data>(
           return error
         })
     },
-    [setData, setError, throwOnError],
+    [safeSetState, setData, setError, throwOnError],
   )
 
   return {
