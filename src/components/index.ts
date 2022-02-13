@@ -1,3 +1,4 @@
 export {ErrorBoundary} from './error-boundary'
-export {Row, FullPageLoading, FullPageFallback} from './lib'
+export {FullPageFallback, FullPageLoading, Row} from './lib'
+export {Pin} from './pin'
 export {UserSelect} from './user-select'

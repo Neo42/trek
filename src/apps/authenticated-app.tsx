@@ -32,8 +32,8 @@ const PageHeader = () => {
   const navigate = useNavigate()
 
   return (
-    <Header spaceBetween={true}>
-      <HeaderLeft gap={true}>
+    <Header spaceBetween>
+      <HeaderLeft gap>
         <Button
           style={{display: 'flex', placeItems: 'center'}}
           type="link"

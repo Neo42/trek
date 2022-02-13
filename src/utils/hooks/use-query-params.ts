@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {URLSearchParamsInit, useSearchParams} from 'react-router-dom'
-import {sanitizeObject} from '../sanitize-object'
+import {sanitizeObject} from '../misc'
 
 export const useQueryParams = <Key extends string>(keys: Key[]) => {
   const [searchParams, setSearchParams] = useSearchParams()
