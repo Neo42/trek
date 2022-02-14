@@ -33,10 +33,7 @@ export const useAsync = <Data>(
     ...customInitialState,
   })
 
-  const [state, setState] = React.useReducer<
-    (s: AsyncState<Data>, a: AsyncState<Data>) => AsyncState<Data>
-  >((s, a) => ({...s, ...a}), initialStateRef.current)
-
+  const [state, setState] = React.useState(initialStateRef.current)
   const safeSetState = useSafeDispatch(setState)
 
   const {throwOnError} = customConfig ?? defaultConfig
