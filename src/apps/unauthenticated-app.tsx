@@ -3,22 +3,21 @@
 import {jsx} from '@emotion/react'
 import styled from '@emotion/styled'
 import {Button, Card, Divider, Form, Input, Typography} from 'antd'
-import * as React from 'react'
-import {Helmet} from 'react-helmet-async'
 import left from 'assets/left.svg'
 import logo from 'assets/logo.svg'
 import right from 'assets/right.svg'
 import {useAuth} from 'auth/context'
 import {AuthForm} from 'auth/index.d'
+import * as React from 'react'
+import {Helmet} from 'react-helmet-async'
 import {
   useAsync,
   // useHeadTitle
 } from 'utils'
-import {User} from 'screens/projects/index.d'
 
 export interface UserFormProps {
   title: 'Login' | 'Create Account'
-  onSubmit: (form: AuthForm) => Promise<User>
+  onSubmit: (form: AuthForm) => Promise<void>
   onError: (error: any) => void
 }
 

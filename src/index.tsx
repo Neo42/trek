@@ -1,14 +1,13 @@
 import './wdyr'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Provider as ReduxProvider} from 'react-redux'
 import {BrowserRouter} from 'react-router-dom'
-import {HelmetProvider} from 'react-helmet-async'
 import App from 'apps/App'
 import {AppProvider} from 'auth'
+import {HelmetProvider} from 'react-helmet-async'
 import reportWebVitals from './reportWebVitals'
 import 'antd/dist/antd.less'
-import {store} from 'store'
+
 const {server} = require('./mocks')
 server.start({
   onUnhandledRequest: 'bypass',
@@ -19,11 +18,9 @@ ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <ReduxProvider store={store}>
-          <AppProvider>
-            <App />
-          </AppProvider>
-        </ReduxProvider>
+        <AppProvider>
+          <App />
+        </AppProvider>
       </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>,
