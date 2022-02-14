@@ -1,7 +1,7 @@
-import {Table} from 'antd'
+import {Dropdown, Menu, Table} from 'antd'
 import dayjs from 'dayjs'
 import {Link} from 'react-router-dom'
-import {Pin} from 'components'
+import {ModalOpenButton, NoPaddingButton, Pin} from 'components'
 import {ProjectListProps} from './index.d'
 import {useUpdateListItem} from 'utils'
 
@@ -53,6 +53,25 @@ export function ProjectList({users, ...restProps}: ProjectListProps) {
                   ? dayjs(project.creationDate).format('YYYY-MM-DD')
                   : ''}
               </span>
+            )
+          },
+        },
+        {
+          render(_, project) {
+            return (
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item key="edit">
+                      <ModalOpenButton>
+                        <NoPaddingButton type="link">Edit</NoPaddingButton>
+                      </ModalOpenButton>
+                    </Menu.Item>
+                  </Menu>
+                }
+              >
+                <NoPaddingButton type="link">...</NoPaddingButton>
+              </Dropdown>
             )
           },
         },

@@ -1,23 +1,27 @@
-import {Button, Dropdown, Menu} from 'antd'
+import {Dropdown, Menu} from 'antd'
 import styled from '@emotion/styled'
 import {Navigate, Route, Routes, useNavigate} from 'react-router-dom'
 import {ProjectsScreen} from 'screens/projects'
 import {ProjectScreen} from 'screens/project'
 import {useAuth} from 'auth/context'
-import {Row} from 'components'
+import {Modal, ModalProvider, NoPaddingButton, Popover, Row} from 'components'
 import {ReactComponent as Logo} from 'assets/logo.svg'
+import {useProjects} from 'utils'
 
 export const AuthenticatedApp = () => {
   return (
     <Container>
-      <PageHeader />
-      <Main>
-        <Routes>
-          <Route path="projects" element={<ProjectsScreen />} />
-          <Route path="projects/:projectId/*" element={<ProjectScreen />} />
-          <Route path="*" element={<Navigate replace to={`projects`} />} />
-        </Routes>
-      </Main>
+      <ModalProvider>
+        <PageHeader />
+        <Main>
+          <Routes>
+            <Route path="projects" element={<ProjectsScreen />} />
+            <Route path="projects/:projectId/*" element={<ProjectScreen />} />
+            <Route path="*" element={<Navigate replace to="projects" />} />
+          </Routes>
+        </Main>
+        <Modal title="Project Modal" />
+      </ModalProvider>
     </Container>
   )
 }
@@ -30,40 +34,46 @@ const Container = styled.div`
 const PageHeader = () => {
   const {user, logout} = useAuth()
   const navigate = useNavigate()
+  const {data: projects} = useProjects()
 
   return (
     <Header spaceBetween>
       <HeaderLeft gap>
-        <Button
-          style={{display: 'flex', placeItems: 'center'}}
+        <NoPaddingButton
           type="link"
+          style={{display: 'flex', placeItems: 'center'}}
           onClick={() => navigate('/')}
         >
           <Logo height="5rem" width="5rem" />
-        </Button>
-        <h2>Projects</h2>
-        <h2>Users</h2>
+        </NoPaddingButton>
+        <Popover
+          title="Projects"
+          contentTitle="Pinned Projects"
+          buttonText="Create Project"
+          items={projects?.filter((project) => project.pinned)}
+        />
+        <span>Users</span>
       </HeaderLeft>
       <HeaderRight>
         <Dropdown
           overlay={
             <Menu>
               <Menu.Item key="logout">
-                <Button type="link" onClick={logout}>
+                <NoPaddingButton type="link" onClick={logout}>
                   Logout
-                </Button>
+                </NoPaddingButton>
               </Menu.Item>
             </Menu>
           }
         >
-          <Button
+          <NoPaddingButton
             type="link"
             onClick={(e) => {
               e.preventDefault()
             }}
           >
             Hi, {user?.name}
-          </Button>
+          </NoPaddingButton>
         </Dropdown>
       </HeaderRight>
     </Header>

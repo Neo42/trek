@@ -1,4 +1,6 @@
+export * from './lib'
+export * from './modal'
 export {ErrorBoundary} from './error-boundary'
-export {FullPageFallback, FullPageLoading, Row} from './lib'
 export {Pin} from './pin'
 export {UserSelect} from './user-select'
+export {Popover} from './popover'

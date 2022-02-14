@@ -1,8 +1,9 @@
-import * as React from 'react'
+import styled from '@emotion/styled'
+import {Button, Typography} from 'antd'
+import {Helmet} from 'react-helmet-async'
 import {ProjectList} from './list'
 import {ProjectSearch} from './search'
-import styled from '@emotion/styled'
-import {Typography} from 'antd'
+import {ModalOpenButton, Row} from 'components'
 import {
   useDebouncedSetState,
   // useHeadTitle
@@ -10,7 +11,6 @@ import {
   useProjectSearchParams,
   useUsers,
 } from 'utils'
-import {Helmet} from 'react-helmet-async'
 
 export function ProjectsScreen() {
   // useHeadTitle('Project List | Trek')
@@ -22,9 +22,14 @@ export function ProjectsScreen() {
   return (
     <Container>
       <Helmet>
-        <title>Project List</title>
+        <title>Project List | Trek</title>
       </Helmet>
-      <h1>Project List</h1>
+      <Row spaceBetween>
+        <h1>Project List</h1>
+        <ModalOpenButton>
+          <Button>Create Project</Button>
+        </ModalOpenButton>
+      </Row>
       {error ? (
         <Typography.Text type="danger">{error.message}</Typography.Text>
       ) : null}
