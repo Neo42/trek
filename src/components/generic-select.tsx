@@ -14,7 +14,7 @@ export const GenericSelect = ({
       placeholder={placeholder}
       value={options?.length ? getValue(value) : 0}
       onChange={(value: GenericSelectProps['value']) =>
-        onChange(getValue(value))
+        onChange?.(getValue(value))
       }
       {...props}
     >

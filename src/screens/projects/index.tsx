@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
-import {Button, Typography} from 'antd'
+import {Button} from 'antd'
 import {Helmet} from 'react-helmet-async'
 import {ProjectList} from './list'
 import {ProjectSearch} from './search'
-import {ModalOpenButton, Row} from 'components'
+import {ErrorMessage, ModalOpenButton, Row} from 'components'
 import {
   useDebouncedSetState,
   // useHeadTitle
@@ -37,9 +37,7 @@ export function ProjectsScreen() {
           <Button>Create Project</Button>
         </ModalOpenButton>
       </Row>
-      {error ? (
-        <Typography.Text type="danger">{error.message}</Typography.Text>
-      ) : null}
+      <ErrorMessage error={error} />
       <ProjectSearch
         params={projectSearchParams}
         setParams={setProjectSearchParams}

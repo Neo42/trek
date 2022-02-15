@@ -6,7 +6,7 @@ import {UserSelect} from 'components'
 import {ProjectSearchProps} from './index.d'
 
 export function ProjectSearch({
-  params: {name, principalId},
+  params: {name, ownerId},
   setParams,
   users,
 }: ProjectSearchProps) {
@@ -20,7 +20,7 @@ export function ProjectSearch({
           value={name}
           onChange={(event) =>
             setParams({
-              principalId,
+              ownerId,
               name: event.target.value,
             })
           }
@@ -29,11 +29,11 @@ export function ProjectSearch({
       <Form.Item>
         <UserSelect
           placeholder="Principal"
-          value={principalId}
+          value={ownerId}
           onChange={(value) => {
             setParams({
               name,
-              principalId: value || undefined,
+              ownerId: value || undefined,
             })
           }}
           defaultOptionName="Principal"

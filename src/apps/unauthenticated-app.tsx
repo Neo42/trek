@@ -2,12 +2,13 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {jsx} from '@emotion/react'
 import styled from '@emotion/styled'
-import {Button, Card, Divider, Form, Input, Typography} from 'antd'
+import {Button, Card, Divider, Form, Input} from 'antd'
 import left from 'assets/left.svg'
 import logo from 'assets/logo.svg'
 import right from 'assets/right.svg'
 import {useAuth} from 'auth/context'
 import {AuthForm} from 'auth/index.d'
+import {ErrorMessage} from 'components'
 import * as React from 'react'
 import {Helmet} from 'react-helmet-async'
 import {
@@ -103,9 +104,7 @@ export function UnauthenticatedApp() {
           {isRegisterScreen ? 'Register' : 'Login'} to continue:
           <div css={{fontWeight: 'bold'}}>Your team's site</div>
         </Title>
-        {error ? (
-          <Typography.Text type="danger">{error.message}</Typography.Text>
-        ) : null}
+        <ErrorMessage error={error} />
         <UserForm
           onError={setError}
           onSubmit={isRegisterScreen ? register : login}

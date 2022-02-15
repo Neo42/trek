@@ -14,10 +14,10 @@ const db = factory({
     name: faker.name.findName,
   },
   [projectsKey]: {
-    id: primaryKey(faker.datatype.uuid),
-    principalId: faker.datatype.uuid,
+    id: primaryKey(Number),
+    ownerId: Number,
     name: faker.company.catchPhraseNoun,
-    group: faker.company.bs,
+    department: faker.company.bsNoun,
     creationDate: () => Date.parse(faker.date.past()),
     pinned: () => false,
   },

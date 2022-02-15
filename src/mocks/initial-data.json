@@ -21,40 +21,40 @@
     {
       "id": 1,
       "name": "Deliverer",
-      "principalId": 1,
-      "group": "Delivery",
+      "ownerId": 1,
+      "department": "Delivery",
       "creationDate": 1604989757139,
       "pinned": false
     },
     {
       "id": 2,
       "name": "Group Buying",
-      "principalId": 2,
-      "group": "Group Buying",
+      "ownerId": 2,
+      "department": "Group Buying",
       "creationDate": 1604989757139,
       "pinned": false
     },
     {
       "id": 3,
       "name": "Logistic",
-      "principalId": 2,
-      "group": "Logistic",
+      "ownerId": 2,
+      "department": "Logistic",
       "creationDate": 1546300800000,
       "pinned": false
     },
     {
       "id": 4,
       "name": "HQ",
-      "principalId": 3,
-      "group": "HQ",
+      "ownerId": 3,
+      "department": "HQ",
       "creationDate": 1604980000011,
       "pinned": false
     },
     {
       "id": 5,
       "name": "Routes",
-      "principalId": 4,
-      "group": "Delivery",
+      "ownerId": 4,
+      "department": "Delivery",
       "creationDate": 1546900800000,
       "pinned": false
     }

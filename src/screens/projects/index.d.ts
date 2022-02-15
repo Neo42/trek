@@ -3,8 +3,8 @@ import {TableProps} from 'antd'
 export interface Project {
   id: number
   name: string
-  principalId: number | undefined
-  group: string
+  ownerId: number | undefined
+  department: string
   creationDate: number
   pinned: boolean
 }
@@ -14,7 +14,7 @@ export interface User {
   name: string
   email: string
   title: string
-  group: string
+  department: string
   token: string
 }
 
@@ -23,7 +23,7 @@ export interface ProjectListProps extends TableProps<Project> {
 }
 
 export interface ProjectSearchProps {
-  params: Pick<Project, 'name' | 'principalId'>
+  params: Pick<Project, 'name' | 'ownerId'>
   setParams: (params: ProjectSearchProps['params']) => void
   users: User[]
 }

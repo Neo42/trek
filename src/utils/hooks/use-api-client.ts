@@ -48,7 +48,7 @@ type ClientArgs = Parameters<typeof client>
 export function useClient() {
   const token = useAuth().user?.token
   return React.useCallback(
-    (endpoint: ClientArgs[0], config: ClientArgs[1]) =>
+    (endpoint: ClientArgs[0], config?: ClientArgs[1]) =>
       client(endpoint, {...config, token}),
     [token],
   )

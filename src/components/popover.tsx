@@ -6,7 +6,11 @@ import {ModalOpenButton} from './modal'
 
 export const Popover = ({title, ...props}: PopoverProps) => {
   return (
-    <AntdPopover placement="bottom" content={<PopoverContent {...props} />}>
+    <AntdPopover
+      zIndex={500}
+      placement="bottom"
+      content={<PopoverContent {...props} />}
+    >
       <span>{title}</span>
     </AntdPopover>
   )

@@ -50,17 +50,18 @@ export const ModalOpenButton = ({
   })
 }
 
-export const ModalBase = ({style, ...props}: ModalBaseProps) => {
+export const ModalBase = (props: ModalBaseProps) => {
   if (!React.useContext(ModalContext)) {
     throw new Error('The ModalBase must be used within a ModalProvider.')
   }
   const {isModalOpen, closeModal} = React.useContext(ModalContext) as ModalState
   return (
     <Drawer
+      getContainer={false} // add this to fix missing prop warning by antd
+      forceRender // this also works
       width="100%"
       visible={isModalOpen}
       onClose={closeModal}
-      style={{...style, zIndex: 99999}}
       {...props}
     />
   )

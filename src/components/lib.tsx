@@ -43,6 +43,11 @@ export const FullPageFallback = ({error}: {error: Error | null}) => (
   </FullPage>
 )
 
+export const ErrorMessage = ({error}: {error: Error | null}) =>
+  error ? (
+    <Typography.Text type="danger">{error.message}</Typography.Text>
+  ) : null
+
 export const NoPaddingButton = styled(Button)`
   padding: 0;
 `

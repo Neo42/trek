@@ -4,12 +4,14 @@ import {Navigate, Route, Routes, useNavigate} from 'react-router-dom'
 import {ProjectsScreen} from 'screens/projects'
 import {ProjectScreen} from 'screens/project'
 import {useAuth} from 'auth/context'
-import {Modal, ModalProvider, NoPaddingButton, Popover, Row} from 'components'
+import {ModalProvider, NoPaddingButton, Popover, Row} from 'components'
 import {ReactComponent as Logo} from 'assets/logo.svg'
 import {useProjects, useProjectModal} from 'utils'
+import {ProjectModal} from '../components/project-modal'
 
 export const AuthenticatedApp = () => {
   const projectModalState = useProjectModal()
+
   return (
     <Container>
       <ModalProvider modalState={projectModalState}>
@@ -21,7 +23,7 @@ export const AuthenticatedApp = () => {
             <Route path="*" element={<Navigate replace to="projects" />} />
           </Routes>
         </Main>
-        <Modal title="Project Modal" />
+        <ProjectModal />
       </ModalProvider>
     </Container>
   )

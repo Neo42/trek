@@ -3,14 +3,15 @@ import dayjs from 'dayjs'
 import {Link} from 'react-router-dom'
 import {ModalOpenButton, NoPaddingButton, Pin} from 'components'
 import {ProjectListProps} from './index.d'
-import {useUpdateListItem} from 'utils'
+import {useEditProject} from 'utils'
+import {useProjectModal} from '../../utils/projects'
 
 export function ProjectList({users, ...restProps}: ProjectListProps) {
-  const {update} = useUpdateListItem()
+  const {mutate} = useEditProject()
+  const {handleEditProject} = useProjectModal()
 
-  const pinProject = (id: number) => (pinned: boolean) => {
-    update({id, pinned})
-  }
+  const pinProject = (id: number) => (pinned: boolean) => mutate({id, pinned})
+  const editProject = (id: number) => () => handleEditProject(id)
 
   return (
     <Table
@@ -34,13 +35,13 @@ export function ProjectList({users, ...restProps}: ProjectListProps) {
           sorter: (a, b) => a.name.localeCompare(b.name),
         },
         {
-          title: 'Group',
-          dataIndex: 'group',
+          title: 'Department',
+          dataIndex: 'department',
         },
         {
           title: 'Principal',
           render(_, project) {
-            const user = users.find((user) => user.id === project.principalId)
+            const user = users.find((user) => user.id === project.ownerId)
             return <span>{user?.name ?? 'Unknown'}</span>
           },
         },
@@ -64,7 +65,12 @@ export function ProjectList({users, ...restProps}: ProjectListProps) {
                   <Menu>
                     <Menu.Item key="edit">
                       <ModalOpenButton>
-                        <NoPaddingButton type="link">Edit</NoPaddingButton>
+                        <NoPaddingButton
+                          type="link"
+                          onClick={editProject(project.id)}
+                        >
+                          Edit
+                        </NoPaddingButton>
                       </ModalOpenButton>
                     </Menu.Item>
                   </Menu>

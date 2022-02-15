@@ -46,7 +46,18 @@ const getRestHandlers = (endpoint, dbKey) => {
 
     rest.get(`${apiUrl}/${endpoint}/:id`, async (req, res, ctx) => {
       const {id} = req.params
-      const item = targetDB.findFirst({where: {id: {equals: id}}})
+      const item = targetDB.findFirst({where: {id: {equals: Number(id)}}})
+      return res(ctx.json(item))
+    }),
+
+    rest.post(`${apiUrl}/${endpoint}`, async (req, res, ctx) => {
+      const item = targetDB.create({
+        ...{
+          id: targetDB.count() + 1,
+          creationDate: new Date().getTime(),
+        },
+        ...req.body,
+      })
       return res(ctx.json(item))
     }),
 
