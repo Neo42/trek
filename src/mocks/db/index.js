@@ -1,25 +1,25 @@
+import {faker} from '@faker-js/faker'
 import {factory, primaryKey} from '@mswjs/data'
-import {username, uuid} from 'minifaker'
-import 'minifaker/dist/esm/locales/en'
 import {usersKey, projectsKey} from '../../constants'
 import storage from '../storage'
 import {authenticate} from './methods'
 import store from '../initial-data.json'
+import {hash} from 'mocks/db/utils'
 
 const db = factory({
   [usersKey]: {
-    id: primaryKey(uuid.v4),
-    username: username,
-    passwordHash: String,
-    name: String,
+    id: primaryKey(faker.datatype.uuid),
+    username: faker.internet.userName,
+    passwordHash: () => hash(faker.internet.password()),
+    name: faker.name.findName,
   },
   [projectsKey]: {
-    id: primaryKey(uuid.v4),
-    principalId: uuid.v4,
-    name: String,
-    group: String,
-    creationDate: Number,
-    pinned: Boolean,
+    id: primaryKey(faker.datatype.uuid),
+    principalId: faker.datatype.uuid,
+    name: faker.company.catchPhraseNoun,
+    group: faker.company.bs,
+    creationDate: () => Date.parse(faker.date.past()),
+    pinned: () => false,
   },
 })
 

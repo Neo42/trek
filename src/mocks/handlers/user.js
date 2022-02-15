@@ -44,12 +44,18 @@ export const userHandlers = [
   rest.post(`${authUrl}/register`, async (req, res, ctx) => {
     const {username, password} = req.body
     validateUserForm({username, password})
-    const id = hash(username)
+    const id = Number(hash(username))
     const passwordHash = hash(password)
-    await userDB.create({id, username, passwordHash, name: username})
+    await userDB.create({
+      id,
+      username,
+      password,
+      passwordHash,
+      name: 'Test User',
+    })
     let user
     try {
-      user = await userDB.authenticate({id, username, passwordHash})
+      user = await userDB.authenticate({username, passwordHash})
     } catch (error) {
       return res(
         ctx.status(400),
