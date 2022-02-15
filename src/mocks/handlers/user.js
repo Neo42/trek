@@ -26,7 +26,7 @@ export async function getUser(req) {
     throw error
   }
 
-  return await userDB.findFirst({where: {id: {equals: id}}})
+  return await userDB.findFirst({where: {id: {equals: Number(id)}}})
 }
 
 export const userHandlers = [
