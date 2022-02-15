@@ -14,9 +14,16 @@ import {
 
 export function ProjectsScreen() {
   // useHeadTitle('Project List | Trek')
-  const [params, setParams] = useProjectSearchParams()
-  const debouncedParams = useDebouncedSetState(params, 250)
-  const {data: projects, error, isLoading} = useProjects(debouncedParams)
+  const {projectSearchParams, setProjectSearchParams} = useProjectSearchParams()
+  const debouncedProjectSearchParams = useDebouncedSetState(
+    projectSearchParams,
+    {delay: 250},
+  )
+  const {
+    data: projects,
+    error,
+    isLoading,
+  } = useProjects(debouncedProjectSearchParams)
   const {data: users} = useUsers()
 
   return (
@@ -34,8 +41,8 @@ export function ProjectsScreen() {
         <Typography.Text type="danger">{error.message}</Typography.Text>
       ) : null}
       <ProjectSearch
-        params={params}
-        setParams={setParams}
+        params={projectSearchParams}
+        setParams={setProjectSearchParams}
         users={users ?? []}
       />
       <ProjectList

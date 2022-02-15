@@ -21,10 +21,12 @@ export interface PinProps extends RateProps {
   onChange?: (checked: PinProps['checked']) => void
 }
 
-export type ModalState = [
-  boolean,
-  React.Dispatch<React.SetStateAction<boolean>>,
-]
+export type ModalState = {
+  readonly isModalOpen: boolean
+  readonly openModal: () => void
+  readonly closeModal: () => void
+  readonly name: string
+}
 
 export interface ModalBaseProps
   extends Omit<

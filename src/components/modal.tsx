@@ -9,9 +9,16 @@ const callAll =
 
 const ModalContext = React.createContext<ModalState | undefined>(undefined)
 
-export const ModalProvider = (
-  props: Omit<React.ComponentProps<typeof ModalContext.Provider>, 'value'>,
-) => <ModalContext.Provider value={React.useState<boolean>(false)} {...props} />
+export const ModalProvider = ({
+  children,
+  modalState,
+}: {
+  children: React.ReactNode
+  modalState: undefined | ModalState
+}) => {
+  ModalContext.displayName = modalState?.name
+  return <ModalContext.Provider value={modalState} children={children} />
+}
 
 export const ModalDismissButton = ({
   children: child,
@@ -23,9 +30,9 @@ export const ModalDismissButton = ({
       'The ModalDismissButton must be used within a ModalProvider.',
     )
   }
-  const [, setIsOpen] = React.useContext(ModalContext) as ModalState
+  const {closeModal} = React.useContext(ModalContext) as ModalState
   return React.cloneElement(child, {
-    onClick: callAll(() => setIsOpen(false), child.props.onClick),
+    onClick: callAll(closeModal, child.props.onClick),
   })
 }
 
@@ -37,9 +44,9 @@ export const ModalOpenButton = ({
   if (!React.useContext(ModalContext)) {
     throw new Error('The ModalOpenButton must be used within a ModalProvider.')
   }
-  const [, setIsOpen] = React.useContext(ModalContext) as ModalState
+  const {openModal} = React.useContext(ModalContext) as ModalState
   return React.cloneElement(child, {
-    onClick: callAll(() => setIsOpen(true), child.props.onClick),
+    onClick: callAll(openModal, child.props.onClick),
   })
 }
 
@@ -47,12 +54,12 @@ export const ModalBase = ({style, ...props}: ModalBaseProps) => {
   if (!React.useContext(ModalContext)) {
     throw new Error('The ModalBase must be used within a ModalProvider.')
   }
-  const [isOpen, setIsOpen] = React.useContext(ModalContext) as ModalState
+  const {isModalOpen, closeModal} = React.useContext(ModalContext) as ModalState
   return (
     <Drawer
       width="100%"
-      visible={isOpen}
-      onClose={() => setIsOpen(false)}
+      visible={isModalOpen}
+      onClose={closeModal}
       style={{...style, zIndex: 99999}}
       {...props}
     />

@@ -6,12 +6,13 @@ import {ProjectScreen} from 'screens/project'
 import {useAuth} from 'auth/context'
 import {Modal, ModalProvider, NoPaddingButton, Popover, Row} from 'components'
 import {ReactComponent as Logo} from 'assets/logo.svg'
-import {useProjects} from 'utils'
+import {useProjects, useProjectModal} from 'utils'
 
 export const AuthenticatedApp = () => {
+  const projectModalState = useProjectModal()
   return (
     <Container>
-      <ModalProvider>
+      <ModalProvider modalState={projectModalState}>
         <PageHeader />
         <Main>
           <Routes>

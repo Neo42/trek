@@ -20,13 +20,34 @@ export const useProjectSearchParams = () => {
     () => ['name', 'principalId'],
     [],
   )
-  const [queryParams, setQueryParams] = useQueryParams(keys)
-  const paramsWithNumberId = React.useMemo(
+
+  const [searchParamsWithStringId, setProjectSearchParams] =
+    useQueryParams(keys)
+  const projectSearchParams = React.useMemo(
     () => ({
-      ...queryParams,
-      principalId: Number(queryParams.principalId) || undefined,
+      ...searchParamsWithStringId,
+      principalId: Number(searchParamsWithStringId.principalId) || undefined,
     }),
-    [queryParams],
+    [searchParamsWithStringId],
   )
-  return [paramsWithNumberId, setQueryParams] as const
+
+  return {projectSearchParams, setProjectSearchParams}
+}
+
+export const useProjectModal = () => {
+  const keys = React.useMemo<['isProjectModalOpen']>(
+    () => ['isProjectModalOpen'],
+    [],
+  )
+
+  const [{isProjectModalOpen}, setSearchParams] = useQueryParams(keys)
+  const openModal = () => setSearchParams({isProjectModalOpen: true})
+  const closeModal = () => setSearchParams({isProjectModalOpen: undefined})
+
+  return {
+    name: 'ProjectModal',
+    isModalOpen: isProjectModalOpen === 'true',
+    openModal,
+    closeModal,
+  } as const
 }
