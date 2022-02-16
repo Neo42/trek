@@ -39,7 +39,7 @@ export const ModalDismissButton = ({
 export const ModalOpenButton = ({
   children: child,
 }: {
-  children: React.ReactElement<any, 'button'>
+  children: React.ReactElement
 }) => {
   if (!React.useContext(ModalContext)) {
     throw new Error('The ModalOpenButton must be used within a ModalProvider.')
@@ -67,9 +67,6 @@ export const ModalBase = (props: ModalBaseProps) => {
   )
 }
 
-export const Modal = ({title, children, ...props}: ModalProps) => (
-  <ModalBase {...props}>
-    <h1>{title}</h1>
-    {children}
-  </ModalBase>
+export const Modal = ({children, ...props}: ModalProps) => (
+  <ModalBase {...props}>{children}</ModalBase>
 )

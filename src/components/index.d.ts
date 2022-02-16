@@ -36,10 +36,7 @@ export type ModalBaseProps = Omit<
   'width' | 'visible' | 'onClose'
 >
 
-export interface ModalProps
-  extends Omit<React.ComponentProps<typeof ModalContentBase>, 'title'> {
-  title: string
-}
+export type ModalProps = React.ComponentProps<typeof ModalContentBase>
 
 export interface PopoverProps {
   title: string

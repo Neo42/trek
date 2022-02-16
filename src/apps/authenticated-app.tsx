@@ -4,10 +4,15 @@ import {Navigate, Route, Routes, useNavigate} from 'react-router-dom'
 import {ProjectsScreen} from 'screens/projects'
 import {ProjectScreen} from 'screens/project'
 import {useAuth} from 'auth/context'
-import {ModalProvider, NoPaddingButton, Popover, Row} from 'components'
+import {
+  ModalProvider,
+  NoPaddingButton,
+  Popover,
+  ProjectModal,
+  Row,
+} from 'components'
 import {ReactComponent as Logo} from 'assets/logo.svg'
 import {useProjects, useProjectModal} from 'utils'
-import {ProjectModal} from '../components/project-modal'
 
 export const AuthenticatedApp = () => {
   const projectModalState = useProjectModal()
@@ -53,7 +58,7 @@ const PageHeader = () => {
           title="Projects"
           contentTitle="Pinned Projects"
           buttonText="Create Project"
-          items={projects?.filter((project) => project.pinned)}
+          items={projects?.filter((project) => project.isPinned)}
         />
         <span>Users</span>
       </HeaderLeft>

@@ -1,36 +1,47 @@
-import {Dropdown, Menu, Table} from 'antd'
+import {Dropdown, Menu, Modal, Table} from 'antd'
 import dayjs from 'dayjs'
 import {Link} from 'react-router-dom'
 import {ModalOpenButton, NoPaddingButton, Pin} from 'components'
 import {ProjectListProps} from './index.d'
-import {useEditProject} from 'utils'
-import {useProjectModal} from '../../utils/projects'
+import {
+  useEditProject,
+  useDeleteProject,
+  useProjectModal,
+  useProjectQueryKey,
+} from 'utils'
 
 export function ProjectList({users, ...restProps}: ProjectListProps) {
-  const {mutate} = useEditProject()
-  const {handleEditProject} = useProjectModal()
-
-  const pinProject = (id: number) => (pinned: boolean) => mutate({id, pinned})
-  const editProject = (id: number) => () => handleEditProject(id)
+  const projectQueryKey = useProjectQueryKey()
+  const {mutate: setIsProjectPinned} = useEditProject(projectQueryKey)
+  const toggleIsProjectPinned = (id: number) => (isPinned: boolean) =>
+    setIsProjectPinned({id, isPinned})
 
   return (
     <Table
       loading
       pagination={false}
-      rowKey={(project) => project.id}
+      rowKey="id"
       columns={[
         {
           title: <Pin checked disabled />,
           render(_, project) {
             return (
-              <Pin checked={project.pinned} onChange={pinProject(project.id)} />
+              <Pin
+                key={project.id}
+                checked={project.isPinned}
+                onChange={toggleIsProjectPinned(project.id)}
+              />
             )
           },
         },
         {
           title: 'Name',
           render(_, project) {
-            return <Link to={String(project.id)}>{project.name}</Link>
+            return (
+              <Link to={String(project.id)} key={project.id}>
+                {project.name}
+              </Link>
+            )
           },
           sorter: (a, b) => a.name.localeCompare(b.name),
         },
@@ -50,7 +61,7 @@ export function ProjectList({users, ...restProps}: ProjectListProps) {
           sorter: (a, b) => b.creationDate - a.creationDate,
           render(_, project) {
             return (
-              <span>
+              <span key={project.id}>
                 {project.creationDate
                   ? dayjs(project.creationDate).format('YYYY-MM-DD')
                   : ''}
@@ -59,25 +70,12 @@ export function ProjectList({users, ...restProps}: ProjectListProps) {
           },
         },
         {
+          title: 'More',
+          align: 'center',
           render(_, project) {
             return (
-              <Dropdown
-                overlay={
-                  <Menu>
-                    <Menu.Item key="edit">
-                      <ModalOpenButton>
-                        <NoPaddingButton
-                          type="link"
-                          onClick={editProject(project.id)}
-                        >
-                          Edit
-                        </NoPaddingButton>
-                      </ModalOpenButton>
-                    </Menu.Item>
-                  </Menu>
-                }
-              >
-                <NoPaddingButton type="link">...</NoPaddingButton>
+              <Dropdown key={project.id} overlay={<More id={project.id} />}>
+                <NoPaddingButton type="link">···</NoPaddingButton>
               </Dropdown>
             )
           },
@@ -85,5 +83,35 @@ export function ProjectList({users, ...restProps}: ProjectListProps) {
       ]}
       {...restProps}
     />
+  )
+}
+
+const More = ({id}: {id: number}) => {
+  const projectQueryKey = useProjectQueryKey()
+  const {handleEditProject} = useProjectModal()
+  const editProject = (id: number) => () => handleEditProject(id)
+  const {mutate: deleteProject} = useDeleteProject(projectQueryKey)
+
+  const confirmDeleteProject = (id: number) => {
+    Modal.confirm({
+      content: 'Are you sure you want to delete this project?',
+      okText: 'Confirm',
+      okButtonProps: {danger: true},
+      onOk: () => deleteProject(id),
+      cancelText: 'Cancel',
+    })
+  }
+
+  return (
+    <Menu>
+      <ModalOpenButton>
+        <Menu.Item key="edit" onClick={editProject(id)}>
+          Edit
+        </Menu.Item>
+      </ModalOpenButton>
+      <Menu.Item danger key="delete" onClick={() => confirmDeleteProject(id)}>
+        Delete
+      </Menu.Item>
+    </Menu>
   )
 }

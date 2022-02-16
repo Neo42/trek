@@ -6,7 +6,7 @@ export interface Project {
   ownerId: number | undefined
   department: string
   creationDate: number
-  pinned: boolean
+  isPinned: boolean
 }
 
 export interface User {

@@ -2,19 +2,30 @@ import * as React from 'react'
 import {Button, Form, Input, Spin} from 'antd'
 import {useForm} from 'antd/es/form/Form'
 import styled from '@emotion/styled'
-import {useAddProject, useEditProject, useProjectModal} from 'utils'
+import {
+  useAddProject,
+  useEditProject,
+  useProjectModal,
+  useProjectQueryKey,
+} from 'utils'
 import {UserSelect} from './user-select'
 import {ErrorMessage} from './lib'
 import {Modal} from './modal'
 
 export const ProjectModal = () => {
   const {editedProject, closeModal} = useProjectModal()
+  const projectQueryKey = useProjectQueryKey()
   const useMutateProject = editedProject ? useEditProject : useAddProject
-
-  const {mutateAsync, error, isLoading} = useMutateProject()
+  const {mutateAsync, error, isLoading} = useMutateProject(projectQueryKey)
   const [form] = useForm()
+
   const handleSubmit = (values: any) => {
-    mutateAsync({...editedProject, ...values}).then(() => {
+    mutateAsync({
+      ...editedProject,
+      ...values,
+      // add this to fix antd table rowKey absence before real id comes back
+      id: editedProject?.id ?? -1,
+    }).then(() => {
       form.resetFields()
       closeModal()
     })
@@ -26,8 +37,9 @@ export const ProjectModal = () => {
   }, [editedProject, form])
 
   return (
-    <Modal title={editedProject ? 'Edit Project' : 'Create Project'}>
+    <Modal>
       <Container>
+        <h1>{editedProject ? 'Edit Project' : 'Create Project'}</h1>
         {isLoading ? (
           <Spin size="large" />
         ) : (
