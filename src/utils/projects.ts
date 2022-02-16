@@ -1,41 +1,55 @@
 import * as React from 'react'
-import {useMutation, useQuery, useQueryClient} from 'react-query'
+import {QueryKey, useMutation, useQuery} from 'react-query'
+import {
+  useClient,
+  useQueryParams,
+  useEditConfig,
+  useAddConfig,
+  useDeleteConfig,
+} from 'utils'
+import {PATCH, POST, DELETE} from '../constants'
 import {Project} from 'screens/projects/index.d'
-import {useClient, useQueryParams} from 'utils'
-import {PATCH, POST} from '../constants'
 
 export const useProjects = (data?: Partial<Project>) => {
   const client = useClient()
-  return useQuery<Project[], Error>(
-    ['projects', data],
-    () => client('projects', {data}),
-    {staleTime: Infinity},
+  return useQuery<Project[], Error>(['projects', data], () =>
+    client('projects', {data}),
   )
 }
 
-export const useEditProject = () => {
+export const useEditProject = (queryKey: QueryKey) => {
   const client = useClient()
-  const queryClient = useQueryClient()
+
   return useMutation(
     (data: Partial<Project>) =>
       client(`projects/${data.id}`, {
         method: PATCH,
         data,
       }),
-    {onSettled: () => queryClient.invalidateQueries('projects')},
+    useEditConfig(queryKey),
   )
 }
 
-export const useAddProject = () => {
+export const useAddProject = (queryKey: QueryKey) => {
   const client = useClient()
-  const queryClient = useQueryClient()
   return useMutation(
     (data: Partial<Project>) =>
       client('projects', {
         method: POST,
         data,
       }),
-    {onSettled: () => queryClient.invalidateQueries('projects')},
+    useAddConfig(queryKey),
+  )
+}
+
+export const useDeleteProject = (queryKey: QueryKey) => {
+  const client = useClient()
+  return useMutation(
+    (id: number) =>
+      client(`projects/${id}`, {
+        method: DELETE,
+      }),
+    useDeleteConfig(queryKey),
   )
 }
 
@@ -61,6 +75,11 @@ export const useProjectSearchParams = () => {
 
   return {projectSearchParams, setProjectSearchParams}
 }
+
+export const useProjectQueryKey = () => [
+  'projects',
+  useProjectSearchParams().projectSearchParams,
+]
 
 export const useProjectModal = () => {
   const keys = React.useMemo<['isProjectModalOpen', 'targetProjectId']>(
