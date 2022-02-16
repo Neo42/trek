@@ -6,3 +6,12 @@ export interface Project {
   creationDate: number
   isPinned: boolean
 }
+
+export interface User {
+  id: number
+  name: string
+  email: string
+  title: string
+  department: string
+  token: string
+}

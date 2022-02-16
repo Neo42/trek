@@ -1,6 +1,6 @@
 import {TableProps, SelectProps, Drawer, RateProps} from 'antd'
-import {Project, User} from '../data'
-import {AuthForm} from '../auth'
+import {Project, User} from './data'
+import {AuthForm} from './auth'
 import {ModalBase} from 'components'
 
 export type ErrorBoundaryProps = React.PropsWithChildren<{
