@@ -6,7 +6,6 @@ import {ProjectSearch} from './search'
 import {ErrorMessage, ModalOpenButton, Row} from 'components'
 import {
   useDebouncedSetState,
-  // useHeadTitle
   useProjects,
   useProjectSearchParams,
   useUsers,

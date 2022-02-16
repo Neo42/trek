@@ -7,20 +7,11 @@ import left from 'assets/left.svg'
 import logo from 'assets/logo.svg'
 import right from 'assets/right.svg'
 import {useAuth} from 'auth/context'
-import {AuthForm} from 'auth/index.d'
 import {ErrorMessage} from 'components'
 import * as React from 'react'
 import {Helmet} from 'react-helmet-async'
-import {
-  useAsync,
-  // useHeadTitle
-} from 'utils'
-
-export interface UserFormProps {
-  title: 'Login' | 'Create Account'
-  onSubmit: (form: AuthForm) => Promise<void>
-  onError: (error: any) => void
-}
+import {UserFormProps} from 'types'
+import {useAsync} from 'utils'
 
 function UserForm({onSubmit, title, onError}: UserFormProps) {
   const {run, isLoading} = useAsync(undefined, {throwOnError: true})

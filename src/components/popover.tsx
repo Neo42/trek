@@ -1,6 +1,6 @@
 import {List, Popover as AntdPopover, Typography, Divider} from 'antd'
 import styled from '@emotion/styled'
-import {PopoverProps, PopoverContentProps} from './index.d'
+import {PopoverProps, PopoverContentProps} from 'types'
 import {NoPaddingButton} from 'components'
 import {ModalOpenButton} from './modal'
 

@@ -1,5 +1,5 @@
 import {Rate} from 'antd'
-import {PinProps} from './index.d'
+import {PinProps} from 'types'
 
 export const Pin = ({checked, onChange, ...props}: PinProps) => {
   return (

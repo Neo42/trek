@@ -8,7 +8,7 @@ import {
   useDeleteConfig,
 } from 'utils'
 import {PATCH, POST, DELETE} from '../constants'
-import {Project} from 'screens/projects/index.d'
+import {Project} from 'types'
 
 export const useProjects = (data?: Partial<Project>) => {
   const client = useClient()

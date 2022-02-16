@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {Drawer} from 'antd'
-import {ModalState, ModalProps, ModalBaseProps} from './index.d'
+import {ModalState, ModalProps, ModalBaseProps} from 'types'
 
 const callAll =
   (...fns: ((...args: unknown[]) => void)[]) =>

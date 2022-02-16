@@ -3,7 +3,7 @@
 import {jsx} from '@emotion/react'
 import {Form, Input} from 'antd'
 import {UserSelect} from 'components'
-import {ProjectSearchProps} from './index.d'
+import {ProjectSearchProps} from 'types'
 
 export function ProjectSearch({
   params: {name, ownerId},

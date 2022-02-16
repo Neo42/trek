@@ -1,5 +1,5 @@
 import {Select} from 'antd'
-import {GenericSelectProps} from './index.d'
+import {GenericSelectProps} from 'types'
 
 export const GenericSelect = ({
   value,

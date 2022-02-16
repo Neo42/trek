@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {sanitizeObject, useAsync, useClient} from 'utils'
-import {User} from 'screens/projects/index.d'
+import {User} from 'types'
 
 export const useUsers = (params?: Partial<User>) => {
   const client = useClient()
