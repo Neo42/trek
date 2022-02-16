@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import * as React from 'react'
 import {Button, Form, Input, Spin} from 'antd'
 import {useForm} from 'antd/es/form/Form'
 import styled from '@emotion/styled'
@@ -20,7 +20,7 @@ export const ProjectModal = () => {
     })
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!editedProject) form.resetFields()
     form.setFieldsValue(editedProject)
   }, [editedProject, form])

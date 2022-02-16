@@ -6,8 +6,10 @@ import {PATCH, POST} from '../constants'
 
 export const useProjects = (data?: Partial<Project>) => {
   const client = useClient()
-  return useQuery<Project[], Error>(['projects', data], () =>
-    client('projects', {data}),
+  return useQuery<Project[], Error>(
+    ['projects', data],
+    () => client('projects', {data}),
+    {staleTime: Infinity},
   )
 }
 

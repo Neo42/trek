@@ -22,7 +22,7 @@ export interface PinProps extends RateProps {
 }
 
 export type ModalState = {
-  readonly name: 'ProjectModal'
+  readonly name: string
   readonly isModalOpen: boolean
   readonly openModal: () => void
   readonly closeModal: () => void

@@ -42,7 +42,7 @@ export const userHandlers = [
   }),
 
   rest.post(`${authUrl}/register`, async (req, res, ctx) => {
-    const {username, password} = req.body
+    const {username, password, name} = req.body
     validateUserForm({username, password})
     const id = Number(hash(username))
     const passwordHash = hash(password)
@@ -51,7 +51,7 @@ export const userHandlers = [
       username,
       password,
       passwordHash,
-      name: 'Test User',
+      name,
     })
     let user
     try {

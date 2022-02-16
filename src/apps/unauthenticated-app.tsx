@@ -52,26 +52,38 @@ function UserForm({onSubmit, title, onError}: UserFormProps) {
       >
         <Input placeholder="Username" type="text" id="username" />
       </Form.Item>
+
       <Form.Item
         name="password"
         rules={[{required: true, message: 'Please enter your password.'}]}
       >
         <Input placeholder="Password" type="password" id="password" />
       </Form.Item>
+
       {title === 'Create Account' ? (
-        <Form.Item
-          name="confirm-password"
-          rules={[
-            {required: true, message: 'Please enter your password again.'},
-          ]}
-        >
-          <Input
-            placeholder="Confirm Password"
-            type="password"
-            id="confirm-password"
-          />
-        </Form.Item>
+        <>
+          <Form.Item
+            name="confirm-password"
+            rules={[
+              {required: true, message: 'Please enter your password again.'},
+            ]}
+          >
+            <Input
+              placeholder="Confirm Password"
+              type="password"
+              id="confirm-password"
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="name"
+            rules={[{required: true, message: 'Please enter your name.'}]}
+          >
+            <Input placeholder="Name" type="text" id="name" />
+          </Form.Item>
+        </>
       ) : null}
+
       <Form.Item>
         <LongButton
           loading={isLoading}

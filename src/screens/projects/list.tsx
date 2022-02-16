@@ -47,6 +47,7 @@ export function ProjectList({users, ...restProps}: ProjectListProps) {
         },
         {
           title: 'Creation Date',
+          sorter: (a, b) => b.creationDate - a.creationDate,
           render(_, project) {
             return (
               <span>
