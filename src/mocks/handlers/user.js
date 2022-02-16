@@ -4,7 +4,7 @@ import storage from 'mocks/storage'
 import {authUrl, apiUrl, usersKey} from '../../constants'
 import {hash, stripUserPassword, validateUserForm} from 'mocks/db/utils'
 
-const localUsers = storage.get(usersKey)
+const usersStorage = storage.get(usersKey)
 const userDB = db.__TREK_USERS__
 
 const getToken = (req) =>
@@ -38,7 +38,7 @@ export const userHandlers = [
     await new Promise((resolve) => setTimeout(resolve, 2000))
     // test error response
     // throw new Error('Test error message.')
-    return res(ctx.json({user: {...user, name: user.username, token}}))
+    return res(ctx.json({user: {...user, token}}))
   }),
 
   rest.post(`${authUrl}/register`, async (req, res, ctx) => {
@@ -62,7 +62,7 @@ export const userHandlers = [
         ctx.json({status: 400, message: error.message}),
       )
     }
-    localUsers.update((prevUsers) => [...prevUsers, stripUserPassword(user)])
+    usersStorage.update((prevUsers) => [...prevUsers, stripUserPassword(user)])
     return res(ctx.json({user}))
   }),
 

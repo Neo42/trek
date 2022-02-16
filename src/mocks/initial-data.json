@@ -24,7 +24,7 @@
       "ownerId": 1,
       "department": "Delivery",
       "creationDate": 1604989757139,
-      "pinned": false
+      "isPinned": false
     },
     {
       "id": 2,
@@ -32,7 +32,7 @@
       "ownerId": 2,
       "department": "Group Buying",
       "creationDate": 1604989757139,
-      "pinned": false
+      "isPinned": false
     },
     {
       "id": 3,
@@ -40,7 +40,7 @@
       "ownerId": 2,
       "department": "Logistic",
       "creationDate": 1546300800000,
-      "pinned": false
+      "isPinned": false
     },
     {
       "id": 4,
@@ -48,7 +48,7 @@
       "ownerId": 3,
       "department": "HQ",
       "creationDate": 1604980000011,
-      "pinned": false
+      "isPinned": false
     },
     {
       "id": 5,
@@ -56,7 +56,7 @@
       "ownerId": 4,
       "department": "Delivery",
       "creationDate": 1546900800000,
-      "pinned": false
+      "isPinned": false
     }
   ]
 }
