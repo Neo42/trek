@@ -2,13 +2,13 @@ import './wdyr'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {BrowserRouter} from 'react-router-dom'
+import {HelmetProvider} from 'react-helmet-async'
 import App from 'apps/App'
 import {AppProvider} from 'auth'
-import {HelmetProvider} from 'react-helmet-async'
 import reportWebVitals from './reportWebVitals'
 import 'antd/dist/antd.less'
+import server from 'mocks'
 
-const {server} = require('./mocks')
 server.start({
   onUnhandledRequest: 'bypass',
   quiet: true,

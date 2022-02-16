@@ -3,4 +3,4 @@ import {userHandlers, restHandlers} from 'mocks/handlers'
 
 const handlers = [...userHandlers, ...restHandlers]
 
-export const server = setupWorker(...handlers)
+export default setupWorker(...handlers)
