@@ -34,7 +34,7 @@ const db = factory({
     id: primaryKey(Number),
     name: faker.hacker.noun,
     tags: () => [1],
-    author: () => 1,
+    authorId: () => 1,
     assigneeId: () => 1,
     taskGroupId: 1,
     kanbanId: () => 1,

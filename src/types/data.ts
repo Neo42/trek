@@ -26,7 +26,7 @@ export interface Task {
   id: number
   name: string
   tags: number[]
-  author: number
+  authorId: number
   assigneeId: number
   taskGroupId: number
   kanbanId: number

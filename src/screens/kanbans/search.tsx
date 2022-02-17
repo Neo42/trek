@@ -4,13 +4,14 @@ import * as React from 'react'
 import {useTasksSearchParams} from 'utils'
 
 export const KanbanSearch = () => {
-  const [{name, typeId, assigneeId}, setTasksSearchParams] =
+  const [{name, typeId, assigneeId, authorId}, setTasksSearchParams] =
     useTasksSearchParams()
 
   const reset = () =>
     setTasksSearchParams({
       name: undefined,
       typeId: undefined,
+      authorId: undefined,
       assigneeId: undefined,
       tagId: undefined,
     })
@@ -22,6 +23,11 @@ export const KanbanSearch = () => {
         placeholder="Task Name"
         value={name}
         onChange={(e) => setTasksSearchParams({name: e.target.value})}
+      />
+      <UserSelect
+        defaultOptionName="Author"
+        value={authorId}
+        onChange={(authorId) => setTasksSearchParams({authorId})}
       />
       <UserSelect
         defaultOptionName="Assignee"

@@ -9,37 +9,44 @@ import {
 import {KanbanColumn} from './kanban'
 import styled from '@emotion/styled'
 import {KanbanSearch} from './search'
+import {ScreenContainer} from 'components'
+import {Spin} from 'antd'
 
 export const KanbansScreen = () => {
   const projectId = useCurrentProjectId()
   const [tasksParams] = useTasksSearchParams()
 
   const {data: currentProject} = useProject(projectId)
-  const {data: kanbans} = useKanbans({projectId})
-  const {data: tasks} = useTasks(tasksParams)
+  const {data: kanbans, isLoading: areKanbansLoading} = useKanbans({projectId})
+  const {data: tasks, isLoading: areTasksLoading} = useTasks(tasksParams)
+  const isLoading = areKanbansLoading || areTasksLoading
 
   return (
-    <>
+    <ScreenContainer>
       <Helmet>
         <title>Kanban List</title>
       </Helmet>
       <h1>{currentProject?.name} Kanban</h1>
       <KanbanSearch />
-      <Kanbans>
-        {kanbans?.map((kanban) => (
-          <KanbanColumn
-            key={kanban.id}
-            kanban={kanban}
-            tasks={tasks?.filter((task) => task.kanbanId === kanban.id)}
-          />
-        ))}
-      </Kanbans>
-    </>
+      {isLoading ? (
+        <Spin size="large" />
+      ) : (
+        <Kanbans>
+          {kanbans?.map((kanban) => (
+            <KanbanColumn
+              key={kanban.id}
+              kanban={kanban}
+              tasks={tasks?.filter((task) => task.kanbanId === kanban.id)}
+            />
+          ))}
+        </Kanbans>
+      )}
+    </ScreenContainer>
   )
 }
 
 const Kanbans = styled.div`
   display: flex;
-  overflow: hidden;
-  margin-right: 2rem;
+  overflow-x: scroll;
+  flex: 1;
 `

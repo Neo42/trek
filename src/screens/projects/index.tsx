@@ -1,9 +1,8 @@
-import styled from '@emotion/styled'
 import {Button} from 'antd'
 import {Helmet} from 'react-helmet-async'
 import {ProjectList} from './list'
 import {ProjectSearch} from './search'
-import {ErrorMessage, ModalOpenButton, Row} from 'components'
+import {ErrorMessage, ModalOpenButton, Row, ScreenContainer} from 'components'
 import {
   useDebouncedSetState,
   useProjects,
@@ -12,8 +11,6 @@ import {
 } from 'utils'
 
 export function ProjectsScreen() {
-  // useHeadTitle('Project List | Trek')
-
   const {projectSearchParams, setProjectSearchParams} = useProjectSearchParams()
   const debouncedProjectSearchParams = useDebouncedSetState(
     projectSearchParams,
@@ -27,7 +24,7 @@ export function ProjectsScreen() {
   const {data: users} = useUsers()
 
   return (
-    <Container>
+    <ScreenContainer>
       <Helmet>
         <title>Project List | Trek</title>
       </Helmet>
@@ -48,12 +45,8 @@ export function ProjectsScreen() {
         loading={isLoading}
         users={users ?? []}
       />
-    </Container>
+    </ScreenContainer>
   )
 }
 
 // ProjectsScreen.whyDidYouRender = true
-
-const Container = styled.div`
-  padding: 3.2rem;
-`

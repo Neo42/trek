@@ -33,8 +33,8 @@ export const useTaskTags = () => {
 }
 
 export const useTasksSearchParams = () => {
-  const [{name, typeId, assigneeId, tagId}, setTasksSearchParams] =
-    useQueryParams('name', 'typeId', 'assigneeId', 'tagId')
+  const [{name, typeId, assigneeId, tagId, authorId}, setTasksSearchParams] =
+    useQueryParams('name', 'typeId', 'assigneeId', 'authorId', 'tagId')
   const projectId = useCurrentProjectId()
 
   return [
@@ -42,11 +42,12 @@ export const useTasksSearchParams = () => {
       () => ({
         projectId,
         name: name,
+        authorId: Number(authorId) || undefined,
         typeId: Number(typeId) || undefined,
         assigneeId: Number(assigneeId) || undefined,
         tagId: Number(tagId) || undefined,
       }),
-      [assigneeId, name, projectId, tagId, typeId],
+      [assigneeId, name, projectId, tagId, typeId, authorId],
     ),
     setTasksSearchParams,
   ] as const
