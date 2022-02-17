@@ -3,6 +3,7 @@ import * as React from 'react'
 import {AuthForm, User} from 'types'
 import {client, useAsync} from 'utils'
 import {FullPageFallback, FullPageLoading} from 'components'
+import {useQueryClient} from 'react-query'
 
 const AuthContext = React.createContext<
   | {
@@ -16,6 +17,7 @@ const AuthContext = React.createContext<
 AuthContext.displayName = 'AuthContext'
 
 const AuthProvider = ({children}: {children: React.ReactNode}) => {
+  const queryClient = useQueryClient()
   const {
     data: user,
     setData: setUser,
@@ -28,7 +30,11 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   const login = (form: AuthForm) => auth.login(form).then(setUser)
   const register = (form: AuthForm) => auth.register(form).then(setUser)
-  const logout = () => auth.logout().then(() => resetUser())
+  const logout = () =>
+    auth.logout().then(() => {
+      resetUser()
+      queryClient.clear()
+    })
 
   const initializeUser = React.useCallback(async () => {
     let user = null
