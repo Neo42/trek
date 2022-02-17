@@ -4,6 +4,10 @@ import {
   userTokenKey,
   projectsKey,
   isLocalDataLoadedKey,
+  kanbansKey,
+  projectPhasesKey,
+  taskTypesKey,
+  tasksKey,
 } from '../constants'
 
 function storageFactory(...keys) {
@@ -21,9 +25,13 @@ function storageFactory(...keys) {
 }
 
 const storage = storageFactory(
+  isLocalDataLoadedKey,
   userTokenKey,
   usersKey,
   projectsKey,
-  isLocalDataLoadedKey,
+  kanbansKey,
+  projectPhasesKey,
+  taskTypesKey,
+  tasksKey,
 )
 export default storage

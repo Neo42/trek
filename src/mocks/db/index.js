@@ -1,6 +1,14 @@
 import {faker} from '@faker-js/faker'
 import {factory, primaryKey} from '@mswjs/data'
-import {usersKey, projectsKey, isLocalDataLoadedKey} from '../../constants'
+import {
+  isLocalDataLoadedKey,
+  usersKey,
+  projectsKey,
+  tasksKey,
+  kanbansKey,
+  projectPhasesKey,
+  taskTypesKey,
+} from '../../constants'
 import storage from '../storage'
 import {authenticate} from './methods'
 import store from '../initial-data.json'
@@ -15,11 +23,35 @@ const db = factory({
   },
   [projectsKey]: {
     id: primaryKey(Number),
-    ownerId: Number,
-    name: faker.company.catchPhraseNoun,
-    department: faker.company.bsNoun,
+    ownerId: 1,
+    name: faker.hacker.noun,
+    department: faker.hacker.abbreviation,
     creationDate: () => Date.parse(faker.date.past()),
     isPinned: () => false,
+  },
+  [tasksKey]: {
+    id: primaryKey(Number),
+    name: faker.hacker.noun,
+    phases: () => [1],
+    reporterId: () => 1,
+    processorId: () => 1,
+    epicId: () => 1,
+    kanbanId: () => 1,
+    favorite: () => false,
+    typeId: () => 1,
+    note: faker.lorem.lines,
+  },
+  [kanbansKey]: {
+    id: primaryKey(Number),
+    name: String,
+  },
+  [projectPhasesKey]: {
+    id: primaryKey(Number),
+    name: () => 'Initiation',
+  },
+  [taskTypesKey]: {
+    id: primaryKey(Number),
+    name: () => 'issue',
   },
 })
 
@@ -47,9 +79,6 @@ function loadData(...dbKeys) {
 
     if (!isLocalDataLoaded) {
       storage.get(isLocalDataLoadedKey).update(() => true)
-
-      console.log('loading local data')
-
       localDataStore.forEach((localData) => {
         storageDataSet.update((storageDataSet) => {
           const hasDataInStorage = storageDataSet.filter(
@@ -69,7 +98,14 @@ function loadData(...dbKeys) {
 }
 
 try {
-  loadData(usersKey, projectsKey)
+  loadData(
+    usersKey,
+    projectsKey,
+    tasksKey,
+    kanbansKey,
+    projectPhasesKey,
+    taskTypesKey,
+  )
 } catch (error) {
   throw error
 }

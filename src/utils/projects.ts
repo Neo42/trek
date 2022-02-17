@@ -19,7 +19,6 @@ export const useProjects = (data?: Partial<Project>) => {
 
 export const useEditProject = (queryKey: QueryKey) => {
   const client = useClient()
-
   return useMutation(
     (data: Partial<Project>) =>
       client(`projects/${data.id}`, {
@@ -62,7 +61,6 @@ export const useProject = (id: number) => {
 
 export const useProjectSearchParams = () => {
   const keys = React.useMemo<['name', 'ownerId']>(() => ['name', 'ownerId'], [])
-
   const [searchParamsWithStringId, setProjectSearchParams] =
     useQueryParams(keys)
   const projectSearchParams = React.useMemo(

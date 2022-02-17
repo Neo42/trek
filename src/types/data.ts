@@ -15,3 +15,5 @@ export interface User {
   department: string
   token: string
 }
+
+export interface Task {}

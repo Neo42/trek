@@ -58,5 +58,137 @@
       "creationDate": 1546900800000,
       "isPinned": false
     }
+  ],
+  "__TREK_KANBANS__": [
+    {
+      "id": 1,
+      "name": "Not Started"
+    },
+    {
+      "id": 2,
+      "name": "In Progress"
+    },
+    {
+      "id": 3,
+      "name": "Completed"
+    }
+  ],
+  "__TREK_PROJECT_PHASES__": [
+    {
+      "id": 1,
+      "name": "Initiation"
+    },
+    {
+      "id": 2,
+      "name": "Planning"
+    },
+    {
+      "id": 3,
+      "name": "Execution"
+    },
+    {
+      "id": 4,
+      "name": "Monitoring and Control"
+    },
+    {
+      "id": 5,
+      "name": "Closure"
+    }
+  ],
+  "__TREK_TASKS_TYPES__": [
+    {
+      "id": 1,
+      "name": "issue"
+    },
+    {
+      "id": 2,
+      "name": "bug"
+    }
+  ],
+  "__TREK_TASKS__": [
+    {
+      "id": 1,
+      "name": "Develop registration interface",
+      "phases": [1, 2],
+      "reporterId": 1,
+      "processorId": 2,
+      "epicId": 1,
+      "kanbanId": 1,
+      "favorite": true,
+      "typeId": 1,
+      "note": "Please get it done ASAP."
+    },
+    {
+      "id": 2,
+      "name": "Develop login interface",
+      "phases": [2],
+      "reporterId": 1,
+      "processorId": 2,
+      "epicId": 1,
+      "kanbanId": 1,
+      "favorite": true,
+      "typeId": 1,
+      "note": "Please do it with JWT."
+    },
+    {
+      "id": 3,
+      "name": "Unit testing",
+      "phases": [1],
+      "reporterId": 1,
+      "processorId": 2,
+      "epicId": 1,
+      "kanbanId": 1,
+      "favorite": true,
+      "typeId": 1,
+      "note": ""
+    },
+    {
+      "id": 4,
+      "name": "Performance optimization",
+      "phases": [1],
+      "reporterId": 1,
+      "processorId": 2,
+      "epicId": 1,
+      "kanbanId": 1,
+      "favorite": true,
+      "typeId": 1,
+      "note": ""
+    },
+    {
+      "id": 5,
+      "name": "Develop authorization interface",
+      "phases": [1],
+      "reporterId": 1,
+      "processorId": 2,
+      "epicId": 1,
+      "kanbanId": 1,
+      "favorite": true,
+      "typeId": 1,
+      "note": ""
+    },
+    {
+      "id": 6,
+      "name": "UI development",
+      "phases": [1],
+      "reporterId": 1,
+      "processorId": 2,
+      "epicId": 1,
+      "kanbanId": 1,
+      "favorite": true,
+      "typeId": 1,
+      "note": ""
+    },
+    {
+      "id": 7,
+      "name": "Self-test",
+      "phases": [1],
+      "reporterId": 1,
+      "processorId": 2,
+      "epicId": 1,
+      "kanbanId": 1,
+      "favorite": true,
+      "typeId": 1,
+      "note": ""
+    }
   ]
 }
