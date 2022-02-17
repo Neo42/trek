@@ -1,5 +1,5 @@
 import {rest} from 'msw'
-import {apiUrl, projectsKey, usersKey} from '../../constants'
+import {apiUrl, projectsKey, usersKey, tasksKey} from '../../constants'
 import db from 'mocks/db'
 import storage from 'mocks/storage'
 
@@ -24,6 +24,7 @@ const getRestHandlers = (endpoint, dbKey) => {
         .reduce((result, item) => ({...result, ...item}), {})
 
       const queryResult = targetDB.findMany({where: searchConditions})
+      // simulate slow response
       await new Promise((resolve) => setTimeout(resolve, 300))
       // throw Error('test error')
       return res(ctx.json(queryResult))
@@ -32,6 +33,8 @@ const getRestHandlers = (endpoint, dbKey) => {
     rest.get(`${apiUrl}/${endpoint}/:id`, async (req, res, ctx) => {
       const {id} = req.params
       const item = targetDB.findFirst({where: {id: {equals: Number(id)}}})
+      // simulate slow response
+      await new Promise((resolve) => setTimeout(resolve, 300))
       return res(ctx.json(item))
     }),
 
@@ -69,5 +72,6 @@ const getRestHandlers = (endpoint, dbKey) => {
 
 export const restHandlers = [
   ...getRestHandlers('projects', projectsKey),
+  ...getRestHandlers('tasks', tasksKey),
   ...getRestHandlers('users', usersKey),
 ]
