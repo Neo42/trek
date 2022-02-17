@@ -74,7 +74,11 @@ export function ProjectList({users, ...restProps}: ProjectListProps) {
           align: 'center',
           render(_, project) {
             return (
-              <Dropdown key={project.id} overlay={<More id={project.id} />}>
+              <Dropdown
+                key={project.id}
+                placement="bottomCenter"
+                overlay={<More id={project.id} />}
+              >
                 <NoPaddingButton type="link">···</NoPaddingButton>
               </Dropdown>
             )

@@ -13,6 +13,7 @@ import {
 
 export function ProjectsScreen() {
   // useHeadTitle('Project List | Trek')
+
   const {projectSearchParams, setProjectSearchParams} = useProjectSearchParams()
   const debouncedProjectSearchParams = useDebouncedSetState(
     projectSearchParams,

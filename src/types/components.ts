@@ -58,7 +58,7 @@ export interface ProjectListProps extends TableProps<Project> {
 }
 
 export interface ProjectSearchProps {
-  params: Pick<Project, 'name' | 'ownerId'>
+  params: Partial<Pick<Project, 'name' | 'ownerId'>>
   setParams: (params: ProjectSearchProps['params']) => void
   users: User[]
 }

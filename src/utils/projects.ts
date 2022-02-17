@@ -9,12 +9,15 @@ import {
 } from 'utils'
 import {PATCH, POST, DELETE} from '../constants'
 import {Project} from 'types'
+import {useLocation} from 'react-router-dom'
 
 export const useProjects = (data?: Partial<Project>) => {
   const client = useClient()
-  return useQuery<Project[], Error>(['projects', data], () =>
-    client('projects', {data}),
-  )
+  return useQuery<Project[], Error>({
+    queryKey: ['projects', data],
+    queryFn: () => client('projects', {data}),
+    staleTime: 5000 * 60,
+  })
 }
 
 export const useEditProject = (queryKey: QueryKey) => {
@@ -54,15 +57,26 @@ export const useDeleteProject = (queryKey: QueryKey) => {
 
 export const useProject = (id: number) => {
   const client = useClient()
-  return useQuery<Project>(['project', {id}], () => client(`projects/${id}`), {
+
+  return useQuery<Project>({
+    queryKey: ['project', {id}],
+    queryFn: () => client(`projects/${id}`),
     enabled: !!id,
+    staleTime: 5000 * 60,
   })
 }
 
+export const useCurrentProjectId = () => {
+  const {pathname} = useLocation()
+  const id = pathname.match(/projects\/(\d+)/)?.[1]
+  return Number(id)
+}
+
 export const useProjectSearchParams = () => {
-  const keys = React.useMemo<['name', 'ownerId']>(() => ['name', 'ownerId'], [])
-  const [searchParamsWithStringId, setProjectSearchParams] =
-    useQueryParams(keys)
+  const [searchParamsWithStringId, setProjectSearchParams] = useQueryParams(
+    'name',
+    'ownerId',
+  )
   const projectSearchParams = React.useMemo(
     () => ({
       ...searchParamsWithStringId,
@@ -80,13 +94,9 @@ export const useProjectQueryKey = () => [
 ]
 
 export const useProjectModal = () => {
-  const keys = React.useMemo<['isProjectModalOpen', 'targetProjectId']>(
-    () => ['isProjectModalOpen', 'targetProjectId'],
-    [],
-  )
-
   const [{isProjectModalOpen, targetProjectId}, setProjectModalParams] =
-    useQueryParams(keys)
+    useQueryParams('isProjectModalOpen', 'targetProjectId')
+
   const openModal = () => setProjectModalParams({isProjectModalOpen: true})
   const closeModal = () =>
     setProjectModalParams({

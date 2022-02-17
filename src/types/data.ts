@@ -16,4 +16,32 @@ export interface User {
   token: string
 }
 
-export interface Task {}
+export interface Kanban {
+  id: number
+  name: string
+  projectId: number
+}
+
+export interface Task {
+  id: number
+  name: string
+  tags: number[]
+  author: number
+  assigneeId: number
+  taskGroupId: number
+  kanbanId: number
+  projectId: number
+  favorite: boolean
+  typeId: number
+  note: string
+}
+
+export interface TaskType {
+  id: number
+  name: 'issue' | 'bug'
+}
+
+export interface TaskTag {
+  id: number
+  name: string
+}
