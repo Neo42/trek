@@ -4,10 +4,11 @@ import {
   isLocalDataLoadedKey,
   usersKey,
   projectsKey,
-  tasksKey,
-  kanbansKey,
   projectPhasesKey,
+  kanbansKey,
+  tasksKey,
   taskTypesKey,
+  taskGroupsKey,
 } from '../../constants'
 import storage from '../storage'
 import {authenticate} from './methods'
@@ -26,7 +27,7 @@ const db = factory({
     ownerId: 1,
     name: faker.hacker.noun,
     department: faker.hacker.abbreviation,
-    creationDate: () => Date.parse(faker.date.past()),
+    creationDate: () => Date.parse(faker.date.recent()),
     isPinned: () => false,
   },
   [tasksKey]: {
@@ -52,6 +53,12 @@ const db = factory({
   [taskTypesKey]: {
     id: primaryKey(Number),
     name: () => 'issue',
+  },
+  [taskGroupsKey]: {
+    id: primaryKey(Number),
+    name: faker.lorem.words,
+    startDate: faker.date.past,
+    endDate: faker.date.recent,
   },
 })
 
@@ -105,6 +112,7 @@ try {
     kanbansKey,
     projectPhasesKey,
     taskTypesKey,
+    taskGroupsKey,
   )
 } catch (error) {
   throw error

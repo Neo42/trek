@@ -1,13 +1,14 @@
 import {LiveStorage} from '@mswjs/storage'
 import {
+  isLocalDataLoadedKey,
   usersKey,
   userTokenKey,
   projectsKey,
-  isLocalDataLoadedKey,
-  kanbansKey,
   projectPhasesKey,
-  taskTypesKey,
+  kanbansKey,
   tasksKey,
+  taskTypesKey,
+  taskGroupsKey,
 } from '../constants'
 
 function storageFactory(...keys) {
@@ -29,9 +30,10 @@ const storage = storageFactory(
   userTokenKey,
   usersKey,
   projectsKey,
-  kanbansKey,
   projectPhasesKey,
-  taskTypesKey,
+  kanbansKey,
   tasksKey,
+  taskTypesKey,
+  taskGroupsKey,
 )
 export default storage
