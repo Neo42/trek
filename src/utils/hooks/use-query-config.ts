@@ -13,6 +13,11 @@ const useQueryConfig = (
       ),
 
     onMutate: async (target: any) => {
+      // Cancel any outgoing refetches (so they don't overwrite the optimistic update)
+      queryClient.cancelQueries(
+        Array.isArray(queryKey) ? queryKey[0] : queryKey,
+      )
+
       const previousItems = queryClient.getQueryData(queryKey)
 
       if (previousItems) {
