@@ -1,5 +1,13 @@
 import {rest} from 'msw'
-import {apiUrl, projectsKey, usersKey, tasksKey} from '../../constants'
+import {
+  apiUrl,
+  usersKey,
+  projectsKey,
+  kanbansKey,
+  tasksKey,
+  taskTagsKey,
+  taskTypesKey,
+} from '../../constants'
 import db from 'mocks/db'
 import storage from 'mocks/storage'
 
@@ -9,15 +17,15 @@ const getRestHandlers = (endpoint, dbKey) => {
   return [
     rest.get(`${apiUrl}/${endpoint}`, async (req, res, ctx) => {
       const params = req.url.searchParams
-
       let searchConditions = []
+
       for (const [key, value] of params) {
         searchConditions.push([key, value])
       }
 
       searchConditions = searchConditions
         .map(([key, value]) => ({
-          [key]: key.toLowerCase().includes('id')
+          [key]: key.toLocaleLowerCase().includes('id')
             ? {equals: +value}
             : {contains: value},
         }))
@@ -72,6 +80,9 @@ const getRestHandlers = (endpoint, dbKey) => {
 
 export const restHandlers = [
   ...getRestHandlers('projects', projectsKey),
+  ...getRestHandlers('kanbans', kanbansKey),
   ...getRestHandlers('tasks', tasksKey),
+  ...getRestHandlers('taskTypes', taskTypesKey),
+  ...getRestHandlers('taskTags', taskTagsKey),
   ...getRestHandlers('users', usersKey),
 ]

@@ -4,7 +4,7 @@ import {
   isLocalDataLoadedKey,
   usersKey,
   projectsKey,
-  projectPhasesKey,
+  taskTagsKey,
   kanbansKey,
   tasksKey,
   taskTypesKey,
@@ -33,11 +33,12 @@ const db = factory({
   [tasksKey]: {
     id: primaryKey(Number),
     name: faker.hacker.noun,
-    phases: () => [1],
-    reporterId: () => 1,
-    processorId: () => 1,
-    epicId: () => 1,
+    tags: () => [1],
+    author: () => 1,
+    assigneeId: () => 1,
+    taskGroupId: 1,
     kanbanId: () => 1,
+    projectId: () => 1,
     favorite: () => false,
     typeId: () => 1,
     note: faker.lorem.lines,
@@ -45,8 +46,9 @@ const db = factory({
   [kanbansKey]: {
     id: primaryKey(Number),
     name: String,
+    projectId: Number,
   },
-  [projectPhasesKey]: {
+  [taskTagsKey]: {
     id: primaryKey(Number),
     name: () => 'Initiation',
   },
@@ -110,7 +112,7 @@ try {
     projectsKey,
     tasksKey,
     kanbansKey,
-    projectPhasesKey,
+    taskTagsKey,
     taskTypesKey,
     taskGroupsKey,
   )

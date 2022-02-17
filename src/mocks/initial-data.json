@@ -62,18 +62,21 @@
   "__TREK_KANBANS__": [
     {
       "id": 1,
-      "name": "Not Started"
+      "name": "Not Started",
+      "projectId": 1
     },
     {
       "id": 2,
-      "name": "In Progress"
+      "name": "In Progress",
+      "projectId": 1
     },
     {
       "id": 3,
-      "name": "Completed"
+      "name": "Completed",
+      "projectId": 1
     }
   ],
-  "__TREK_PROJECT_PHASES__": [
+  "__TREK_TASK_TAGS__": [
     {
       "id": 1,
       "name": "Initiation"
@@ -95,25 +98,16 @@
       "name": "Closure"
     }
   ],
-  "__TREK_TASKS_TYPES__": [
-    {
-      "id": 1,
-      "name": "issue"
-    },
-    {
-      "id": 2,
-      "name": "bug"
-    }
-  ],
   "__TREK_TASKS__": [
     {
       "id": 1,
       "name": "Develop registration interface",
-      "phases": [1, 2],
-      "reporterId": 1,
-      "processorId": 2,
-      "epicId": 1,
+      "tags": [1, 2],
+      "author": 1,
+      "assigneeId": 1,
+      "taskGroupId": 1,
       "kanbanId": 1,
+      "projectId": 1,
       "favorite": true,
       "typeId": 1,
       "note": "Please get it done ASAP."
@@ -121,11 +115,12 @@
     {
       "id": 2,
       "name": "Develop login interface",
-      "phases": [2],
-      "reporterId": 1,
-      "processorId": 2,
-      "epicId": 1,
+      "tags": [2],
+      "author": 1,
+      "assigneeId": 2,
+      "taskGroupId": 1,
       "kanbanId": 1,
+      "projectId": 1,
       "favorite": true,
       "typeId": 1,
       "note": "Please do it with JWT."
@@ -133,11 +128,12 @@
     {
       "id": 3,
       "name": "Unit testing",
-      "phases": [1],
-      "reporterId": 1,
-      "processorId": 2,
-      "epicId": 1,
-      "kanbanId": 1,
+      "tags": [1],
+      "author": 1,
+      "assigneeId": 3,
+      "taskGroupId": 1,
+      "kanbanId": 2,
+      "projectId": 1,
       "favorite": true,
       "typeId": 1,
       "note": ""
@@ -145,11 +141,12 @@
     {
       "id": 4,
       "name": "Performance optimization",
-      "phases": [1],
-      "reporterId": 1,
-      "processorId": 2,
-      "epicId": 1,
-      "kanbanId": 1,
+      "tags": [1],
+      "author": 1,
+      "assigneeId": 4,
+      "taskGroupId": 1,
+      "kanbanId": 2,
+      "projectId": 1,
       "favorite": true,
       "typeId": 1,
       "note": ""
@@ -157,11 +154,12 @@
     {
       "id": 5,
       "name": "Develop authorization interface",
-      "phases": [1],
-      "reporterId": 1,
-      "processorId": 2,
-      "epicId": 1,
-      "kanbanId": 1,
+      "tags": [1],
+      "author": 1,
+      "assigneeId": 1,
+      "taskGroupId": 1,
+      "kanbanId": 3,
+      "projectId": 1,
       "favorite": true,
       "typeId": 1,
       "note": ""
@@ -169,11 +167,12 @@
     {
       "id": 6,
       "name": "UI development",
-      "phases": [1],
-      "reporterId": 1,
-      "processorId": 2,
-      "epicId": 1,
-      "kanbanId": 1,
+      "tags": [1],
+      "author": 1,
+      "assigneeId": 2,
+      "taskGroupId": 1,
+      "kanbanId": 3,
+      "projectId": 1,
       "favorite": true,
       "typeId": 1,
       "note": ""
@@ -181,14 +180,25 @@
     {
       "id": 7,
       "name": "Self-test",
-      "phases": [1],
-      "reporterId": 1,
-      "processorId": 2,
-      "epicId": 1,
+      "tags": [1],
+      "author": 1,
+      "assigneeId": 3,
+      "taskGroupId": 1,
       "kanbanId": 1,
+      "projectId": 1,
       "favorite": true,
-      "typeId": 1,
+      "typeId": 2,
       "note": ""
+    }
+  ],
+  "__TREK_TASK_TYPES__": [
+    {
+      "id": 1,
+      "name": "issue"
+    },
+    {
+      "id": 2,
+      "name": "bug"
     }
   ],
   "__TREK_TASK_GROUPS__": [
