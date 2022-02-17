@@ -64,6 +64,7 @@ const PageHeader = () => {
       </HeaderLeft>
       <HeaderRight>
         <Dropdown
+          placement="bottomCenter"
           overlay={
             <Menu>
               <Menu.Item key="logout">
