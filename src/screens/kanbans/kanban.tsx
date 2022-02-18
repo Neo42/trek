@@ -1,11 +1,21 @@
 import styled from '@emotion/styled'
-import {Card} from 'antd'
+import {Button, Card, Dropdown, Menu, Modal} from 'antd'
 import {Kanban, Task} from 'types'
-import {useTaskTypes} from 'utils'
+import {
+  useTaskModal,
+  useTaskTypes,
+  useTasksSearchParams,
+  useDeleteKanban,
+  useKanbansQueryKey,
+  useProjectId,
+} from 'utils'
 import {ReactComponent as IssueIcon} from 'assets/issue.svg'
 import {ReactComponent as BugIcon} from 'assets/bug.svg'
+import {Row, TaskSearchHighlight} from 'components'
+import {NewTask} from './new-task'
 
-export const KanbanColumn = ({
+export const KanbanBoard = ({
+  // TODO - reduce taskTypes request count
   kanban,
   tasks,
 }: {
@@ -13,17 +23,69 @@ export const KanbanColumn = ({
   tasks?: Task[]
 }) => {
   return (
-    <Column>
-      <h3>{kanban.name}</h3>
+    <BoardContainer>
+      <Row spaceBetween>
+        <h3>{kanban.name}</h3>
+        <KanbanMore kanban={kanban} />
+      </Row>
       <TasksContainer>
         {tasks?.map((task) => (
-          <Card key={task.id} style={{marginBottom: `0.5rem`}}>
-            <div>{task.name}</div>
-            <TaskTypeIcon id={task.typeId} />
-          </Card>
+          <TaskCard key={task.id} task={task} />
         ))}
+        <NewTask kanbanId={kanban.id} />
       </TasksContainer>
-    </Column>
+    </BoardContainer>
+  )
+}
+
+const KanbanMore = ({kanban}: {kanban: Kanban}) => {
+  const projectId = useProjectId()
+  const {mutateAsync: deleteKanban} = useDeleteKanban(
+    useKanbansQueryKey({name: kanban.name, projectId}),
+  )
+
+  const handleDelete = () => {
+    Modal.confirm({
+      okText: 'Confirm',
+      cancelText: 'Cancel',
+      content: 'Are you sure you want to delete this kanban?',
+      onOk: () => deleteKanban(kanban.id),
+    })
+  }
+
+  const overlay = (
+    <Menu>
+      <Menu.Item>
+        <Button danger type="link" onClick={handleDelete}>
+          Delete
+        </Button>
+      </Menu.Item>
+    </Menu>
+  )
+
+  return (
+    <Dropdown overlay={overlay} placement="bottomCenter">
+      <Button type="link">···</Button>
+    </Dropdown>
+  )
+}
+
+const TaskCard = ({task}: {task: Task}) => {
+  const {handleEditItem: handleEditTask} = useTaskModal()
+  const {
+    tasksSearchParams: {name},
+  } = useTasksSearchParams()
+  return (
+    <Card
+      key={task.id}
+      onClick={() => handleEditTask(task.id)}
+      style={{marginBottom: `0.5rem`, cursor: 'pointer'}}
+    >
+      <div>
+        <TaskSearchHighlight name={task.name} keyword={name} />
+      </div>
+      <TaskTypeIcon id={task.typeId} />
+    </Card>
   )
 }
 
@@ -40,7 +102,7 @@ const TaskTypeIcon = ({id}: {id: number}) => {
   ) : null
 }
 
-const Column = styled.div`
+export const BoardContainer = styled.div`
   min-width: 27rem;
   border-radius: 6px;
   background-color: rgb(244, 245, 247);

@@ -2,50 +2,57 @@ import {Spin} from 'antd'
 import styled from '@emotion/styled'
 import {Helmet} from 'react-helmet-async'
 import {
-  useCurrentProjectId,
+  useProjectId,
   useKanbans,
   useProject,
   useTasks,
   useTasksSearchParams,
+  useTaskModal,
 } from 'utils'
-import {KanbanColumn} from './kanban'
+import {KanbanBoard} from './kanban'
 import {KanbanSearch} from './search'
-import {ScreenContainer} from 'components'
+import {ModalProvider, ScreenContainer, TaskModal} from 'components'
+import {NewKanban} from './new-kanban'
 
 export const KanbansScreen = () => {
-  const projectId = useCurrentProjectId()
-  const [tasksParams] = useTasksSearchParams()
+  const projectId = useProjectId()
+  const {tasksSearchParams} = useTasksSearchParams()
 
   const {data: currentProject} = useProject(projectId)
   const {data: kanbans, isLoading: areKanbansLoading} = useKanbans({projectId})
-  const {data: tasks, isLoading: areTasksLoading} = useTasks(tasksParams)
+  const {data: tasks, isLoading: areTasksLoading} = useTasks(tasksSearchParams)
   const isLoading = areKanbansLoading || areTasksLoading
+  const {modalState} = useTaskModal()
 
   return (
     <ScreenContainer>
-      <Helmet>
-        <title>Kanban List</title>
-      </Helmet>
-      <h1>{currentProject?.name} Kanban</h1>
-      <KanbanSearch />
-      {isLoading ? (
-        <Spin size="large" />
-      ) : (
-        <Kanbans>
-          {kanbans?.map((kanban) => (
-            <KanbanColumn
-              key={kanban.id}
-              kanban={kanban}
-              tasks={tasks?.filter((task) => task.kanbanId === kanban.id)}
-            />
-          ))}
-        </Kanbans>
-      )}
+      <ModalProvider modalState={modalState}>
+        <Helmet>
+          <title>Kanban List</title>
+        </Helmet>
+        <h1>{currentProject?.name} Kanban</h1>
+        <KanbanSearch />
+        {isLoading ? (
+          <Spin size="large" />
+        ) : (
+          <Kanbans>
+            {kanbans?.map((kanban) => (
+              <KanbanBoard
+                key={kanban.id}
+                kanban={kanban}
+                tasks={tasks?.filter((task) => task.kanbanId === kanban.id)}
+              />
+            ))}
+            <NewKanban />
+          </Kanbans>
+        )}
+        <TaskModal />
+      </ModalProvider>
     </ScreenContainer>
   )
 }
 
-const Kanbans = styled.div`
+export const Kanbans = styled.div`
   display: flex;
   overflow-x: scroll;
   flex: 1;

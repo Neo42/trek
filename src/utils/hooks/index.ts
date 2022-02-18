@@ -1,6 +1,6 @@
 export {useAsync} from './use-async'
 export {client, useClient} from './use-api-client'
 export {useHeadTitle} from './_use-head-title'
-export {useDebouncedSetState} from './use-debounced-setState'
+export {useDebouncedValue} from './use-debounced-value'
 export {useQueryParams} from './use-query-params'
 export * from './use-query-config'

@@ -13,22 +13,28 @@ import {ErrorMessage} from './lib'
 import {Modal} from './modal'
 
 export const ProjectModal = () => {
-  const {editedProject, closeModal} = useProjectModal()
+  const {
+    editedItem: editedProject,
+    modalState: {closeModal},
+  } = useProjectModal()
   const projectQueryKey = useProjectQueryKey()
   const useMutateProject = editedProject ? useEditProject : useAddProject
-  const {mutateAsync, error, isLoading} = useMutateProject(projectQueryKey)
+  const {
+    mutateAsync: editProject,
+    error,
+    isLoading,
+  } = useMutateProject(projectQueryKey)
   const [form] = useForm()
 
-  const handleSubmit = (values: any) => {
-    mutateAsync({
+  const handleSubmit = async (values: any) => {
+    await editProject({
       ...editedProject,
       ...values,
-      // add this to fix antd table rowKey absence before real id comes back
+      // add this fake id to fix antd table rowKey absence before real id comes back
       id: editedProject?.id ?? -1,
-    }).then(() => {
-      form.resetFields()
-      closeModal()
     })
+    form.resetFields()
+    closeModal()
   }
 
   React.useEffect(() => {

@@ -1,5 +1,5 @@
 import {TableProps, SelectProps, Drawer, RateProps} from 'antd'
-import {Project, User} from './data'
+import {Project, Task, User} from './data'
 import {AuthForm} from './auth'
 import {ModalBase} from 'components'
 
@@ -32,9 +32,6 @@ export type ModalState = {
   readonly isModalOpen: boolean
   readonly openModal: () => void
   readonly closeModal: () => void
-  readonly isLoading: boolean
-  readonly editedProject: Project | undefined
-  readonly handleEditProject: (id: number) => void
 }
 
 export type ModalBaseProps = Omit<

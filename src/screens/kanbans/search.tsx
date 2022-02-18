@@ -3,8 +3,10 @@ import {Row, TaskTypeSelect, UserSelect} from 'components'
 import {useTasksSearchParams} from 'utils'
 
 export const KanbanSearch = () => {
-  const [{name, typeId, assigneeId, authorId}, setTasksSearchParams] =
-    useTasksSearchParams()
+  const {
+    tasksSearchParams: {name, assigneeId, authorId, typeId},
+    setTasksSearchParams,
+  } = useTasksSearchParams()
 
   const reset = () =>
     setTasksSearchParams({
@@ -26,17 +28,21 @@ export const KanbanSearch = () => {
       <UserSelect
         defaultOptionName="Author"
         value={authorId}
-        onChange={(authorId) => setTasksSearchParams({authorId})}
+        onChange={(value) =>
+          setTasksSearchParams({authorId: value || undefined})
+        }
       />
       <UserSelect
         defaultOptionName="Assignee"
         value={assigneeId}
-        onChange={(assigneeId) => setTasksSearchParams({assigneeId})}
+        onChange={(value) =>
+          setTasksSearchParams({assigneeId: value || undefined})
+        }
       />
       <TaskTypeSelect
         defaultOptionName="Task Types"
         value={typeId}
-        onChange={(typeId) => setTasksSearchParams({typeId})}
+        onChange={(value) => setTasksSearchParams({typeId: value || undefined})}
       />
       <Button onClick={reset}>Clear Filters</Button>
     </Row>

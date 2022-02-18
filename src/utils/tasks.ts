@@ -1,17 +1,111 @@
+import {DELETE, PATCH, POST} from '../constants'
 import * as React from 'react'
-import {useQuery} from 'react-query'
+import {QueryKey, useMutation, useQuery} from 'react-query'
 import {Task, TaskTag, TaskType} from 'types'
-import {useClient, useQueryParams} from './hooks'
-import {useCurrentProjectId} from './projects'
+import {useProjectId} from './projects'
+import {
+  useAddConfig,
+  useClient,
+  useDebouncedValue,
+  useDeleteConfig,
+  useEditConfig,
+  useQueryParams,
+} from './hooks'
 
 export const useTasks = (data?: Partial<Task>) => {
   const client = useClient()
   const queryKey = useTasksQueryKey()
+
   return useQuery<Task[], Error>({
     queryKey,
     queryFn: () => client('tasks', {data}),
     staleTime: 5000 * 60,
   })
+}
+
+export const useTasksQueryKey = () => {
+  const taskSearchParams = useTasksSearchParams().tasksSearchParams
+  const debouncedName = useDebouncedValue(taskSearchParams?.name, {delay: 250})
+
+  return ['tasks', {...taskSearchParams, name: debouncedName}]
+}
+
+export const useTask = (id: number) => {
+  const client = useClient()
+  return useQuery<Task>({
+    queryKey: ['task', {id}],
+    queryFn: () => client(`tasks/${id}`),
+    enabled: !!id,
+    staleTime: 5000 * 60,
+  })
+}
+
+export const useAddTask = (queryKey: QueryKey) => {
+  const client = useClient()
+  return useMutation(
+    (data: Pick<Task, 'name' | 'kanbanId' | 'projectId' | 'note'>) =>
+      client('tasks', {
+        method: POST,
+        data,
+      }),
+    useAddConfig(queryKey),
+  )
+}
+
+export const useEditTask = (queryKey: QueryKey) => {
+  const client = useClient()
+  return useMutation(
+    (data: Partial<Task>) =>
+      client(`tasks/${data.id}`, {
+        method: PATCH,
+        data,
+      }),
+    useEditConfig(queryKey),
+  )
+}
+
+export const useDeleteTask = (queryKey: QueryKey) => {
+  const client = useClient()
+  return useMutation(
+    (id: number) =>
+      client(`tasks/${id}`, {
+        method: DELETE,
+      }),
+    useDeleteConfig(queryKey),
+  )
+}
+
+export const useTaskModal = () => {
+  const [{isTaskModalOpen, targetItemId}, setTaskModalParams] = useQueryParams(
+    'isTaskModalOpen',
+    'targetItemId',
+  )
+
+  const openModal = () => setTaskModalParams({isTaskModalOpen: true})
+  const closeModal = () =>
+    setTaskModalParams({
+      isTaskModalOpen: undefined,
+      targetItemId: undefined,
+    })
+
+  const {data: editedItem, isLoading} = useTask(Number(targetItemId))
+  const handleEditItem = React.useCallback(
+    (id: number) => setTaskModalParams({targetItemId: id}),
+    [setTaskModalParams],
+  )
+
+  return {
+    modalState: {
+      name: 'TaskModal',
+      isModalOpen: isTaskModalOpen === 'true' || !!targetItemId,
+      openModal,
+      closeModal,
+    },
+    handleEditItem,
+    isLoading,
+    editedItem,
+    targetItemId,
+  } as const
 }
 
 export const useTaskTypes = () => {
@@ -35,22 +129,20 @@ export const useTaskTags = () => {
 export const useTasksSearchParams = () => {
   const [{name, typeId, assigneeId, tagId, authorId}, setTasksSearchParams] =
     useQueryParams('name', 'typeId', 'assigneeId', 'authorId', 'tagId')
-  const projectId = useCurrentProjectId()
+  const projectId = useProjectId()
 
-  return [
-    React.useMemo(
+  return {
+    tasksSearchParams: React.useMemo(
       () => ({
         projectId,
-        name: name,
+        name,
         authorId: Number(authorId) || undefined,
         typeId: Number(typeId) || undefined,
         assigneeId: Number(assigneeId) || undefined,
         tagId: Number(tagId) || undefined,
       }),
-      [assigneeId, name, projectId, tagId, typeId, authorId],
+      [projectId, name, authorId, typeId, assigneeId, tagId],
     ),
     setTasksSearchParams,
-  ] as const
+  } as const
 }
-
-const useTasksQueryKey = () => ['tasks', useTasksSearchParams()[0]]

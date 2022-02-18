@@ -15,11 +15,11 @@ import {ReactComponent as Logo} from 'assets/logo.svg'
 import {useProjects, useProjectModal} from 'utils'
 
 export const AuthenticatedApp = () => {
-  const projectModalState = useProjectModal()
+  const {modalState} = useProjectModal()
 
   return (
     <Container>
-      <ModalProvider modalState={projectModalState}>
+      <ModalProvider modalState={modalState}>
         <PageHeader />
         <Main>
           <Routes>

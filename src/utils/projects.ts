@@ -57,7 +57,6 @@ export const useDeleteProject = (queryKey: QueryKey) => {
 
 export const useProject = (id: number) => {
   const client = useClient()
-
   return useQuery<Project>({
     queryKey: ['project', {id}],
     queryFn: () => client(`projects/${id}`),
@@ -66,23 +65,23 @@ export const useProject = (id: number) => {
   })
 }
 
-export const useCurrentProjectId = () => {
+export const useProjectId = () => {
   const {pathname} = useLocation()
   const id = pathname.match(/projects\/(\d+)/)?.[1]
   return Number(id)
 }
 
 export const useProjectSearchParams = () => {
-  const [searchParamsWithStringId, setProjectSearchParams] = useQueryParams(
+  const [{name, ownerId}, setProjectSearchParams] = useQueryParams(
     'name',
     'ownerId',
   )
   const projectSearchParams = React.useMemo(
     () => ({
-      ...searchParamsWithStringId,
-      ownerId: Number(searchParamsWithStringId.ownerId) || undefined,
+      name,
+      ownerId: Number(ownerId) || undefined,
     }),
-    [searchParamsWithStringId],
+    [name, ownerId],
   )
 
   return {projectSearchParams, setProjectSearchParams}
@@ -104,17 +103,20 @@ export const useProjectModal = () => {
       targetProjectId: undefined,
     })
 
-  const {data: editedProject, isLoading} = useProject(Number(targetProjectId))
-  const handleEditProject = (id: number) =>
-    setProjectModalParams({targetProjectId: id})
-
+  const {data: editedItem, isLoading} = useProject(Number(targetProjectId))
+  const handleEditItem = React.useCallback(
+    (id: number) => setProjectModalParams({targetProjectId: id}),
+    [setProjectModalParams],
+  )
   return {
-    name: 'ProjectModal',
-    isModalOpen: isProjectModalOpen === 'true' || !!targetProjectId,
-    openModal,
-    closeModal,
+    modalState: {
+      name: 'ProjectModal',
+      isModalOpen: isProjectModalOpen === 'true' || !!targetProjectId,
+      openModal,
+      closeModal,
+    },
+    handleEditItem,
     isLoading,
-    editedProject,
-    handleEditProject,
+    editedItem,
   } as const
 }

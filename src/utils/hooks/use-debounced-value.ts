@@ -6,14 +6,14 @@ import * as React from 'react'
  * @param delay - the amount of time to wait before setting the state
  * @returns The state and setState functions.
  */
-export const useDebouncedSetState = <Value>(
+export const useDebouncedValue = <Value>(
   value: Value,
   option?: {delay: number},
 ) => {
-  const [debouncedState, setDebouncedState] = React.useState(value)
+  const [debounceValue, setDebounceValue] = React.useState(value)
   React.useEffect(() => {
-    const timeout = setTimeout(() => setDebouncedState(value), option?.delay)
+    const timeout = setTimeout(() => setDebounceValue(value), option?.delay)
     return () => clearTimeout(timeout)
   }, [value, option?.delay])
-  return debouncedState
+  return debounceValue
 }

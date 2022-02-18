@@ -4,7 +4,7 @@ import {ProjectList} from './list'
 import {ProjectSearch} from './search'
 import {ErrorMessage, ModalOpenButton, Row, ScreenContainer} from 'components'
 import {
-  useDebouncedSetState,
+  useDebouncedValue,
   useProjects,
   useProjectSearchParams,
   useUsers,
@@ -12,10 +12,10 @@ import {
 
 export function ProjectsScreen() {
   const {projectSearchParams, setProjectSearchParams} = useProjectSearchParams()
-  const debouncedProjectSearchParams = useDebouncedSetState(
-    projectSearchParams,
-    {delay: 250},
-  )
+  const debouncedProjectSearchParams = useDebouncedValue(projectSearchParams, {
+    delay: 250,
+  })
+
   const {
     data: projects,
     error,
