@@ -10,6 +10,7 @@ import {
 } from '../../constants'
 import db from 'mocks/db'
 import storage from 'mocks/storage'
+import {getUser} from 'mocks/handlers/user'
 
 const getRestHandlers = (endpoint, dbKey) => {
   const targetDB = db[dbKey]
@@ -47,13 +48,17 @@ const getRestHandlers = (endpoint, dbKey) => {
     }),
 
     rest.post(`${apiUrl}/${endpoint}`, async (req, res, ctx) => {
-      const item = targetDB.create({
+      console.log('posting')
+      const {id} = await getUser(req)
+      let item = targetDB.create({
         ...req.body,
         ...{
           id: targetDB.count() + 1,
           creationDate: new Date().getTime(),
+          [endpoint === 'tasks' ? 'authorId' : 'ownerId']: id,
         },
       })
+      console.log(item)
       targetStorage.update(() => targetDB.getAll())
       return res(ctx.json(item))
     }),
@@ -66,6 +71,7 @@ const getRestHandlers = (endpoint, dbKey) => {
       const updatedItem = targetDB.findFirst({
         where: {id: {equals: parseInt(id)}},
       })
+      console.log(updatedItem)
       return res(ctx.json(updatedItem))
     }),
 

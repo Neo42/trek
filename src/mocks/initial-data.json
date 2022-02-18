@@ -153,7 +153,7 @@
     },
     {
       "id": 5,
-      "name": "Develop authorIdization interface",
+      "name": "Develop authorization interface",
       "tags": [1],
       "authorId": 3,
       "assigneeId": 1,

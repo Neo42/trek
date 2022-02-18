@@ -1,5 +1,5 @@
 import {faker} from '@faker-js/faker'
-import {factory, primaryKey} from '@mswjs/data'
+import {factory, nullable, primaryKey} from '@mswjs/data'
 import {
   isLocalDataLoadedKey,
   usersKey,
@@ -33,15 +33,15 @@ const db = factory({
   [tasksKey]: {
     id: primaryKey(Number),
     name: faker.hacker.noun,
-    tags: () => [1],
-    authorId: () => 1,
-    assigneeId: () => 1,
-    taskGroupId: 1,
-    kanbanId: () => 1,
-    projectId: () => 1,
-    favorite: () => false,
-    typeId: () => 1,
-    note: faker.lorem.lines,
+    projectId: Number,
+    kanbanId: Number,
+    authorId: Number,
+    tags: () => [],
+    assigneeId: nullable(Number),
+    taskGroupId: nullable(Number),
+    favorite: nullable(() => false),
+    typeId: nullable(Number),
+    note: nullable(faker.lorem.lines),
   },
   [kanbansKey]: {
     id: primaryKey(Number),

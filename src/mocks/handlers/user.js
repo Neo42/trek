@@ -11,8 +11,8 @@ const getToken = (req) =>
   req.headers.get('Authorization')?.replace('Bearer ', '')
 
 export async function getUser(req) {
-  console.log(req)
   const token = getToken(req)
+
   if (!token) {
     const error = new Error('A token must be provided')
     error.status = 401
