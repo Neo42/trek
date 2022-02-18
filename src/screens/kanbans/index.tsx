@@ -1,3 +1,5 @@
+import {Spin} from 'antd'
+import styled from '@emotion/styled'
 import {Helmet} from 'react-helmet-async'
 import {
   useCurrentProjectId,
@@ -7,10 +9,8 @@ import {
   useTasksSearchParams,
 } from 'utils'
 import {KanbanColumn} from './kanban'
-import styled from '@emotion/styled'
 import {KanbanSearch} from './search'
 import {ScreenContainer} from 'components'
-import {Spin} from 'antd'
 
 export const KanbansScreen = () => {
   const projectId = useCurrentProjectId()

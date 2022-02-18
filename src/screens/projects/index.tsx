@@ -38,7 +38,6 @@ export function ProjectsScreen() {
       <ProjectSearch
         params={projectSearchParams}
         setParams={setProjectSearchParams}
-        users={users ?? []}
       />
       <ProjectList
         dataSource={projects ?? []}

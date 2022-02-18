@@ -1,5 +1,6 @@
 import * as React from 'react'
 import {QueryKey, useMutation, useQuery} from 'react-query'
+import {useLocation} from 'react-router-dom'
 import {
   useClient,
   useQueryParams,
@@ -9,7 +10,6 @@ import {
 } from 'utils'
 import {PATCH, POST, DELETE} from '../constants'
 import {Project} from 'types'
-import {useLocation} from 'react-router-dom'
 
 export const useProjects = (data?: Partial<Project>) => {
   const client = useClient()

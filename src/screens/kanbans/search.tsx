@@ -1,6 +1,5 @@
 import {Button, Input} from 'antd'
 import {Row, TaskTypeSelect, UserSelect} from 'components'
-import * as React from 'react'
 import {useTasksSearchParams} from 'utils'
 
 export const KanbanSearch = () => {

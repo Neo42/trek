@@ -1,9 +1,9 @@
+import styled from '@emotion/styled'
+import {Card} from 'antd'
 import {Kanban, Task} from 'types'
 import {useTaskTypes} from 'utils'
 import {ReactComponent as IssueIcon} from 'assets/issue.svg'
 import {ReactComponent as BugIcon} from 'assets/bug.svg'
-import styled from '@emotion/styled'
-import {Card} from 'antd'
 
 export const KanbanColumn = ({
   kanban,
@@ -15,14 +15,14 @@ export const KanbanColumn = ({
   return (
     <Column>
       <h3>{kanban.name}</h3>
-      <TaskContainer>
+      <TasksContainer>
         {tasks?.map((task) => (
           <Card key={task.id} style={{marginBottom: `0.5rem`}}>
             <div>{task.name}</div>
             <TaskTypeIcon id={task.typeId} />
           </Card>
         ))}
-      </TaskContainer>
+      </TasksContainer>
     </Column>
   )
 }
@@ -50,7 +50,7 @@ const Column = styled.div`
   margin-right: 1.5rem;
 `
 
-const TaskContainer = styled.div`
+const TasksContainer = styled.div`
   overflow: scroll;
   flex: 1;
   ::-webkit-scrollbar {

@@ -1,6 +1,3 @@
-/** @jsxImportSource @emotion/react */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {jsx} from '@emotion/react'
 import {Form, Input} from 'antd'
 import {UserSelect} from 'components'
 import {ProjectSearchProps} from 'types'
@@ -8,10 +5,9 @@ import {ProjectSearchProps} from 'types'
 export function ProjectSearch({
   params: {name, ownerId},
   setParams,
-  users,
 }: ProjectSearchProps) {
   return (
-    <Form css={{marginBottom: `2rem`}} layout="inline">
+    <Form style={{marginBottom: `2rem`}} layout="inline">
       <Form.Item>
         <Input
           placeholder="Project Name"
