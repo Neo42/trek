@@ -57,9 +57,9 @@ export const TaskModal = () => {
           <ErrorMessage error={error as Error} />
           <Form
             initialValues={editedTask}
-            form={form}
             labelCol={{span: 8}}
             wrapperCol={{span: 16}}
+            {...{form}}
           >
             <Form.Item
               label="Task Name"

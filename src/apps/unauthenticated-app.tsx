@@ -14,7 +14,7 @@ import {UserFormProps} from 'types'
 import {useAsync} from 'utils'
 
 function UserForm({onSubmit, title, onError}: UserFormProps) {
-  const {run, isLoading} = useAsync(undefined, {throwOnError: true})
+  const {run, isLoading: loading} = useAsync(undefined, {throwOnError: true})
 
   async function handleSubmit(values: {
     username: string
@@ -76,12 +76,7 @@ function UserForm({onSubmit, title, onError}: UserFormProps) {
       ) : null}
 
       <Form.Item>
-        <LongButton
-          loading={isLoading}
-          htmlType="submit"
-          type="primary"
-          title={title}
-        >
+        <LongButton htmlType="submit" type="primary" {...{title, loading}}>
           {title}
         </LongButton>
       </Form.Item>
@@ -107,7 +102,7 @@ export function UnauthenticatedApp() {
           {isRegisterScreen ? 'Register' : 'Login'} to continue:
           <div css={{fontWeight: 'bold'}}>Your team's site</div>
         </Title>
-        <ErrorMessage error={error} />
+        <ErrorMessage {...{error}} />
         <UserForm
           onError={setError}
           onSubmit={isRegisterScreen ? register : login}

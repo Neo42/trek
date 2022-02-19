@@ -34,7 +34,7 @@ export function ProjectsScreen() {
           <Button>Create Project</Button>
         </ModalOpenButton>
       </Row>
-      <ErrorMessage error={error} />
+      <ErrorMessage {...{error}} />
       <ProjectSearch
         params={projectSearchParams}
         setParams={setProjectSearchParams}

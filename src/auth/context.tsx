@@ -55,11 +55,11 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
   }
 
   if (isError) {
-    return <FullPageFallback error={error} />
+    return <FullPageFallback {...{error}} />
   }
 
   const value = {user, login, register, logout}
-  return <AuthContext.Provider value={value} children={children} />
+  return <AuthContext.Provider {...{value, children}} />
 }
 
 function useAuth() {

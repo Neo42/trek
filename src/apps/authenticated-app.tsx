@@ -19,7 +19,7 @@ export const AuthenticatedApp = () => {
 
   return (
     <Container>
-      <ModalProvider modalState={modalState}>
+      <ModalProvider {...{modalState}}>
         <PageHeader />
         <Main>
           <Routes>

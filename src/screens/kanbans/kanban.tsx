@@ -26,11 +26,11 @@ export const KanbanBoard = ({
     <BoardContainer>
       <Row spaceBetween>
         <h3>{kanban.name}</h3>
-        <KanbanMore kanban={kanban} />
+        <KanbanMore {...{kanban}} />
       </Row>
       <TasksContainer>
         {tasks?.map((task) => (
-          <TaskCard key={task.id} task={task} />
+          <TaskCard key={task.id} {...{task}} />
         ))}
         <NewTask kanbanId={kanban.id} />
       </TasksContainer>
@@ -64,7 +64,7 @@ const KanbanMore = ({kanban}: {kanban: Kanban}) => {
   )
 
   return (
-    <Dropdown overlay={overlay} placement="bottomCenter">
+    <Dropdown {...{overlay}} placement="bottomCenter">
       <Button type="link">···</Button>
     </Dropdown>
   )

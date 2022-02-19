@@ -22,7 +22,7 @@ export const ProjectModal = () => {
   const {
     mutateAsync: editProject,
     error,
-    isLoading,
+    isLoading: loading,
   } = useMutateProject(projectQueryKey)
   const [form] = useForm()
 
@@ -46,16 +46,16 @@ export const ProjectModal = () => {
     <Modal>
       <Container>
         <h1>{editedProject ? 'Edit Project' : 'Create Project'}</h1>
-        {isLoading ? (
+        {loading ? (
           <Spin size="large" />
         ) : (
           <>
             <ErrorMessage error={error as Error} />
             <Form
-              form={form}
               layout="vertical"
               style={{width: '40rem'}}
               onFinish={handleSubmit}
+              {...{form}}
             >
               <Form.Item
                 label="Name"
@@ -82,7 +82,7 @@ export const ProjectModal = () => {
               </Form.Item>
 
               <Form.Item style={{textAlign: 'right'}}>
-                <Button loading={isLoading} type="primary" htmlType="submit">
+                <Button {...{loading}} type="primary" htmlType="submit">
                   Submit
                 </Button>
               </Form.Item>

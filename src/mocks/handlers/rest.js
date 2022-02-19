@@ -48,7 +48,6 @@ const getRestHandlers = (endpoint, dbKey) => {
     }),
 
     rest.post(`${apiUrl}/${endpoint}`, async (req, res, ctx) => {
-      console.log('posting')
       const {id} = await getUser(req)
       let item = targetDB.create({
         ...req.body,
@@ -58,7 +57,6 @@ const getRestHandlers = (endpoint, dbKey) => {
           [endpoint === 'tasks' ? 'authorId' : 'ownerId']: id,
         },
       })
-      console.log(item)
       targetStorage.update(() => targetDB.getAll())
       return res(ctx.json(item))
     }),
@@ -71,7 +69,6 @@ const getRestHandlers = (endpoint, dbKey) => {
       const updatedItem = targetDB.findFirst({
         where: {id: {equals: parseInt(id)}},
       })
-      console.log(updatedItem)
       return res(ctx.json(updatedItem))
     }),
 

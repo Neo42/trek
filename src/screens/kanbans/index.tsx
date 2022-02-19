@@ -26,7 +26,7 @@ export const KanbansScreen = () => {
 
   return (
     <ScreenContainer>
-      <ModalProvider modalState={modalState}>
+      <ModalProvider {...{modalState}}>
         <Helmet>
           <title>Kanban List</title>
         </Helmet>
@@ -39,7 +39,7 @@ export const KanbansScreen = () => {
             {kanbans?.map((kanban) => (
               <KanbanBoard
                 key={kanban.id}
-                kanban={kanban}
+                {...{kanban}}
                 tasks={tasks?.filter((task) => task.kanbanId === kanban.id)}
               />
             ))}

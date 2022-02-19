@@ -23,7 +23,7 @@ export const NewKanban = () => {
     <BoardContainer>
       <Input
         size="large"
-        placeholder={placeholder}
+        {...{placeholder}}
         onPressEnter={submit}
         value={name}
         onChange={(e) => setName(e.target.value)}
