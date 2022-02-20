@@ -10,7 +10,9 @@ import {
   useDeleteConfig,
   useEditConfig,
   useQueryParams,
+  useReorderTaskConfig,
 } from './hooks'
+import {ReorderProps} from './kanbans'
 
 export const useTasks = (data?: Partial<Task>) => {
   const client = useClient()
@@ -72,6 +74,18 @@ export const useDeleteTask = (queryKey: QueryKey) => {
         method: DELETE,
       }),
     useDeleteConfig(queryKey),
+  )
+}
+
+export const useReorderTasks = (queryKey: QueryKey) => {
+  const client = useClient()
+  return useMutation(
+    (data: ReorderProps) =>
+      client('tasks/reorder', {
+        data,
+        method: POST,
+      }),
+    useReorderTaskConfig(queryKey),
   )
 }
 

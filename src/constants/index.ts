@@ -12,6 +12,8 @@ export const taskTagsKey = '__TREK_TASK_TAGS__'
 export const tasksKey = '__TREK_TASKS__'
 export const taskTypesKey = '__TREK_TASK_TYPES__'
 export const taskGroupsKey = '__TREK_TASK_GROUPS__'
+export const taskOrderKey = '__TREK_TASK_ORDER__'
+export const kanbanOrderKey = '__TREK_KANBAN_ORDER__'
 
 /* HTTP methods */
 export const GET = 'GET'

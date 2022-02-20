@@ -32,7 +32,10 @@ const getRestHandlers = (endpoint, dbKey) => {
         }))
         .reduce((result, item) => ({...result, ...item}), {})
 
-      const queryResult = targetDB.findMany({where: searchConditions})
+      const queryResult = targetDB.findMany({
+        where: searchConditions,
+        orderBy: {orderId: 'asc'},
+      })
       // simulate slow response
       await new Promise((resolve) => setTimeout(resolve, 300))
       // throw Error('test error')
@@ -49,16 +52,19 @@ const getRestHandlers = (endpoint, dbKey) => {
 
     rest.post(`${apiUrl}/${endpoint}`, async (req, res, ctx) => {
       const {id} = await getUser(req)
-      let item = targetDB.create({
+      let item = {
         ...req.body,
         ...{
-          id: targetDB.count() + 1,
+          id: new Date().getTime(),
+          orderId: targetDB.count(),
           creationDate: new Date().getTime(),
           [endpoint === 'tasks' ? 'authorId' : 'ownerId']: id,
         },
-      })
+      }
+
+      const createdItem = targetDB.create(item)
       targetStorage.update(() => targetDB.getAll())
-      return res(ctx.json(item))
+      return res(ctx.json(createdItem))
     }),
 
     rest.patch(`${apiUrl}/${endpoint}/:id`, async (req, res, ctx) => {
@@ -75,6 +81,16 @@ const getRestHandlers = (endpoint, dbKey) => {
     rest.delete(`${apiUrl}/${endpoint}/:id`, async (req, res, ctx) => {
       const {id} = req.params
       targetDB.delete({where: {id: {equals: parseInt(id)}}})
+      if (endpoint === 'projects') {
+        console.log('projects')
+        db[kanbansKey].deleteMany({where: {projectId: {equals: Number(id)}}})
+        db[tasksKey].deleteMany({where: {projectId: {equals: Number(id)}}})
+        storage.get(kanbansKey).update(() => db[kanbansKey].getAll())
+      }
+      if (endpoint === 'kanbans') {
+        db[tasksKey].deleteMany({where: {kanbanId: {equals: Number(id)}}})
+      }
+      storage.get(tasksKey).update(() => db[tasksKey].getAll())
       targetStorage.update(() => targetDB.getAll())
       return res(ctx.json({success: true}))
     }),

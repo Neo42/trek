@@ -5,10 +5,12 @@ import {
   userTokenKey,
   projectsKey,
   taskTagsKey,
-  kanbansKey,
   tasksKey,
   taskTypesKey,
   taskGroupsKey,
+  taskOrderKey,
+  kanbansKey,
+  kanbanOrderKey,
 } from '../constants'
 
 function storageFactory(...keys) {
@@ -35,5 +37,7 @@ const storage = storageFactory(
   tasksKey,
   taskTypesKey,
   taskGroupsKey,
+  taskOrderKey,
+  kanbanOrderKey,
 )
 export default storage

@@ -1,3 +1,4 @@
+import * as React from 'react'
 import styled from '@emotion/styled'
 import {Button, Card, Dropdown, Menu, Modal} from 'antd'
 import {Kanban, Task} from 'types'
@@ -7,42 +8,68 @@ import {
   useTasksSearchParams,
   useDeleteKanban,
   useKanbansQueryKey,
-  useProjectId,
 } from 'utils'
 import {ReactComponent as IssueIcon} from 'assets/issue.svg'
 import {ReactComponent as BugIcon} from 'assets/bug.svg'
-import {Row, TaskSearchHighlight} from 'components'
+import {
+  Draggable,
+  Droppable,
+  DroppableChildren,
+  Row,
+  TaskSearchHighlight,
+} from 'components'
 import {NewTask} from './new-task'
 
-export const KanbanBoard = ({
-  // TODO - reduce taskTypes request count
-  kanban,
-  tasks,
-}: {
+type KanBanBoardProps = {
   kanban: Kanban
   tasks?: Task[]
-}) => {
-  return (
-    <BoardContainer>
-      <Row spaceBetween>
-        <h3>{kanban.name}</h3>
-        <KanbanMore {...{kanban}} />
-      </Row>
-      <TasksContainer>
-        {tasks?.map((task) => (
-          <TaskCard key={task.id} {...{task}} />
-        ))}
-        <NewTask kanbanId={kanban.id} />
-      </TasksContainer>
-    </BoardContainer>
-  )
 }
 
+export const KanbanBoard = React.forwardRef<HTMLDivElement, KanBanBoardProps>(
+  (
+    {
+      // TODO - reduce taskTypes request count
+      kanban,
+      tasks,
+      ...props
+    }: KanBanBoardProps,
+    ref,
+  ) => {
+    return (
+      <BoardContainer ref={ref} {...props}>
+        <Row spaceBetween>
+          <h3>{kanban.name}</h3>
+          <KanbanMore {...{kanban}} />
+        </Row>
+        <TasksContainer>
+          <Droppable
+            type="TASK"
+            direction="vertical"
+            droppableId={String(kanban.id)}
+          >
+            <DroppableChildren style={{minHeight: '1px'}}>
+              {tasks?.map((task, index) => (
+                <Draggable
+                  draggableId={String(task.id)}
+                  index={index}
+                  key={'task' + task.id}
+                >
+                  <div>
+                    <TaskCard key={task.id} task={task} />
+                  </div>
+                </Draggable>
+              ))}
+            </DroppableChildren>
+          </Droppable>
+          <NewTask kanbanId={kanban.id} />
+        </TasksContainer>
+      </BoardContainer>
+    )
+  },
+)
+
 const KanbanMore = ({kanban}: {kanban: Kanban}) => {
-  const projectId = useProjectId()
-  const {mutateAsync: deleteKanban} = useDeleteKanban(
-    useKanbansQueryKey({name: kanban.name, projectId}),
-  )
+  const {mutateAsync: deleteKanban} = useDeleteKanban(useKanbansQueryKey())
 
   const handleDelete = () => {
     Modal.confirm({
@@ -55,7 +82,7 @@ const KanbanMore = ({kanban}: {kanban: Kanban}) => {
 
   const overlay = (
     <Menu>
-      <Menu.Item>
+      <Menu.Item key="delete">
         <Button danger type="link" onClick={handleDelete}>
           Delete
         </Button>
@@ -103,7 +130,7 @@ const TaskTypeIcon = ({id}: {id: number}) => {
 }
 
 export const BoardContainer = styled.div`
-  min-width: 27rem;
+  min-width: 25rem;
   border-radius: 6px;
   background-color: rgb(244, 245, 247);
   display: flex;

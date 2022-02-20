@@ -9,6 +9,8 @@ import {
   tasksKey,
   taskTypesKey,
   taskGroupsKey,
+  taskOrderKey,
+  kanbanOrderKey,
 } from '../../constants'
 import storage from '../storage'
 import {authenticate} from './methods'
@@ -32,6 +34,7 @@ const db = factory({
   },
   [tasksKey]: {
     id: primaryKey(Number),
+    orderId: Number,
     name: faker.hacker.noun,
     projectId: Number,
     kanbanId: Number,
@@ -45,6 +48,7 @@ const db = factory({
   },
   [kanbansKey]: {
     id: primaryKey(Number),
+    orderId: Number,
     name: String,
     projectId: Number,
   },
@@ -119,5 +123,23 @@ try {
 } catch (error) {
   throw error
 }
+
+storage.get(taskOrderKey).update(() =>
+  storage
+    .get(tasksKey)
+    .getValue()
+    .map((task) => ({
+      id: task.id,
+    })),
+)
+
+storage.get(kanbanOrderKey).update(() =>
+  storage
+    .get(kanbansKey)
+    .getValue()
+    .map((kanban) => ({
+      id: kanban.id,
+    })),
+)
 
 export default db

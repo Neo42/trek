@@ -62,16 +62,19 @@
   "__TREK_KANBANS__": [
     {
       "id": 1,
+      "orderId": 0,
       "name": "Not Started",
       "projectId": 1
     },
     {
       "id": 2,
+      "orderId": 1,
       "name": "In Progress",
       "projectId": 1
     },
     {
       "id": 3,
+      "orderId": 2,
       "name": "Completed",
       "projectId": 1
     }
@@ -101,6 +104,7 @@
   "__TREK_TASKS__": [
     {
       "id": 1,
+      "orderId": 0,
       "name": "Develop registration interface",
       "tags": [1, 2],
       "authorId": 4,
@@ -114,6 +118,7 @@
     },
     {
       "id": 2,
+      "orderId": 1,
       "name": "Develop login interface",
       "tags": [2],
       "authorId": 1,
@@ -127,6 +132,7 @@
     },
     {
       "id": 3,
+      "orderId": 2,
       "name": "Unit testing",
       "tags": [1],
       "authorId": 3,
@@ -140,6 +146,7 @@
     },
     {
       "id": 4,
+      "orderId": 3,
       "name": "Performance optimization",
       "tags": [1],
       "authorId": 2,
@@ -153,6 +160,7 @@
     },
     {
       "id": 5,
+      "orderId": 4,
       "name": "Develop authorization interface",
       "tags": [1],
       "authorId": 3,
@@ -166,6 +174,7 @@
     },
     {
       "id": 6,
+      "orderId": 5,
       "name": "UI development",
       "tags": [1],
       "authorId": 3,
@@ -179,6 +188,7 @@
     },
     {
       "id": 7,
+      "orderId": 6,
       "name": "Self-test",
       "tags": [1],
       "authorId": 2,

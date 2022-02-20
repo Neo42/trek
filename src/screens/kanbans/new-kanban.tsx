@@ -7,7 +7,7 @@ export const NewKanban = () => {
   const [name, setName] = React.useState('')
   const [placeholder, setPlaceholder] = React.useState('Create a New Kanban')
   const projectId = useProjectId()
-  const kanbanQueryKey = useKanbansQueryKey({name, projectId})
+  const kanbanQueryKey = useKanbansQueryKey()
   const {mutateAsync: addKanban} = useAddKanban(kanbanQueryKey)
 
   const submit = async () => {
