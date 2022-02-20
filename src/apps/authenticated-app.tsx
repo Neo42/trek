@@ -12,7 +12,7 @@ import {
   Row,
 } from 'components'
 import {ReactComponent as Logo} from 'assets/logo.svg'
-import {useProjects, useProjectModal} from 'utils'
+import {useProjects, useProjectModal, useUsers} from 'utils'
 
 export const AuthenticatedApp = () => {
   const {modalState} = useProjectModal()
@@ -43,6 +43,7 @@ const PageHeader = () => {
   const {user, logout} = useAuth()
   const navigate = useNavigate()
   const {data: projects} = useProjects()
+  const {data: users} = useUsers()
 
   return (
     <Header spaceBetween>
@@ -60,7 +61,7 @@ const PageHeader = () => {
           buttonText="Create Project"
           items={projects?.filter((project) => project.isPinned)}
         />
-        <span>Users</span>
+        <Popover title="Users" contentTitle="User List" items={users ?? []} />
       </HeaderLeft>
       <HeaderRight>
         <Dropdown

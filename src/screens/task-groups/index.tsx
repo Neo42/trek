@@ -47,7 +47,7 @@ export const TaskGroupsScreen = () => {
       <List
         style={{overflow: 'scroll'}}
         dataSource={taskGroups}
-        itemLayout={'vertical'}
+        itemLayout="vertical"
         renderItem={(taskGroup) => (
           <List.Item>
             <List.Item.Meta

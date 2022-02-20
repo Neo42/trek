@@ -31,10 +31,14 @@ const PopoverContent = ({
           </List.Item>
         ))}
       </List>
-      <Divider />
-      <ModalOpenButton>
-        <NoPaddingButton type="link">{buttonText}</NoPaddingButton>
-      </ModalOpenButton>
+      {buttonText ? (
+        <>
+          <Divider />
+          <ModalOpenButton>
+            <NoPaddingButton type="link">{buttonText}</NoPaddingButton>
+          </ModalOpenButton>
+        </>
+      ) : null}
     </ContentContainer>
   )
 }

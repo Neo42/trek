@@ -1,5 +1,5 @@
 import {TableProps, SelectProps, Drawer, RateProps} from 'antd'
-import {Project, Task, User} from './data'
+import {Project, User} from './data'
 import {AuthForm} from './auth'
 import {ModalBase} from 'components'
 
@@ -43,7 +43,7 @@ export type ModalProps = React.ComponentProps<typeof ModalBase>
 
 export interface PopoverProps {
   title: string
-  buttonText: string
+  buttonText?: string
   contentTitle: string
   items: Partial<User | Project>[] | undefined
 }
