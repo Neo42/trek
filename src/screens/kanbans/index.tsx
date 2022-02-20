@@ -14,6 +14,7 @@ import {
   useReorderKanbans,
   useReorderTasks,
   useTasksQueryKey,
+  useKanbanSearchParams,
 } from 'utils'
 import {
   Draggable,
@@ -32,7 +33,9 @@ export const KanbansScreen = () => {
   const {tasksSearchParams} = useTasksSearchParams()
 
   const {data: currentProject} = useProject(projectId)
-  const {data: kanbans, isLoading: areKanbansLoading} = useKanbans({projectId})
+  const {data: kanbans, isLoading: areKanbansLoading} = useKanbans(
+    useKanbanSearchParams(),
+  )
   const {data: tasks, isLoading: areTasksLoading} = useTasks(tasksSearchParams)
   const isLoading = areKanbansLoading || areTasksLoading
   const {modalState} = useTaskModal()

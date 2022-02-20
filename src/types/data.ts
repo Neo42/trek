@@ -45,3 +45,11 @@ export interface TaskTag {
   id: number
   name: string
 }
+
+export interface TaskGroup {
+  id: number
+  name: string
+  projectId: number
+  startDate: number
+  endDate: number
+}

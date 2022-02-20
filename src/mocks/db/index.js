@@ -63,6 +63,7 @@ const db = factory({
   [taskGroupsKey]: {
     id: primaryKey(Number),
     name: faker.lorem.words,
+    projectId: Number,
     startDate: faker.date.past,
     endDate: faker.date.recent,
   },

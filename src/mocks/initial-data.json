@@ -214,12 +214,14 @@
   "__TREK_TASK_GROUPS__": [
     {
       "id": 1,
+      "projectId": 1,
       "name": "development delivery logistics interface",
       "startDate": 1607558400000,
       "endDate": 1610323200000
     },
     {
       "id": 2,
+      "projectId": 1,
       "name": "develop map for delivery",
       "startDate": 1610409600000,
       "endDate": 1613260800000

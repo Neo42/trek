@@ -94,7 +94,7 @@ const More = ({id}: {id: number}) => {
   const projectQueryKey = useProjectQueryKey()
   const {handleEditItem: handleEditProject} = useProjectModal()
   const editProject = (id: number) => () => handleEditProject(id)
-  const {mutate: deleteProject} = useDeleteProject(projectQueryKey)
+  const {mutateAsync: deleteProject} = useDeleteProject(projectQueryKey)
 
   const confirmDeleteProject = (id: number) => {
     Modal.confirm({

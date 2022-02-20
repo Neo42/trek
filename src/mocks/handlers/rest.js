@@ -7,6 +7,7 @@ import {
   tasksKey,
   taskTagsKey,
   taskTypesKey,
+  taskGroupsKey,
 } from '../../constants'
 import db from 'mocks/db'
 import storage from 'mocks/storage'
@@ -82,9 +83,9 @@ const getRestHandlers = (endpoint, dbKey) => {
       const {id} = req.params
       targetDB.delete({where: {id: {equals: parseInt(id)}}})
       if (endpoint === 'projects') {
-        console.log('projects')
         db[kanbansKey].deleteMany({where: {projectId: {equals: Number(id)}}})
         db[tasksKey].deleteMany({where: {projectId: {equals: Number(id)}}})
+        db[taskGroupsKey].deleteMany({where: {projectId: {equals: Number(id)}}})
         storage.get(kanbansKey).update(() => db[kanbansKey].getAll())
       }
       if (endpoint === 'kanbans') {
@@ -98,10 +99,11 @@ const getRestHandlers = (endpoint, dbKey) => {
 }
 
 export const restHandlers = [
+  ...getRestHandlers('users', usersKey),
   ...getRestHandlers('projects', projectsKey),
   ...getRestHandlers('kanbans', kanbansKey),
   ...getRestHandlers('tasks', tasksKey),
   ...getRestHandlers('taskTypes', taskTypesKey),
   ...getRestHandlers('taskTags', taskTagsKey),
-  ...getRestHandlers('users', usersKey),
+  ...getRestHandlers('taskGroups', taskGroupsKey),
 ]

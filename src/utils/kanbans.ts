@@ -1,13 +1,13 @@
 import {QueryKey, useMutation, useQuery} from 'react-query'
 import {DELETE, POST} from '../constants'
-import {Kanban} from 'types'
+import {useProjectId} from './projects'
 import {
   useAddConfig,
   useClient,
   useDeleteConfig,
   useReorderKanbanConfig,
 } from './hooks'
-import {useProjectId} from './projects'
+import {Kanban} from 'types'
 
 export const useKanbans = (data?: Partial<Kanban>) => {
   const client = useClient()
@@ -61,4 +61,5 @@ export const useReorderKanbans = (queryKey: QueryKey) => {
   )
 }
 
-export const useKanbansQueryKey = () => ['kanbans', {projectId: useProjectId()}]
+export const useKanbanSearchParams = () => ({projectId: useProjectId()})
+export const useKanbansQueryKey = () => ['kanbans', useKanbanSearchParams()]
