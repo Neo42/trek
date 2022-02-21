@@ -14,8 +14,8 @@ import storage from 'mocks/storage'
 import {getUser} from 'mocks/handlers/user'
 
 const getRestHandlers = (endpoint, dbKey) => {
-  const targetDB = db[dbKey]
-  const targetStorage = storage.get(dbKey)
+  const targetDB = dbKey && db[dbKey]
+  const targetStorage = dbKey && storage.get(dbKey)
   return [
     rest.get(`${apiUrl}/${endpoint}`, async (req, res, ctx) => {
       const params = req.url.searchParams
@@ -52,6 +52,9 @@ const getRestHandlers = (endpoint, dbKey) => {
     }),
 
     rest.post(`${apiUrl}/${endpoint}`, async (req, res, ctx) => {
+      if (endpoint === 'profile') {
+        return res(ctx.json(req.body))
+      }
       const {id} = await getUser(req)
       let item = {
         ...req.body,
@@ -106,4 +109,5 @@ export const restHandlers = [
   ...getRestHandlers('taskTypes', taskTypesKey),
   ...getRestHandlers('taskTags', taskTagsKey),
   ...getRestHandlers('taskGroups', taskGroupsKey),
+  ...getRestHandlers('profile', taskGroupsKey),
 ]

@@ -1,3 +1,3 @@
-export {userHandlers} from './user'
-export {restHandlers} from './rest'
-export {reorderHandlers} from './reorder'
+export * from './user'
+export * from './rest'
+export * from './reorder'

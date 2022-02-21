@@ -21,6 +21,7 @@ import {
   Droppable,
   DroppableChildren,
   ModalProvider,
+  Profiler,
   ScreenContainer,
   TaskModal,
 } from 'components'
@@ -53,34 +54,36 @@ export const KanbansScreen = () => {
         {isLoading ? (
           <Spin size="large" />
         ) : (
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Kanbans>
-              <Droppable
-                type="KANBAN"
-                direction="horizontal"
-                droppableId="kanban"
-              >
-                <DroppableChildren style={{display: 'flex'}}>
-                  {kanbans?.map((kanban, index) => (
-                    <Draggable
-                      draggableId={'kanban' + kanban.id}
-                      index={index}
-                      key={'draggable' + kanban.id}
-                    >
-                      <KanbanBoard
-                        key={kanban.id}
-                        {...{kanban}}
-                        tasks={tasks?.filter(
-                          (task) => task.kanbanId === kanban.id,
-                        )}
-                      />
-                    </Draggable>
-                  ))}
-                </DroppableChildren>
-              </Droppable>
-              <NewKanban />
-            </Kanbans>
-          </DragDropContext>
+          <Profiler id="kanbans">
+            <DragDropContext onDragEnd={onDragEnd}>
+              <Kanbans>
+                <Droppable
+                  type="KANBAN"
+                  direction="horizontal"
+                  droppableId="kanban"
+                >
+                  <DroppableChildren style={{display: 'flex'}}>
+                    {kanbans?.map((kanban, index) => (
+                      <Draggable
+                        draggableId={'kanban' + kanban.id}
+                        index={index}
+                        key={'draggable' + kanban.id}
+                      >
+                        <KanbanBoard
+                          key={kanban.id}
+                          {...{kanban}}
+                          tasks={tasks?.filter(
+                            (task) => task.kanbanId === kanban.id,
+                          )}
+                        />
+                      </Draggable>
+                    ))}
+                  </DroppableChildren>
+                </Droppable>
+                <NewKanban />
+              </Kanbans>
+            </DragDropContext>
+          </Profiler>
         )}
         <TaskModal />
       </ModalProvider>

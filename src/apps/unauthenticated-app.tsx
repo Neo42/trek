@@ -84,7 +84,7 @@ function UserForm({onSubmit, title, onError}: UserFormProps) {
   )
 }
 
-export function UnauthenticatedApp() {
+export default function UnauthenticatedApp() {
   const [isRegisterScreen, setIsRegisterScreen] = React.useState(false)
   // useHeadTitle(`Please ${isRegisterScreen ? 'Login' : 'Register'} to Continue`)
   const {login, register} = useAuth()

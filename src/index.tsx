@@ -8,6 +8,7 @@ import {AppProvider} from 'auth'
 import reportWebVitals from './reportWebVitals'
 import 'antd/dist/antd.less'
 import server from 'mocks'
+import {Profiler} from 'components'
 
 server.start({
   onUnhandledRequest: 'bypass',
@@ -18,9 +19,11 @@ ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <AppProvider>
-          <App />
-        </AppProvider>
+        <Profiler id="App Root" phases={['mount']}>
+          <AppProvider>
+            <App />
+          </AppProvider>
+        </Profiler>
       </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>,

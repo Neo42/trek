@@ -14,7 +14,7 @@ import {
 import {ReactComponent as Logo} from 'assets/logo.svg'
 import {useProjects, useProjectModal, useUsers} from 'utils'
 
-export const AuthenticatedApp = () => {
+export default function AuthenticatedApp() {
   const {modalState} = useProjectModal()
 
   return (
@@ -33,6 +33,7 @@ export const AuthenticatedApp = () => {
     </Container>
   )
 }
+
 const Container = styled.div`
   display: grid;
   grid-template-rows: 6rem 1fr;
