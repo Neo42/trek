@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {Button, Form, Input, Spin} from 'antd'
-import {useForm} from 'antd/es/form/Form'
 import styled from '@emotion/styled'
 import {
   useAddProject,
@@ -24,7 +23,7 @@ export const ProjectModal = () => {
     error,
     isLoading: loading,
   } = useMutateProject(projectQueryKey)
-  const [form] = useForm()
+  const [form] = Form.useForm()
 
   const handleSubmit = async (values: any) => {
     await editProject({

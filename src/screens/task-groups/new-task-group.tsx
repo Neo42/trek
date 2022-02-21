@@ -1,7 +1,6 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
 import {Drawer, DrawerProps, Form, Button, Input, Spin} from 'antd'
-import {useForm} from 'antd/es/form/Form'
 import {ErrorMessage} from 'components'
 import {useAddTaskGroup, useTaskGroupsQueryKey, useProjectId} from 'utils'
 
@@ -14,7 +13,7 @@ export const NewTaskGroup = ({
     error,
     mutateAsync: addTaskGroup,
   } = useAddTaskGroup(useTaskGroupsQueryKey())
-  const [form] = useForm()
+  const [form] = Form.useForm()
   const projectId = useProjectId()
   const handleSubmit = async (values: any) => {
     await addTaskGroup({...values, projectId})

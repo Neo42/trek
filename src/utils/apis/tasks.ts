@@ -1,4 +1,4 @@
-import {DELETE, PATCH, POST} from '../constants'
+import {DELETE, PATCH, POST} from '../../constants'
 import * as React from 'react'
 import {QueryKey, useMutation, useQuery} from 'react-query'
 import {Task, TaskTag, TaskType} from 'types'
@@ -11,7 +11,7 @@ import {
   useEditConfig,
   useQueryParams,
   useReorderTaskConfig,
-} from './hooks'
+} from '../hooks'
 import {ReorderProps} from './kanbans'
 
 export const useTasks = (data?: Partial<Task>) => {

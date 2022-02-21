@@ -1,16 +1,26 @@
 import {Button} from 'antd'
-import {Helmet} from 'react-helmet-async'
 import {ProjectList} from './list'
 import {ProjectSearch} from './search'
-import {ErrorMessage, ModalOpenButton, Row, ScreenContainer} from 'components'
+import {
+  ErrorMessage,
+  ModalOpenButton,
+  ModalProvider,
+  ProjectModal,
+  Row,
+  ScreenContainer,
+} from 'components'
 import {
   useDebouncedValue,
+  useHeadTitle,
+  useProjectModal,
   useProjects,
   useProjectSearchParams,
   useUsers,
 } from 'utils'
 
 export function ProjectsScreen() {
+  useHeadTitle('Project List | Trek')
+  const {modalState} = useProjectModal()
   const {projectSearchParams, setProjectSearchParams} = useProjectSearchParams()
   const debouncedProjectSearchParams = useDebouncedValue(projectSearchParams, {
     delay: 250,
@@ -25,25 +35,25 @@ export function ProjectsScreen() {
 
   return (
     <ScreenContainer>
-      <Helmet>
-        <title>Project List | Trek</title>
-      </Helmet>
-      <Row spaceBetween>
-        <h1>Project List</h1>
-        <ModalOpenButton>
-          <Button>Create Project</Button>
-        </ModalOpenButton>
-      </Row>
-      <ErrorMessage {...{error}} />
-      <ProjectSearch
-        params={projectSearchParams}
-        setParams={setProjectSearchParams}
-      />
-      <ProjectList
-        dataSource={projects ?? []}
-        loading={isLoading}
-        users={users ?? []}
-      />
+      <ModalProvider {...{modalState}}>
+        <Row spaceBetween>
+          <h1>Project List</h1>
+          <ModalOpenButton>
+            <Button>Create Project</Button>
+          </ModalOpenButton>
+        </Row>
+        <ErrorMessage {...{error}} />
+        <ProjectSearch
+          params={projectSearchParams}
+          setParams={setProjectSearchParams}
+        />
+        <ProjectList
+          dataSource={projects ?? []}
+          loading={isLoading}
+          users={users ?? []}
+        />
+        <ProjectModal />
+      </ModalProvider>
     </ScreenContainer>
   )
 }

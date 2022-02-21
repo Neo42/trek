@@ -8,13 +8,14 @@ import {
   useAddConfig,
   useDeleteConfig,
 } from 'utils'
-import {PATCH, POST, DELETE} from '../constants'
+import {PATCH, POST, DELETE} from '../../constants'
 import {Project} from 'types'
+import {sanitizeObject} from '../misc'
 
 export const useProjects = (data?: Partial<Project>) => {
   const client = useClient()
   return useQuery<Project[], Error>({
-    queryKey: ['projects', data],
+    queryKey: ['projects', sanitizeObject(data)],
     queryFn: () => client('projects', {data}),
     staleTime: 5000 * 60,
   })

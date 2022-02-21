@@ -1,12 +1,12 @@
 import {QueryKey, useMutation, useQuery} from 'react-query'
-import {DELETE, POST} from '../constants'
+import {DELETE, POST} from '../../constants'
 import {useProjectId} from './projects'
 import {
   useAddConfig,
   useClient,
   useDeleteConfig,
   useReorderKanbanConfig,
-} from './hooks'
+} from '../hooks'
 import {Kanban} from 'types'
 
 export const useKanbans = (data?: Partial<Kanban>) => {

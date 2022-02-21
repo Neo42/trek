@@ -1,7 +1,6 @@
 import './wdyr'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {BrowserRouter} from 'react-router-dom'
 import {HelmetProvider} from 'react-helmet-async'
 import App from 'apps/App'
 import {AppProvider} from 'auth'
@@ -18,13 +17,11 @@ server.start({
 ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
-      <BrowserRouter>
-        <Profiler id="App Root" phases={['mount']}>
-          <AppProvider>
-            <App />
-          </AppProvider>
-        </Profiler>
-      </BrowserRouter>
+      <Profiler id="App Root" phases={['mount']}>
+        <AppProvider>
+          <App />
+        </AppProvider>
+      </Profiler>
     </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root'),

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {Button, Form, Input, Modal, Spin} from 'antd'
-import {useForm} from 'antd/es/form/Form'
 import {useDeleteTask, useEditTask, useTaskModal, useTasksQueryKey} from 'utils'
 import {UserSelect} from './user-select'
 import {TaskTypeSelect} from './task-type-select'
@@ -15,7 +14,7 @@ export const TaskModal = () => {
   const tasksQueryKey = useTasksQueryKey()
   const {mutateAsync: editTask, error, isLoading} = useEditTask(tasksQueryKey)
   const {mutateAsync: deleteTask} = useDeleteTask(tasksQueryKey)
-  const [form] = useForm()
+  const [form] = Form.useForm()
 
   const handleCancel = () => {
     form.resetFields()

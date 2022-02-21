@@ -38,7 +38,7 @@ const getRestHandlers = (endpoint, dbKey) => {
         orderBy: {orderId: 'asc'},
       })
       // simulate slow response
-      await new Promise((resolve) => setTimeout(resolve, 300))
+      // await new Promise((resolve) => setTimeout(resolve, 300))
       // throw Error('test error')
       return res(ctx.json(queryResult))
     }),
@@ -47,7 +47,7 @@ const getRestHandlers = (endpoint, dbKey) => {
       const {id} = req.params
       const item = targetDB.findFirst({where: {id: {equals: Number(id)}}})
       // simulate slow response
-      await new Promise((resolve) => setTimeout(resolve, 300))
+      // await new Promise((resolve) => setTimeout(resolve, 300))
       return res(ctx.json(item))
     }),
 

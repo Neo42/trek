@@ -1,7 +1,7 @@
 import {QueryKey, useMutation, useQuery} from 'react-query'
-import {useAddConfig, useClient, useDeleteConfig} from './hooks'
+import {useAddConfig, useClient, useDeleteConfig} from '../hooks'
 import {useProjectId} from './projects'
-import {DELETE, POST} from '../constants'
+import {DELETE, POST} from '../../constants'
 import {TaskGroup} from 'types'
 
 export const useTaskGroups = (data?: Partial<TaskGroup>) => {
