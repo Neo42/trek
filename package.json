@@ -33,13 +33,25 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest",
       "prettier"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "browserslist": {
@@ -60,6 +72,15 @@
     "@faker-js/faker": "^6.0.0-alpha.6",
     "@mswjs/data": "^0.8.4",
     "@mswjs/storage": "^0.1.0",
+    "@storybook/addon-actions": "^6.4.19",
+    "@storybook/addon-essentials": "^6.4.19",
+    "@storybook/addon-interactions": "^6.4.19",
+    "@storybook/addon-links": "^6.4.19",
+    "@storybook/node-logger": "^6.4.19",
+    "@storybook/preset-ant-design": "^0.0.2",
+    "@storybook/preset-create-react-app": "^3.2.0",
+    "@storybook/react": "^6.4.19",
+    "@storybook/testing-library": "^0.0.9",
     "@types/qs": "^6.9.7",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@welldone-software/why-did-you-render": "^6.2.3",

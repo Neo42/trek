@@ -23,7 +23,7 @@ export interface GenericSelectProps
 }
 
 export interface PinProps extends Omit<RateProps, 'checked' | 'onChange'> {
-  checked: boolean
+  checked?: boolean
   onChange?: (checked: PinProps['checked']) => void
 }
 
