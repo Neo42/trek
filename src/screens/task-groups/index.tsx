@@ -58,7 +58,7 @@ export const TaskGroupsScreen = () => {
                     type="link"
                     onClick={() => confirmDeleteTaskGroup(taskGroup)}
                   >
-                    删除
+                    Delete
                   </Button>
                 </Row>
               }
