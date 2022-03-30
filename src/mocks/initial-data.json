@@ -215,14 +215,14 @@
     {
       "id": 1,
       "projectId": 1,
-      "name": "development delivery logistics interface",
+      "name": "Developing Delivery Logistics Interface",
       "startDate": 1607558400000,
       "endDate": 1610323200000
     },
     {
       "id": 2,
       "projectId": 1,
-      "name": "develop map for delivery",
+      "name": "Developing Delivery Map",
       "startDate": 1610409600000,
       "endDate": 1613260800000
     }

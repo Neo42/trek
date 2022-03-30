@@ -74,18 +74,17 @@ export const TaskGroupsScreen = () => {
                 </div>
               }
             />
-            <div>
-              {tasks
-                ?.filter((task) => task.taskGroupId === taskGroup.id)
-                .map((task) => (
+            {tasks
+              ?.filter((task) => task.taskGroupId === taskGroup.id)
+              .map((task) => (
+                <div key={task.id}>
                   <Link
-                    key={task.id}
                     to={`/projects/${projectId}/kanbans?targetItemId=${task.id}`}
                   >
-                    <div>{task.name}</div>
+                    {task.name}
                   </Link>
-                ))}
-            </div>
+                </div>
+              ))}
           </List.Item>
         )}
       />
