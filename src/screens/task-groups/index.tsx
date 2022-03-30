@@ -82,7 +82,7 @@ export const TaskGroupsScreen = () => {
                     key={task.id}
                     to={`/projects/${projectId}/kanbans?targetItemId=${task.id}`}
                   >
-                    {task.name}
+                    <div>{task.name}</div>
                   </Link>
                 ))}
             </div>

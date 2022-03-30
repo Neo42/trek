@@ -4,21 +4,24 @@ import {Navigate, Route, Routes, useNavigate} from 'react-router-dom'
 import {ProjectsScreen} from 'screens/projects'
 import {ProjectScreen} from 'screens/project'
 import {useAuth} from 'auth/context'
-import {NoPaddingButton, Popover, Row} from 'components'
+import {ModalProvider, NoPaddingButton, Popover, Row} from 'components'
 import {ReactComponent as Logo} from 'assets/logo.svg'
-import {useProjects, useUsers} from 'utils'
+import {useProjectModal, useProjects, useUsers} from 'utils'
 
 export default function AuthenticatedApp() {
+  const {modalState} = useProjectModal()
   return (
     <Container>
-      <PageHeader />
-      <Main>
-        <Routes>
-          <Route path="projects" element={<ProjectsScreen />} />
-          <Route path="projects/:projectId/*" element={<ProjectScreen />} />
-          <Route path="*" element={<Navigate replace to="projects" />} />
-        </Routes>
-      </Main>
+      <ModalProvider {...{modalState}}>
+        <PageHeader />
+        <Main>
+          <Routes>
+            <Route path="projects" element={<ProjectsScreen />} />
+            <Route path="projects/:projectId/*" element={<ProjectScreen />} />
+            <Route path="*" element={<Navigate replace to="projects" />} />
+          </Routes>
+        </Main>
+      </ModalProvider>
     </Container>
   )
 }
